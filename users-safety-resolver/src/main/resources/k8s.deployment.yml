@@ -1,0 +1,16 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+name: users-safety-resolver-deployment
+spec:
+replicas: 1
+template:
+    metadata:
+    labels:
+        app: users-safety-resolver
+    spec:
+    containers:
+    - name: users-safety-resolver
+        image: michalkoszalka/users-safety-resolver
+        ports:
+        - containerPort: 8090

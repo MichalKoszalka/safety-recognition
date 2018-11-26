@@ -11,8 +11,8 @@ object SimpleApp {
     val numsC = logData.filter(line => line.contains("c")).count()
     val numsB = logData.filter(line => line.contains("b")).count()
     val scanner = new Scanner(System.in)
-    scanner.nextLine()
-    println(s"Lines with c: $numsC, Lines with b: $numsB")
+//    scanner.nextLine()
+    println(s"Lines with   c: $numsC, Lines with b: $numsB")
     spark.stop()
   }
 

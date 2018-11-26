@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ScalaCompilerConfiguration">
-    <profile name="Maven 1" modules="spark-processor">
+    <profile name="Maven 1" modules="">
       <option name="deprecationWarnings" value="true" />
       <option name="featureWarnings" value="true" />
       <parameters>
@@ -9,6 +9,6 @@
         <parameter value="C:\Users\JIT\Documents\worskpace\A16\safety-recognition\spark-processor\target/.scala_dependencies" />
       </parameters>
     </profile>
-    <profile name="sbt 1" modules="sparkexample_1718,sparkexample" />
+    <profile name="sbt 1" modules="sparkexample_1718,sparkexample,spark-processor_724,spark-processor,spark-processor_4188,safety-recognition,spark-processor_8412,spark-processor_3828,safety-recognition-spark-processor" />
   </component>
 </project>

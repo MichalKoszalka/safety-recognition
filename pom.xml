@@ -10,6 +10,11 @@
 	<version>1.0-SNAPSHOT</version>
 	<modules>
 		<module>crime-api-consumer</module>
+		<module>safety-endpoint</module>
+		<module>safety-level-scheduler</module>
+		<module>safety-push-notification-server</module>
+		<module>users-safety-resolver</module>
+		<module>police-api-consumer</module>
 	</modules>
 
 

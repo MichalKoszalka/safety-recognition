@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ScalaSbtSettings">
+    <option name="customVMPath" />
     <option name="linkedExternalProjectsSettings">
       <SbtProjectSettings>
-        <option name="externalProjectPath" value="$PROJECT_DIR$/SparkExample" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/spark-processor" />
         <option name="modules">
           <set>
-            <option value="$PROJECT_DIR$/SparkExample" />
-            <option value="$PROJECT_DIR$/SparkExample/project" />
+            <option value="$PROJECT_DIR$/spark-processor" />
+            <option value="$PROJECT_DIR$/spark-processor/project" />
           </set>
         </option>
         <option name="sbtVersion" value="1.1.2" />
-        <option name="useAutoImport" value="true" />
       </SbtProjectSettings>
     </option>
   </component>

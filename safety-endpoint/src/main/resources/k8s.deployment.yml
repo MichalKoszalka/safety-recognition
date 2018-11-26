@@ -1,0 +1,16 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+name: crime-api-producer-deployment
+spec:
+replicas: 1
+template:
+    metadata:
+    labels:
+        app: crime-api-producer
+    spec:
+    containers:
+    - name: crime-api-producer
+        image: michalkoszalka/crime-api-producer
+        ports:
+        - containerPort: 8090

@@ -1,0 +1,16 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+name: safety-level-scheduler-deployment
+spec:
+replicas: 1
+template:
+    metadata:
+    labels:
+        app: safety-level-scheduler
+    spec:
+    containers:
+    - name: safety-level-scheduler
+        image: michalkoszalka/safety-level-scheduler
+        ports:
+        - containerPort: 8090
