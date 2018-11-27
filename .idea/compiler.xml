@@ -9,23 +9,21 @@
         <outputRelativeToContentRoot value="true" />
         <module name="crime-api-consumer" />
         <module name="police-api-consumer" />
-        <module name="safety-endpoint" />
         <module name="safety-level-scheduler" />
         <module name="safety-push-notification-server" />
+        <module name="users-safety-resolver" />
       </profile>
       <profile name="Annotation profile for safety-recognition" enabled="true">
         <sourceOutputDir name="../safety-push-notification-server/target/generated-sources/annotations" />
         <sourceTestOutputDir name="../safety-push-notification-server/target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="users-safety-resolver" />
+        <module name="safety-endpoint" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="safety-recognition (4)" target="1.8" />
-      <module name="safety-recognition-crime-api-consumer" target="10" />
-    </bytecodeTargetLevel>
+    <bytecodeTargetLevel target="10" />
   </component>
   <component name="JavacSettings">
+    <option name="PREFER_TARGET_JDK_COMPILER" value="false" />
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="crime-api-consumer" options="-parameters" />
       <module name="police-api-consumer" options="-parameters" />

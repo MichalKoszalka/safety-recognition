@@ -11,7 +11,7 @@ public class Crime {
 
     private Long id;
     private String category;
-    private Long persistent_id;
+    private String persistent_id;
     private String month;
     private String location_type;
     private String location_subtype;
