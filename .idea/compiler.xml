@@ -9,15 +9,24 @@
         <outputRelativeToContentRoot value="true" />
         <module name="crime-api-consumer" />
         <module name="police-api-consumer" />
+        <module name="safety-endpoint" />
         <module name="safety-level-scheduler" />
         <module name="safety-push-notification-server" />
-        <module name="users-safety-resolver" />
+        <module name="safety-recognition (1)" />
+        <module name="safety-recognition (2)" />
+        <module name="safety-recognition (3)" />
       </profile>
       <profile name="Annotation profile for safety-recognition" enabled="true">
-        <sourceOutputDir name="../safety-push-notification-server/target/generated-sources/annotations" />
-        <sourceTestOutputDir name="../safety-push-notification-server/target/generated-test-sources/test-annotations" />
+        <sourceOutputDir name="../safety-endpoint/target/generated-sources/annotations" />
+        <sourceTestOutputDir name="../safety-endpoint/target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="safety-endpoint" />
+        <module name="users-safety-resolver" />
+      </profile>
+      <profile name="Annotation profile for safety-recognition (4)" enabled="true">
+        <sourceOutputDir name="../safety-level-scheduler/target/generated-sources/annotations" />
+        <sourceTestOutputDir name="../safety-level-scheduler/target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="safety-recognition (4)" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="10" />
@@ -30,6 +39,7 @@
       <module name="safety-endpoint" options="-parameters" />
       <module name="safety-level-scheduler" options="-parameters" />
       <module name="safety-push-notification-server" options="-parameters" />
+      <module name="safety-recognition (4)" options="-parameters" />
       <module name="users-safety-resolver" options="-parameters" />
     </option>
   </component>

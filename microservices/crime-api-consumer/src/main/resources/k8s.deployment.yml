@@ -1,0 +1,22 @@
+  apiVersion: apps/v1beta1 # for versions before 1.8.0 use apps/v1beta1
+  kind: Deployment
+  metadata:
+    name: crime-api-consumer
+  spec:
+    selector:
+      matchLabels:
+        app: crime-api-consumer
+    replicas: 2 # tells deployment to run 3 pods matching the template
+    template: # create pods using pod definition in this template
+      metadata:
+        labels:
+          app: crime-api-consumer
+      spec:
+        containers:
+        - name: crime-api-consumer
+          image: michalkoszalka/crime-api-consumer
+          ports:
+          - containerPort: 8080
+            name: server
+          - containerPort: 8081
+            name: management

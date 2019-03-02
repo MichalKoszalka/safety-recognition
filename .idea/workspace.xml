@@ -2,60 +2,62 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9d217f27-73f9-44c8-a389-61b06baece81" name="Default" comment="Modules and deployments">
-      <change afterPath="$PROJECT_DIR$/police-api-consumer/src/main/java/com/safety.recognition/scheduling/CrimeFetchScheduledTask.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/crime-api-consumer/src/main/java/com/safety/recognition/message/consumer/CrimeMessageConsumer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/crime-api-consumer/src/main/java/com/safety/recognition/message/consumer/KafkaConsumerConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/kafka-cluster/docker-compose.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/kafka-cluster/run-on-kubernetes.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/police-api-consumer/Dockerfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/police-api-consumer/src/main/java/com/safety.recognition/message/producer/CrimeMessageProducer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/police-api-consumer/src/main/java/com/safety.recognition/message/producer/KafkaProducerConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/police-api-consumer/src/main/resources/deployment.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sbt.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/scala_compiler.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/crime-api-consumer/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/crime-api-consumer/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crime-api-consumer/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/crime-api-consumer/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crime-api-consumer/src/main/resources/k8s.deployment.yml" beforeDir="false" afterPath="$PROJECT_DIR$/crime-api-consumer/src/main/resources/k8s.deployment.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/police-api-consumer/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/police-api-consumer/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/police-api-consumer/src/main/java/com/safety.recognition/PoliceApiConsumerApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/police-api-consumer/src/main/java/com/safety.recognition/PoliceApiConsumerApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/police-api-consumer/src/main/java/com/safety.recognition/client/CrimeClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/police-api-consumer/src/main/java/com/safety.recognition/client/CrimeClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/police-api-consumer/src/main/java/com/safety.recognition/client/CrimeClientImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/police-api-consumer/src/main/java/com/safety.recognition/client/CrimeClientImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/police-api-consumer/src/main/java/com/safety.recognition/model/Crime.java" beforeDir="false" afterPath="$PROJECT_DIR$/police-api-consumer/src/main/java/com/safety.recognition/model/Crime.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/police-api-consumer/src/main/java/com/safety.recognition/scheduling/CrimeFetchScheduledTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/police-api-consumer/src/main/java/com/safety.recognition/scheduling/CrimeFetchScheduledTask.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/police-api-consumer/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/police-api-consumer/src/main/resources/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/safety-endpoint/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/safety-endpoint/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/safety-level-scheduler/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/safety-level-scheduler/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/safety-push-notification-server/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/safety-push-notification-server/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/spark-processor/.idea/modules/spark-processor-build.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/spark-processor/build.sbt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/spark-processor/project/build.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/spark-processor/src/main/resources/runInKubernetes.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/spark-processor/src/main/resources/sampleFile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/spark-processor/src/main/scala/SimpleApp.scala" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/spark-processor/target/scala-2.11/classes/SimpleApp$$anonfun$1.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/spark-processor/target/scala-2.11/classes/SimpleApp$$anonfun$2.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/spark-processor/target/scala-2.11/classes/SimpleApp$.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/spark-processor/target/scala-2.11/classes/SimpleApp.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/spark-processor/target/scala-2.11/classes/sampleFile" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/users-safety-resolver/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/users-safety-resolver/pom.xml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
     <ignored path="$PROJECT_DIR$/safety-recognition-crime-api-consumer/target/" />
     <ignored path="$PROJECT_DIR$/crime-api-consumer/target/" />
-    <ignored path="$PROJECT_DIR$/spark-processor/target/" />
-    <ignored path="$PROJECT_DIR$/SparkExample/target/" />
-    <ignored path="$PROJECT_DIR$/SparkExample/project/project/target/" />
-    <ignored path="$PROJECT_DIR$/SparkExample/project/target/" />
     <ignored path="$PROJECT_DIR$/crime-api-producer/target/" />
     <ignored path="$PROJECT_DIR$/users-safety-resolver/target/" />
     <ignored path="$PROJECT_DIR$/safety-level-scheduler/target/" />
     <ignored path="$PROJECT_DIR$/safety-push-notification-server/target/" />
     <ignored path="$PROJECT_DIR$/project/project/target/" />
     <ignored path="$PROJECT_DIR$/project/target/" />
-    <ignored path="$PROJECT_DIR$/spark-processor/project/project/target/" />
-    <ignored path="$PROJECT_DIR$/spark-processor/project/target/" />
     <ignored path="$PROJECT_DIR$/safety-endpoint/target/" />
     <ignored path="$PROJECT_DIR$/police-api-consumer/target/" />
+    <ignored path="$PROJECT_DIR$/crimes-processor/target/" />
+    <ignored path="$PROJECT_DIR$/crimes-processor/project/project/target/" />
+    <ignored path="$PROJECT_DIR$/crimes-processor/project/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
-  </component>
-  <component name="ExternalProjectsData">
-    <projectState path="$PROJECT_DIR$">
-      <ProjectState />
-    </projectState>
-    <projectState path="$PROJECT_DIR$/SparkExample">
-      <ProjectState />
-    </projectState>
-    <projectState path="$PROJECT_DIR$/spark-processor">
-      <ProjectState />
-    </projectState>
   </component>
   <component name="ExternalProjectsManager">
     <system id="SBT">
@@ -65,7 +67,7 @@
             <expand>
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="spark-processor" type="f1a62948:ProjectNode" />
+                <item name="safety-recognition" type="f1a62948:ProjectNode" />
               </path>
             </expand>
             <select />
@@ -74,179 +76,107 @@
       </state>
     </system>
   </component>
-  <component name="FUSProjectUsageTrigger">
-    <session id="-1307055767">
-      <usages-collector id="statistics.file.extensions.open">
-        <counts>
-          <entry key="iml" value="2" />
-          <entry key="java" value="20" />
-          <entry key="properties" value="4" />
-          <entry key="sbt" value="1" />
-          <entry key="scala" value="1" />
-          <entry key="sh" value="1" />
-          <entry key="xml" value="12" />
-          <entry key="yaml" value="1" />
-          <entry key="yml" value="1" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.types.open">
-        <counts>
-          <entry key="IDEA_MODULE" value="2" />
-          <entry key="JAVA" value="20" />
-          <entry key="PLAIN_TEXT" value="2" />
-          <entry key="Properties" value="4" />
-          <entry key="Scala" value="1" />
-          <entry key="XML" value="12" />
-          <entry key="YAML" value="2" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.extensions.edit">
-        <counts>
-          <entry key="java" value="1023" />
-          <entry key="properties" value="22" />
-          <entry key="sbt" value="3" />
-          <entry key="sbtShell" value="11" />
-          <entry key="scala" value="1" />
-          <entry key="sh" value="132" />
-          <entry key="txt" value="23" />
-          <entry key="xml" value="54" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.types.edit">
-        <counts>
-          <entry key="Bash" value="25" />
-          <entry key="JAVA" value="1023" />
-          <entry key="PLAIN_TEXT" value="131" />
-          <entry key="Properties" value="22" />
-          <entry key="Scala" value="1" />
-          <entry key="XML" value="54" />
-          <entry key="sbt" value="2" />
-          <entry key="sbtShell" value="11" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.lifecycle.project">
-        <counts>
-          <entry key="project.closed" value="14" />
-          <entry key="project.open.time.1" value="2" />
-          <entry key="project.open.time.10" value="1" />
-          <entry key="project.open.time.12" value="1" />
-          <entry key="project.open.time.2" value="3" />
-          <entry key="project.open.time.4" value="2" />
-          <entry key="project.open.time.7" value="1" />
-          <entry key="project.open.time.9" value="4" />
-          <entry key="project.opened" value="14" />
-        </counts>
-      </usages-collector>
-    </session>
-  </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/police-api-consumer/src/main/java/com/safety.recognition/model/Crime.java">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/kafka-cluster/docker-compose.yaml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="113">
-              <caret line="8" column="43" lean-forward="true" selection-start-line="8" selection-start-column="43" selection-end-line="8" selection-end-column="43" />
+            <state relative-caret-position="390">
+              <caret line="26" column="17" selection-start-line="26" selection-start-column="17" selection-end-line="26" selection-end-column="17" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/kafka-cluster/run-on-kubernetes.yaml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="233">
+              <caret line="106" column="24" selection-start-line="106" selection-start-column="24" selection-end-line="106" selection-end-column="24" />
               <folding>
-                <element signature="imports" expanded="true" />
+                <element signature="e#708#752#0" expanded="true" />
+                <element signature="e#761#822#0" expanded="true" />
+                <element signature="e#831#894#0" expanded="true" />
+                <element signature="e#1240#1288#0" expanded="true" />
+                <element signature="e#1297#1335#0" expanded="true" />
+                <element signature="e#1626#1694#0" expanded="true" />
+                <element signature="e#1703#1756#0" expanded="true" />
+                <element signature="e#1765#1820#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/police-api-consumer/src/main/java/com/safety.recognition/client/CrimeClient.java">
+        <entry file="file://$PROJECT_DIR$/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="45">
-              <caret line="3" selection-start-line="3" selection-end-line="3" />
+            <state relative-caret-position="165">
+              <caret line="11" column="43" selection-start-line="11" selection-start-column="43" selection-end-line="11" selection-end-column="43" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/police-api-consumer/src/main/resources/application.properties">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="41" selection-start-column="41" selection-end-column="41" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/police-api-consumer/src/main/java/com/safety.recognition/scheduling/CrimeFetchScheduledTask.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="269">
-              <caret line="18" selection-start-line="18" selection-end-line="18" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#564#565#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/police-api-consumer/src/test/java/com/safety/recognition/PoliceApiConsumerApplicationTests.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/police-api-consumer/src/main/java/com/safety.recognition/client/CrimeClientImpl.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="146">
-              <caret line="21" column="19" selection-start-line="21" selection-start-column="19" selection-end-line="21" selection-end-column="19" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#493#511#1" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/police-api-consumer/src/main/java/com/safety.recognition/model/OutcomeStatus.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="10" column="24" selection-start-line="10" selection-start-column="24" selection-end-line="10" selection-end-column="24" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/police-api-consumer/src/main/java/com/safety.recognition/model/Location.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="8" column="7" selection-start-line="8" selection-start-column="7" selection-end-line="8" selection-end-column="7" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/police-api-consumer/src/main/java/com/safety.recognition/PoliceApiConsumerApplication.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/police-api-consumer/src/main/java/com/safety.recognition/model/Street.java">
+        <entry file="file://$PROJECT_DIR$/crime-api-consumer/src/main/java/com/safety/recognition/SafetyRecognitionApplication.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="75">
-              <caret line="5" column="7" selection-start-line="5" selection-start-column="7" selection-end-line="5" selection-end-column="7" />
+              <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/crime-api-consumer/src/main/java/com/safety/recognition/message/consumer/KafkaConsumerConfig.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="345">
+              <caret line="39" column="18" selection-start-line="39" selection-start-column="18" selection-end-line="39" selection-end-column="18" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/.idea/compiler.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="460">
+              <caret line="39" column="35" selection-start-line="39" selection-start-column="35" selection-end-line="39" selection-end-column="35" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1284">
+              <caret line="535" column="65" selection-start-line="535" selection-start-column="65" selection-end-line="535" selection-end-column="65" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="75">
+              <caret line="5" selection-start-line="5" selection-end-line="5" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/police-api-consumer/pom.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="255">
+              <caret line="17" selection-start-line="17" selection-end-line="17" />
               <folding>
-                <element signature="imports" expanded="true" />
+                <marker date="1546719414490" expanded="true" signature="1848:2055" ph="..." />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/crime-api-consumer/pom.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="165">
+              <caret line="11" column="31" selection-start-line="11" selection-start-column="31" selection-end-line="11" selection-end-column="31" />
             </state>
           </provider>
         </entry>
@@ -257,6 +187,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Class" />
+        <option value="FxmlFile" />
       </list>
     </option>
   </component>
@@ -266,16 +197,18 @@
       <find>java</find>
       <find>ware</find>
       <find>lombo</find>
+      <find>crim</find>
+      <find>safety</find>
+      <find>processor</find>
     </findStrings>
     <replaceStrings>
       <replace />
     </replaceStrings>
     <dirStrings>
       <dir>C:\Users\JIT\Documents\worskpace\A16\safety-recognition\crime-api-consumer</dir>
-      <dir>C:\Users\JIT\Documents\worskpace\A16\safety-recognition\spark-processor</dir>
-      <dir>$PROJECT_DIR$/spark-processor</dir>
       <dir>$PROJECT_DIR$/.idea</dir>
       <dir>$PROJECT_DIR$</dir>
+      <dir>$PROJECT_DIR$/kafka-cluster/kubernetes-kafka/yahoo-kafka-manager</dir>
     </dirStrings>
   </component>
   <component name="Git.Settings">
@@ -284,13 +217,7 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/spark-processor/src/main/scala/safety/recognition/App.scala" />
-        <option value="$PROJECT_DIR$/spark-processor/pom.xml" />
-        <option value="$PROJECT_DIR$/spark-processor/build.sbt" />
         <option value="$PROJECT_DIR$/.idea/sbt.xml" />
-        <option value="$PROJECT_DIR$/spark-processor/.idea/sbt.xml" />
-        <option value="$PROJECT_DIR$/spark-processor/src/main/resources/runInKubernetes.sh" />
-        <option value="$PROJECT_DIR$/spark-processor/src/main/scala/SimpleApp.scala" />
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/police-api-consumer/src/main/java/com/safety.recognition/Crime.java" />
         <option value="$PROJECT_DIR$/police-api-consumer/src/main/java/com/safety.recognition/CrimeWrapper.java" />
@@ -299,25 +226,45 @@
         <option value="$PROJECT_DIR$/police-api-consumer/src/main/java/com/safety.recognition/model/Location.java" />
         <option value="$PROJECT_DIR$/police-api-consumer/src/main/java/com/safety.recognition/client/CrimesClient.java" />
         <option value="$PROJECT_DIR$/police-api-consumer/src/main/java/com/safety.recognition/PoliceApiConsumerApplication.java" />
-        <option value="$PROJECT_DIR$/safety-level-scheduler/pom.xml" />
-        <option value="$PROJECT_DIR$/safety-push-notification-server/pom.xml" />
-        <option value="$PROJECT_DIR$/users-safety-resolver/pom.xml" />
-        <option value="$PROJECT_DIR$/crime-api-consumer/pom.xml" />
-        <option value="$PROJECT_DIR$/safety-endpoint/pom.xml" />
-        <option value="$PROJECT_DIR$/police-api-consumer/pom.xml" />
         <option value="$PROJECT_DIR$/police-api-consumer/src/main/java/com/safety.recognition/client/CrimeClientImpl.java" />
         <option value="$PROJECT_DIR$/police-api-consumer/src/main/java/com/safety.recognition/client/CrimeClient.java" />
-        <option value="$PROJECT_DIR$/police-api-consumer/src/main/java/com/safety.recognition/scheduling/CrimeFetchScheduledTask.java" />
-        <option value="$PROJECT_DIR$/police-api-consumer/src/main/resources/application.properties" />
         <option value="$PROJECT_DIR$/police-api-consumer/src/main/java/com/safety.recognition/model/Crime.java" />
+        <option value="$PROJECT_DIR$/kafka-cluster/zookeeper.yaml" />
+        <option value="$PROJECT_DIR$/kafka-cluster/kafka-servie.yaml" />
+        <option value="$PROJECT_DIR$/kafka-cluster/metallb.yaml" />
+        <option value="$PROJECT_DIR$/police-api-consumer/src/main/java/com/safety.recognition/message/producer/KafkaProducerConfig.java" />
+        <option value="$PROJECT_DIR$/police-api-consumer/src/main/java/com/safety.recognition/message/producer/CrimeMessageProducer.java" />
+        <option value="$PROJECT_DIR$/police-api-consumer/Dockerfile" />
+        <option value="$PROJECT_DIR$/crime-api-consumer/src/main/resources/k8s.deployment.yml" />
+        <option value="$PROJECT_DIR$/kafka-cluster/kafka-broker-2.yaml" />
+        <option value="$PROJECT_DIR$/kafka-cluster/kafka-broker.yaml" />
+        <option value="$PROJECT_DIR$/kafka-cluster/docker-compose.yml" />
+        <option value="$PROJECT_DIR$/kafka-cluster/Dockerfile" />
+        <option value="$PROJECT_DIR$/kafka-cluster/kafka-docker/docker-compose.yml" />
+        <option value="$PROJECT_DIR$/kafka-cluster/kafka-docker/create-topics.sh" />
+        <option value="$PROJECT_DIR$/kafka-cluster/create-topic.yaml" />
+        <option value="$PROJECT_DIR$/kafka-cluster/kubernetes-kafka/yahoo-kafka-manager/kafka-manager.yml" />
+        <option value="$PROJECT_DIR$/kafka-cluster/kubernetes-kafka/yahoo-kafka-manager/kafka-manager-service.yml" />
+        <option value="$PROJECT_DIR$/crime-api-consumer/src/main/java/com/safety/recognition/message.consumer.fxml" />
+        <option value="$PROJECT_DIR$/crime-api-consumer/src/main/java/com/safety/recognition/message/consumer/KafkaProducerConfig.java" />
+        <option value="$PROJECT_DIR$/crime-api-consumer/src/main/java/com/safety/recognition/message/consumer/CrimeMessageConsumer.java" />
+        <option value="$PROJECT_DIR$/kafka-cluster/forwardKafkaToMac.sh" />
+        <option value="$PROJECT_DIR$/police-api-consumer/src/main/resources/deployment.yaml" />
+        <option value="$PROJECT_DIR$/police-api-consumer/src/main/resources/application.properties" />
+        <option value="$PROJECT_DIR$/police-api-consumer/src/main/java/com/safety.recognition/scheduling/CrimeFetchScheduledTask.java" />
+        <option value="$PROJECT_DIR$/crime-api-consumer/src/main/resources/application.properties" />
+        <option value="$PROJECT_DIR$/crime-api-consumer/src/main/java/com/safety/recognition/message/consumer/KafkaConsumerConfig.java" />
+        <option value="$PROJECT_DIR$/users-safety-resolver/pom.xml" />
+        <option value="$PROJECT_DIR$/safety-push-notification-server/pom.xml" />
+        <option value="$PROJECT_DIR$/safety-level-scheduler/pom.xml" />
+        <option value="$PROJECT_DIR$/safety-endpoint/pom.xml" />
+        <option value="$PROJECT_DIR$/police-api-consumer/pom.xml" />
+        <option value="$PROJECT_DIR$/crime-api-consumer/pom.xml" />
+        <option value="$PROJECT_DIR$/kafka-cluster/all-in-one/run-on-kubernetes.yaml" />
+        <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/kafka-cluster/all-in-one/docker-compose.yaml" />
       </list>
     </option>
-  </component>
-  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
-  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
-  <component name="JsGulpfileManager">
-    <detection-done>true</detection-done>
-    <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="MavenImportPreferences">
     <option name="importingSettings">
@@ -340,10 +287,6 @@
         </path>
         <path>
           <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
-          <item name="safety-push-notification-server" type="9519ce18:MavenProjectsStructure$ProjectNode" />
-        </path>
-        <path>
-          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
           <item name="police-api-consumer" type="9519ce18:MavenProjectsStructure$ProjectNode" />
         </path>
         <path>
@@ -351,14 +294,17 @@
           <item name="police-api-consumer" type="9519ce18:MavenProjectsStructure$ProjectNode" />
           <item name="Lifecycle" type="58874e2:MavenProjectsStructure$LifecycleNode" />
         </path>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="safety-push-notification-server" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+        </path>
       </expand>
       <select />
     </treeState>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="y" value="23" />
+  <component name="ProjectFrameBounds" fullScreen="true">
     <option name="width" value="1440" />
-    <option name="height" value="812" />
+    <option name="height" value="900" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -382,8 +328,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -394,138 +338,6 @@
             <path>
               <item name="safety-recognition" type="b2602c69:ProjectViewProjectNode" />
               <item name="safety-recognition" type="462c0819:PsiDirectoryNode" />
-              <item name="crime-api-consumer" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="safety-recognition" type="b2602c69:ProjectViewProjectNode" />
-              <item name="safety-recognition" type="462c0819:PsiDirectoryNode" />
-              <item name="crime-api-consumer" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="safety-recognition" type="b2602c69:ProjectViewProjectNode" />
-              <item name="safety-recognition" type="462c0819:PsiDirectoryNode" />
-              <item name="crime-api-consumer" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="safety-recognition" type="b2602c69:ProjectViewProjectNode" />
-              <item name="safety-recognition" type="462c0819:PsiDirectoryNode" />
-              <item name="crime-api-consumer" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="safety-recognition" type="b2602c69:ProjectViewProjectNode" />
-              <item name="safety-recognition" type="462c0819:PsiDirectoryNode" />
-              <item name="crime-api-consumer" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="recognition" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="safety-recognition" type="b2602c69:ProjectViewProjectNode" />
-              <item name="safety-recognition" type="462c0819:PsiDirectoryNode" />
-              <item name="police-api-consumer" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="safety-recognition" type="b2602c69:ProjectViewProjectNode" />
-              <item name="safety-recognition" type="462c0819:PsiDirectoryNode" />
-              <item name="police-api-consumer" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="safety-recognition" type="b2602c69:ProjectViewProjectNode" />
-              <item name="safety-recognition" type="462c0819:PsiDirectoryNode" />
-              <item name="police-api-consumer" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="safety-recognition" type="b2602c69:ProjectViewProjectNode" />
-              <item name="safety-recognition" type="462c0819:PsiDirectoryNode" />
-              <item name="police-api-consumer" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="safety-recognition" type="b2602c69:ProjectViewProjectNode" />
-              <item name="safety-recognition" type="462c0819:PsiDirectoryNode" />
-              <item name="police-api-consumer" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="safety.recognition" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="safety-recognition" type="b2602c69:ProjectViewProjectNode" />
-              <item name="safety-recognition" type="462c0819:PsiDirectoryNode" />
-              <item name="police-api-consumer" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="safety.recognition" type="462c0819:PsiDirectoryNode" />
-              <item name="client" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="safety-recognition" type="b2602c69:ProjectViewProjectNode" />
-              <item name="safety-recognition" type="462c0819:PsiDirectoryNode" />
-              <item name="police-api-consumer" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="safety.recognition" type="462c0819:PsiDirectoryNode" />
-              <item name="model" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="safety-recognition" type="b2602c69:ProjectViewProjectNode" />
-              <item name="safety-recognition" type="462c0819:PsiDirectoryNode" />
-              <item name="police-api-consumer" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="safety.recognition" type="462c0819:PsiDirectoryNode" />
-              <item name="scheduling" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="safety-recognition" type="b2602c69:ProjectViewProjectNode" />
-              <item name="safety-recognition" type="462c0819:PsiDirectoryNode" />
-              <item name="police-api-consumer" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="safety-recognition" type="b2602c69:ProjectViewProjectNode" />
-              <item name="safety-recognition" type="462c0819:PsiDirectoryNode" />
-              <item name="police-api-consumer" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="safety-recognition" type="b2602c69:ProjectViewProjectNode" />
-              <item name="safety-recognition" type="462c0819:PsiDirectoryNode" />
-              <item name="police-api-consumer" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="safety-recognition" type="b2602c69:ProjectViewProjectNode" />
-              <item name="safety-recognition" type="462c0819:PsiDirectoryNode" />
-              <item name="police-api-consumer" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="recognition" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="safety-recognition" type="b2602c69:ProjectViewProjectNode" />
-              <item name="safety-recognition" type="462c0819:PsiDirectoryNode" />
               <item name="safety-endpoint" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -537,56 +349,117 @@
             <path>
               <item name="safety-recognition" type="b2602c69:ProjectViewProjectNode" />
               <item name="safety-recognition" type="462c0819:PsiDirectoryNode" />
-              <item name="safety-level-scheduler" type="462c0819:PsiDirectoryNode" />
+              <item name="safety-endpoint" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="safety-recognition" type="b2602c69:ProjectViewProjectNode" />
               <item name="safety-recognition" type="462c0819:PsiDirectoryNode" />
-              <item name="safety-push-notification-server" type="462c0819:PsiDirectoryNode" />
+              <item name="safety-endpoint" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="safety-recognition" type="b2602c69:ProjectViewProjectNode" />
               <item name="safety-recognition" type="462c0819:PsiDirectoryNode" />
-              <item name="spark-processor" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="safety-recognition" type="b2602c69:ProjectViewProjectNode" />
-              <item name="safety-recognition" type="462c0819:PsiDirectoryNode" />
-              <item name="spark-processor" type="462c0819:PsiDirectoryNode" />
-              <item name="project" type="462c0819:PsiDirectoryNode" />
+              <item name="safety-endpoint" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="recognition" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="safety-recognition" type="b2602c69:ProjectViewProjectNode" />
               <item name="safety-recognition" type="462c0819:PsiDirectoryNode" />
               <item name="users-safety-resolver" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="safety-recognition" type="b2602c69:ProjectViewProjectNode" />
+              <item name="safety-recognition" type="462c0819:PsiDirectoryNode" />
+              <item name="users-safety-resolver" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="safety-recognition" type="b2602c69:ProjectViewProjectNode" />
+              <item name="safety-recognition" type="462c0819:PsiDirectoryNode" />
+              <item name="users-safety-resolver" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="safety-recognition" type="b2602c69:ProjectViewProjectNode" />
+              <item name="safety-recognition" type="462c0819:PsiDirectoryNode" />
+              <item name="users-safety-resolver" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="safety-recognition" type="b2602c69:ProjectViewProjectNode" />
+              <item name="safety-recognition" type="462c0819:PsiDirectoryNode" />
+              <item name="users-safety-resolver" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="safety-recognition" type="b2602c69:ProjectViewProjectNode" />
+              <item name="safety-recognition" type="462c0819:PsiDirectoryNode" />
+              <item name="users-safety-resolver" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+              <item name="safety" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="safety-recognition" type="b2602c69:ProjectViewProjectNode" />
+              <item name="safety-recognition" type="462c0819:PsiDirectoryNode" />
+              <item name="users-safety-resolver" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+              <item name="safety" type="462c0819:PsiDirectoryNode" />
+              <item name="recognition" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="ExpandSpringBootJavaOptionsPanel" value="true" />
     <property name="RequestMappingsPanelOrder0" value="0" />
     <property name="RequestMappingsPanelOrder1" value="1" />
     <property name="RequestMappingsPanelWidth0" value="75" />
     <property name="RequestMappingsPanelWidth1" value="75" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1543300099484" />
-    <property name="jdk.selected.JAVA_MODULE" value="10" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1551558635121" />
+    <property name="jdk.selected.JAVA_MODULE" value="1.8" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/pom.xml" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
-    <property name="project.structure.last.edited" value="SDKs" />
+    <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2551724" />
-    <property name="settings.editor.selected.configurable" value="AndroidSdkUpdater" />
+    <property name="settings.editor.selected.configurable" value="sbt.project.settings.configurable" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/kafka-cluster" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/spark-processor/.idea" />
-      <recent name="C:\Users\JIT\Documents\worskpace\A16\safety-recognition\spark-processor" />
+      <recent name="$PROJECT_DIR$/crime-api-consumer/src/main/java/com/safety/recognition/message/consumer" />
+      <recent name="$PROJECT_DIR$/kafka-cluster" />
+      <recent name="$PROJECT_DIR$/police-api-consumer" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -601,9 +474,16 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.PoliceApiConsumerApplication">
-    <configuration default="true" type="Applet" factoryName="Applet">
+  <component name="RunManager" selected="Application.Simple App">
+    <configuration default="true" type="Applet">
       <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Simple App" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="SimpleApp" />
+      <module name="crimes-processor" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -615,6 +495,7 @@
       </method>
     </configuration>
     <configuration default="true" type="JUnit" factoryName="JUnit">
+      <option name="TEST_OBJECT" value="class" />
       <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -679,6 +560,8 @@
     <configuration name="CrimeApiProducerApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
       <module name="safety-endpoint" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.safety.recognition.CrimeApiProducerApplication" />
+      <option name="VM_PARAMETERS" value="-Dserver.port=9090" />
+      <option name="ALTERNATIVE_JRE_PATH" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -719,7 +602,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="TestNG" factoryName="TestNG">
+    <configuration default="true" type="TestNG">
       <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
       <properties />
       <listeners />
@@ -727,28 +610,83 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
+    <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType">
       <module name="" />
       <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
       <option name="PROGRAM_PARAMETERS" />
-      <predefined_log_file id="idea.log" enabled="true" />
+      <predefined_log_file enabled="true" id="idea.log" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="police-api-consumer/Dockerfile" type="docker-deploy" factoryName="dockerfile" temporary="true" server-name="Docker">
+      <deployment type="dockerfile">
+        <settings>
+          <option name="sourceFilePath" value="police-api-consumer/Dockerfile" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
     <list>
+      <item itemvalue="Application.Simple App" />
+      <item itemvalue="Docker.police-api-consumer/Dockerfile" />
+      <item itemvalue="Scala Console.Scala Console" />
       <item itemvalue="Spring Boot.SafetyRecognitionApplication" />
       <item itemvalue="Spring Boot.CrimeApiProducerApplication" />
       <item itemvalue="Spring Boot.UsersSafetyResolverApplication" />
       <item itemvalue="Spring Boot.SafetyLevelSchedulerApplication" />
       <item itemvalue="Spring Boot.SafetyPushNotificationServerApplication" />
       <item itemvalue="Spring Boot.PoliceApiConsumerApplication" />
-      <item itemvalue="Scala Console.Scala Console" />
     </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Docker.police-api-consumer/Dockerfile" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SbtLocalSettings">
     <option name="availableProjects">
       <map>
+        <entry>
+          <key>
+            <ExternalProjectPojo>
+              <option name="name" value="safety-recognition" />
+              <option name="path" value="$PROJECT_DIR$/crimes-processor" />
+            </ExternalProjectPojo>
+          </key>
+          <value>
+            <list>
+              <ExternalProjectPojo>
+                <option name="name" value="safety-recognition [file:/Users/michalkoszalka/Workspace/safety-recognition/]" />
+                <option name="path" value="$PROJECT_DIR$" />
+              </ExternalProjectPojo>
+              <ExternalProjectPojo>
+                <option name="name" value="safety-recognition-build [file:/Users/michalkoszalka/Workspace/safety-recognition/]" />
+                <option name="path" value="$PROJECT_DIR$/project" />
+              </ExternalProjectPojo>
+            </list>
+          </value>
+        </entry>
+        <entry>
+          <key>
+            <ExternalProjectPojo>
+              <option name="name" value="safety-recognition" />
+              <option name="path" value="$PROJECT_DIR$" />
+            </ExternalProjectPojo>
+          </key>
+          <value>
+            <list>
+              <ExternalProjectPojo>
+                <option name="name" value="safety-recognition [file:/Users/michalkoszalka/Workspace/safety-recognition/]" />
+                <option name="path" value="$PROJECT_DIR$" />
+              </ExternalProjectPojo>
+              <ExternalProjectPojo>
+                <option name="name" value="safety-recognition-build" />
+                <option name="path" value="$PROJECT_DIR$/project" />
+              </ExternalProjectPojo>
+            </list>
+          </value>
+        </entry>
         <entry>
           <key>
             <ExternalProjectPojo>
@@ -775,9 +713,17 @@
       <map>
         <entry key="$PROJECT_DIR$/SparkExample/build.sbt" value="3219511665" />
         <entry key="$PROJECT_DIR$/SparkExample/project/build.properties" value="2073824194" />
-        <entry key="$PROJECT_DIR$/spark-processor" value="3065646177000" />
-        <entry key="$PROJECT_DIR$/spark-processor/build.sbt" value="3002929446" />
+        <entry key="$PROJECT_DIR$/crimes-processor" value="0" />
+        <entry key="$PROJECT_DIR$/crimes-processor/build.sbt" value="2967666879" />
+        <entry key="$PROJECT_DIR$/spark-processor" value="0" />
+        <entry key="$PROJECT_DIR$/spark-processor/build.sbt" value="3465750248" />
         <entry key="$PROJECT_DIR$/spark-processor/project/build.properties" value="2073824194" />
+      </map>
+    </option>
+    <option name="projectSyncType">
+      <map>
+        <entry key="$PROJECT_DIR$/crimes-processor" value="RE_IMPORT" />
+        <entry key="$PROJECT_DIR$/spark-processor" value="RE_IMPORT" />
       </map>
     </option>
   </component>
@@ -812,7 +758,19 @@
       <workItem from="1540730792334" duration="1224000" />
       <workItem from="1541399066778" duration="6000" />
       <workItem from="1543154884987" duration="3554000" />
-      <workItem from="1543251258225" duration="3638000" />
+      <workItem from="1543251258225" duration="3801000" />
+      <workItem from="1543384472054" duration="245000" />
+      <workItem from="1543538820057" duration="391000" />
+      <workItem from="1543898240280" duration="477000" />
+      <workItem from="1545917204274" duration="17766000" />
+      <workItem from="1546162260311" duration="45168000" />
+      <workItem from="1546716987913" duration="1205000" />
+      <workItem from="1546718371156" duration="1552000" />
+      <workItem from="1546769539731" duration="1102000" />
+      <workItem from="1549135935908" duration="998000" />
+      <workItem from="1549347792253" duration="394000" />
+      <workItem from="1549348230048" duration="519000" />
+      <workItem from="1551558004770" duration="698000" />
     </task>
     <task id="LOCAL-00001" summary="Modules and deployments">
       <created>1543213043973</created>
@@ -821,17 +779,23 @@
       <option name="project" value="LOCAL" />
       <updated>1543213043973</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="JDK 11 update and working crimes fetching">
+      <created>1543300262378</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1543300262378</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="52806000" />
+    <option name="totallyTimeSpent" value="123484000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1440" height="812" extended-state="6" />
-    <editor active="true" />
+    <frame x="0" y="0" width="1440" height="900" extended-state="0" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49879518" visible="true" weight="0.3583691" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49879518" visible="true" weight="0.3311874" />
       <window_info id="Structure" order="1" sideWeight="0.50120485" side_tool="true" weight="0.41058657" />
       <window_info id="Archetypes" order="2" />
       <window_info id="Designer" order="3" />
@@ -841,31 +805,33 @@
       <window_info id="Capture Tool" order="7" />
       <window_info id="Web" order="8" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.6688126" weight="0.35277778" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" sideWeight="0.7260372" visible="true" weight="0.3986111" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32891566" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.66809726" weight="0.4626506" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.7260372" weight="0.39759037" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Build" order="7" visible="true" weight="0.32891566" />
-      <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.49928468" weight="0.32891566" />
-      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.2739628" side_tool="true" visible="true" weight="0.3986111" />
+      <window_info anchor="bottom" id="Build" order="7" weight="0.32891566" />
+      <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.5858369" weight="0.46024096" />
+      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.3319027" side_tool="true" weight="0.35180724" />
       <window_info anchor="bottom" id="SonarLint" order="10" />
       <window_info anchor="bottom" id="Database Changes" order="11" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="12" sideWeight="0.49499285" weight="0.32825485" />
-      <window_info anchor="bottom" id="Docker" order="13" />
+      <window_info anchor="bottom" id="Version Control" order="12" sideWeight="0.490701" weight="0.3253012" />
+      <window_info anchor="bottom" id="Docker" order="13" sideWeight="0.7732475" weight="0.32891566" />
       <window_info anchor="bottom" id="SonarQube" order="14" />
       <window_info anchor="bottom" id="Tail" order="15" />
       <window_info anchor="bottom" id="Spring" order="16" sideWeight="0.49928468" weight="0.32825485" />
-      <window_info anchor="bottom" id="Messages" order="17" sideWeight="0.49427754" weight="0.53878117" />
-      <window_info anchor="bottom" id="Java Enterprise" order="18" />
-      <window_info anchor="bottom" id="sbt-shell-toolwindow" order="19" weight="0.3554217" />
+      <window_info anchor="bottom" id="Messages" order="17" sideWeight="0.49427754" visible="true" weight="0.5373494" />
+      <window_info anchor="bottom" id="Java Enterprise" order="18" sideWeight="0.49928468" weight="0.32891566" />
+      <window_info anchor="bottom" id="sbt-shell-toolwindow" order="19" visible="true" weight="0.3554217" />
+      <window_info anchor="right" id="Maven" />
+      <window_info anchor="right" id="Codota" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="right" id="Capture Analysis" order="4" />
-      <window_info anchor="right" id="Maven Projects" order="5" visible="true" weight="0.18097281" />
+      <window_info anchor="right" id="Maven Projects" order="5" weight="0.18097281" />
       <window_info anchor="right" id="Database" order="6" />
       <window_info anchor="right" id="Palette&#9;" order="7" />
       <window_info anchor="right" id="Theme Preview" order="8" />
@@ -876,180 +842,358 @@
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
-  <component name="VcsContentAnnotationSettings">
-    <option name="myLimit" value="2678400000" />
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="RECENTLY_FILTERED_USER_GROUPS">
+                <collection />
+              </option>
+              <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+                <collection />
+              </option>
+              <option name="COLUMN_ORDER">
+                <list>
+                  <option value="0" />
+                  <option value="1" />
+                  <option value="2" />
+                  <option value="3" />
+                </list>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Branch">
+          <value>
+            <list />
+          </value>
+        </entry>
+        <entry key="User">
+          <value>
+            <list />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Modules and deployments" />
-    <option name="LAST_COMMIT_MESSAGE" value="Modules and deployments" />
+    <MESSAGE value="JDK 11 update and working crimes fetching" />
+    <option name="LAST_COMMIT_MESSAGE" value="JDK 11 update and working crimes fetching" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/police-api-consumer/src/main/java/com/safety.recognition/scheduling/CrimeFetchScheduledTask.java</url>
-          <line>18</line>
+          <line>23</line>
           <properties />
           <option name="timeStamp" value="1" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/police-api-consumer/src/main/java/com/safety.recognition/scheduling/CrimeFetchScheduledTask.java</url>
-          <line>19</line>
+          <line>28</line>
           <properties />
           <option name="timeStamp" value="2" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/police-api-consumer/src/main/java/com/safety.recognition/message/producer/CrimeMessageProducer.java</url>
+          <line>13</line>
+          <properties />
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+    <watches-manager>
+      <configuration name="SpringBootApplicationConfigurationType">
+        <watch expression="crimes.get(13)" />
+      </configuration>
+    </watches-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/spark-processor/src/main/scala/safety/recognition/App.scala" />
-    <entry file="file://$PROJECT_DIR$/spark-processor/pom.xml" />
-    <entry file="file://$PROJECT_DIR$/SparkExample/src/main/scala/SimpleApp.scala" />
-    <entry file="file://$PROJECT_DIR$/SparkExample/build.sbt" />
-    <entry file="file://$PROJECT_DIR$/spark-processor/project/build.properties">
+    <entry file="file://$PROJECT_DIR$/kafka-cluster/kafka-broker.yaml">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="19" selection-start-column="19" selection-end-column="19" />
+        <state relative-caret-position="191">
+          <caret line="19" column="24" selection-start-line="19" selection-start-column="24" selection-end-line="19" selection-end-column="24" />
         </state>
       </provider>
     </entry>
-    <entry file="jar://$USER_HOME$/.ivy2/cache/org.apache.spark/spark-sql_2.11/srcs/spark-sql_2.11-2.3.0-sources.jar!/org/apache/spark/sql/execution/datasources/DataSource.scala" />
-    <entry file="jar://$USER_HOME$/.ivy2/cache/org.apache.spark/spark-sql_2.11/srcs/spark-sql_2.11-2.3.0-sources.jar!/org/apache/spark/sql/DataFrameReader.scala" />
-    <entry file="file://$PROJECT_DIR$/crime-api-consumer/src/test/java/com/safety/recognition/SafetyRecognitionApplicationTests.java">
+    <entry file="file://$PROJECT_DIR$/kafka-cluster/docker-compose.yml" />
+    <entry file="file://$PROJECT_DIR$/kafka-cluster/Dockerfile" />
+    <entry file="file://$PROJECT_DIR$/kafka-cluster/kafka-service.yaml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="16" selection-start-line="16" selection-end-line="16" />
+        <state relative-caret-position="165">
+          <caret line="11" column="17" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="17" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/safety-endpoint/src/main/java/com/safety/recognition/CrimeApiProducerApplication.java">
+    <entry file="file://$PROJECT_DIR$/kafka-cluster/kafka-docker/start-kafka.sh">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+        <state relative-caret-position="-854" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/kafka-cluster/kafka-docker/docker-compose.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="15" selection-start-line="15" selection-end-line="15" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/safety-push-notification-server/src/main/resources/k8s.deployment.yml">
+    <entry file="file://$PROJECT_DIR$/kafka-cluster/kafka-docker/create-topics.sh">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="12" column="43" selection-start-line="12" selection-start-column="43" selection-end-line="12" selection-end-column="43" />
+        <state relative-caret-position="-551">
+          <caret column="1" selection-start-column="1" selection-end-column="1" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/safety-level-scheduler/src/test/java/com/safety/recognition/SafetyLevelSchedulerApplicationTests.java">
+    <entry file="file://$PROJECT_DIR$/kafka-cluster/create-topic.yaml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="11" column="9" selection-start-line="11" selection-start-column="9" selection-end-line="11" selection-end-column="9" />
+        <state relative-caret-position="205">
+          <caret line="14" column="41" selection-start-line="14" selection-start-column="41" selection-end-line="14" selection-end-column="41" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/safety-level-scheduler/src/main/java/com/safety/recognition/SafetyLevelSchedulerApplication.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/users-safety-resolver/src/test/java/com/safety/recognition/UsersSafetyResolverApplicationTests.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="15" column="1" selection-start-line="15" selection-start-column="1" selection-end-line="15" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/crime-api-consumer/Dockerfile">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" selection-start-line="4" selection-end-line="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/crime-api-consumer/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="18" column="16" selection-start-line="18" selection-start-column="16" selection-end-line="18" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/spark-processor/.idea/modules/spark-processor-build.iml" />
-    <entry file="file://$PROJECT_DIR$/spark-processor/.idea/modules/spark-processor.iml" />
-    <entry file="file://$PROJECT_DIR$/.idea/sbt.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret selection-end-line="5" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/spark-processor/build.sbt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="36" selection-start-line="6" selection-start-column="36" selection-end-line="6" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/spark-processor/src/main/resources/runInKubernetes.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="20" selection-start-line="8" selection-start-column="20" selection-end-line="8" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cassandra-database/cassandra-service.yaml">
+    <entry file="file://$PROJECT_DIR$/kafka-cluster/kubernetes-kafka/outside-services/outside-2.yml">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/safety-endpoint/src/main/resources/application.properties">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/spark-processor/.idea/sbt.xml">
+    <entry file="file://$PROJECT_DIR$/kafka-cluster/kubernetes-kafka/yahoo-kafka-manager/kafka-manager-service.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="17" column="10" selection-start-line="17" selection-start-column="10" selection-end-line="17" selection-end-column="10" />
+        <state relative-caret-position="165">
+          <caret line="11" column="18" selection-start-line="11" selection-start-column="18" selection-end-line="11" selection-end-column="18" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/spark-processor/src/main/scala/SimpleApp.scala">
+    <entry file="file://$PROJECT_DIR$/kafka-cluster/kubernetes-kafka/yahoo-kafka-manager/kafka-manager.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="14" column="26" selection-start-line="14" selection-start-column="26" selection-end-line="14" selection-end-column="26" />
+        <state relative-caret-position="300">
+          <caret line="20" selection-start-line="20" selection-end-line="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/crime-api-consumer/src/main/java/com/safety/recognition/message.consumer.fxml" />
+    <entry file="jar://$MAVEN_REPOSITORY$/org/apache/kafka/kafka-clients/2.0.0/kafka-clients-2.0.0.jar!/org/apache/kafka/clients/consumer/ConsumerConfig.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="27" column="31" selection-start-line="27" selection-start-column="31" selection-end-line="27" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/kafka/spring-kafka/2.2.2.RELEASE/spring-kafka-2.2.2.RELEASE.jar!/org/springframework/kafka/config/ConcurrentKafkaListenerContainerFactory.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="15" column="11" selection-start-line="15" selection-start-column="11" selection-end-line="15" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/police-api-consumer/src/main/java/com/safety.recognition/message/producer/KafkaProducerConfig.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="264">
+          <caret line="36" column="48" lean-forward="true" selection-start-line="36" selection-start-column="48" selection-end-line="36" selection-end-column="48" />
           <folding>
-            <element signature="e#0#24#0" expanded="true" />
+            <element signature="imports" expanded="true" />
+            <element signature="e#1307#1308#0" expanded="true" />
+            <element signature="e#1368#1369#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
+    <entry file="file://$PROJECT_DIR$/kafka-cluster/forwardKafkaToMac.sh">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="13" column="5" selection-start-line="13" selection-start-column="5" selection-end-line="13" selection-end-column="5" />
+        <state relative-caret-position="240">
+          <caret line="16" selection-start-line="16" selection-end-line="20" selection-end-column="20" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/police-api-consumer/src/main/java/com/safety.recognition/model/CrimeWrapper.java" />
-    <entry file="file://$PROJECT_DIR$/users-safety-resolver/src/main/resources/k8s.deployment.yml">
+    <entry file="file://$PROJECT_DIR$/police-api-consumer/police-api-consumer.iml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" column="38" selection-start-line="3" selection-start-column="38" selection-end-line="3" selection-end-column="38" />
+        <state relative-caret-position="15">
+          <caret line="1" column="22" lean-forward="true" selection-start-line="1" selection-start-column="22" selection-end-line="1" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/police-api-consumer/src/main/java/com/safety.recognition/scheduling/CrimeFetchScheduledTask.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="177">
+          <caret line="19" lean-forward="true" selection-start-line="19" selection-end-line="19" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/police-api-consumer/src/main/java/com/safety.recognition/PoliceApiConsumerApplication.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="7" column="17" selection-start-line="7" selection-start-column="17" selection-end-line="7" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/police-api-consumer/src/main/java/com/safety.recognition/client/CrimeClientImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="71">
+          <caret line="15" column="30" selection-start-line="15" selection-start-column="30" selection-end-line="15" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/kafka/spring-kafka/2.2.2.RELEASE/spring-kafka-2.2.2.RELEASE.jar!/org/springframework/kafka/core/KafkaTemplate.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="124">
+          <caret line="100" column="46" selection-start-line="100" selection-start-column="46" selection-end-line="100" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/police-api-consumer/src/main/java/com/safety.recognition/message/producer/CrimeMessageProducer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="13" column="24" selection-start-line="13" selection-start-column="24" selection-end-line="13" selection-end-column="24" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#373#374#0" expanded="true" />
+            <element signature="e#430#431#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/crime-api-consumer/src/main/resources/application.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" selection-start-line="1" selection-end-line="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spark-processor/src/main/resources/runInKubernetes.sh" />
+    <entry file="file://$PROJECT_DIR$/spark-processor/src/main/resources/sampleFile" />
+    <entry file="file://$PROJECT_DIR$/spark-processor/project/build.properties" />
+    <entry file="file://$PROJECT_DIR$/spark-processor/src/main/scala/SimpleApp.scala" />
+    <entry file="file://$PROJECT_DIR$/spark-processor/build.sbt" />
+    <entry file="file://$PROJECT_DIR$/crime-api-consumer/src/main/resources/k8s.deployment.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="21" column="28" selection-start-line="21" selection-start-column="28" selection-end-line="21" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/crime-api-consumer/src/main/java/com/safety/recognition/message/consumer/CrimeMessageConsumer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="58" selection-start-line="2" selection-start-column="58" selection-end-line="2" selection-end-column="58" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/crimes-processor/src/SimpleApp.scala" />
+    <entry file="file://$PROJECT_DIR$/crimes-processor/build.sbt" />
+    <entry file="file://$PROJECT_DIR$/crimes-processor/.idea/modules/safety-recognition-build.iml" />
+    <entry file="file://$PROJECT_DIR$/crimes-processor/crimes-processor.iml" />
+    <entry file="file://$PROJECT_DIR$/users-safety-resolver/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="17" selection-start-line="17" selection-end-line="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/police-api-consumer/src/main/resources/deployment.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="5" selection-start-line="4" selection-start-column="5" selection-end-line="4" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/police-api-consumer/src/main/resources/application.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" column="34" selection-start-line="1" selection-start-column="34" selection-end-line="1" selection-end-column="34" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/safety-push-notification-server/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="23" column="24" selection-start-line="23" selection-start-column="24" selection-end-line="23" selection-end-column="24" />
+        <state relative-caret-position="255">
+          <caret line="17" selection-start-line="17" selection-end-line="17" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/users-safety-resolver/pom.xml">
+    <entry file="file://$PROJECT_DIR$/safety-level-scheduler/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="23" column="24" selection-start-line="23" selection-start-column="24" selection-end-line="23" selection-end-column="24" />
+        <state relative-caret-position="255">
+          <caret line="17" selection-start-line="17" selection-end-line="17" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/safety-endpoint/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="17" selection-start-line="17" selection-end-line="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/police-api-consumer/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="17" selection-start-line="17" selection-end-line="17" />
+          <folding>
+            <marker date="1546719414490" expanded="true" signature="1848:2055" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/crime-api-consumer/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="165">
           <caret line="11" column="31" selection-start-line="11" selection-start-column="31" selection-end-line="11" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/sbt.xml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/compiler.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="460">
+          <caret line="39" column="35" selection-start-line="39" selection-start-column="35" selection-end-line="39" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1284">
+          <caret line="535" column="65" selection-start-line="535" selection-start-column="65" selection-end-line="535" selection-end-column="65" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="5" selection-start-line="5" selection-end-line="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/kafka-cluster/docker-compose.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="390">
+          <caret line="26" column="17" selection-start-line="26" selection-start-column="17" selection-end-line="26" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/kafka-cluster/run-on-kubernetes.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="233">
+          <caret line="106" column="24" selection-start-line="106" selection-start-column="24" selection-end-line="106" selection-end-column="24" />
+          <folding>
+            <element signature="e#708#752#0" expanded="true" />
+            <element signature="e#761#822#0" expanded="true" />
+            <element signature="e#831#894#0" expanded="true" />
+            <element signature="e#1240#1288#0" expanded="true" />
+            <element signature="e#1297#1335#0" expanded="true" />
+            <element signature="e#1626#1694#0" expanded="true" />
+            <element signature="e#1703#1756#0" expanded="true" />
+            <element signature="e#1765#1820#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1067,114 +1211,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/crime-api-consumer/pom.xml">
+    <entry file="file://$PROJECT_DIR$/crime-api-consumer/src/main/java/com/safety/recognition/message/consumer/KafkaConsumerConfig.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="13" selection-start-line="13" selection-end-line="62" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/safety-level-scheduler/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="14" column="23" selection-start-line="14" selection-start-column="23" selection-end-line="14" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/police-api-consumer/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="30" selection-start-line="8" selection-start-column="30" selection-end-line="8" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/police-api-consumer/src/test/java/com/safety/recognition/PoliceApiConsumerApplicationTests.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/police-api-consumer/src/main/java/com/safety.recognition/model/Street.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" column="7" selection-start-line="5" selection-start-column="7" selection-end-line="5" selection-end-column="7" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/police-api-consumer/src/main/java/com/safety.recognition/model/OutcomeStatus.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="10" column="24" selection-start-line="10" selection-start-column="24" selection-end-line="10" selection-end-column="24" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/police-api-consumer/src/main/java/com/safety.recognition/model/Location.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="7" selection-start-line="8" selection-start-column="7" selection-end-line="8" selection-end-column="7" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/police-api-consumer/src/main/java/com/safety.recognition/client/CrimeClient.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" selection-start-line="3" selection-end-line="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/police-api-consumer/src/main/java/com/safety.recognition/PoliceApiConsumerApplication.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/police-api-consumer/src/main/resources/application.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="41" selection-start-column="41" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/police-api-consumer/src/main/java/com/safety.recognition/scheduling/CrimeFetchScheduledTask.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="269">
-          <caret line="18" selection-start-line="18" selection-end-line="18" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#564#565#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/police-api-consumer/src/main/java/com/safety.recognition/client/CrimeClientImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="146">
-          <caret line="21" column="19" selection-start-line="21" selection-start-column="19" selection-end-line="21" selection-end-column="19" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#493#511#1" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/police-api-consumer/src/main/java/com/safety.recognition/model/Crime.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="113">
-          <caret line="8" column="43" lean-forward="true" selection-start-line="8" selection-start-column="43" selection-end-line="8" selection-end-column="43" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state relative-caret-position="345">
+          <caret line="39" column="18" selection-start-line="39" selection-start-column="18" selection-end-line="39" selection-end-column="18" />
         </state>
       </provider>
     </entry>
@@ -1207,7 +1247,7 @@
       </state>
       <state key="GlobalLibrariesConfigurable.UI">
         <settings>
-          <last-edited>scala-sdk-2.12.4</last-edited>
+          <last-edited>scala-sdk-2.11.8</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
@@ -1231,7 +1271,7 @@
       </state>
       <state key="ModuleStructureConfigurable.UI">
         <settings>
-          <last-edited>crime-api-consumer</last-edited>
+          <last-edited>users-safety-resolver</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
