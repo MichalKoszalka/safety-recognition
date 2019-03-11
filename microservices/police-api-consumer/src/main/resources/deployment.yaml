@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: police-api-consumer
-        image: michalkoszalka/police-api-consumer
+        image: michalkoszalka/police-api-consumer:0.0.1
         ports:
         - containerPort: 8080
           name: server

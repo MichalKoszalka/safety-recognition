@@ -1,6 +1,6 @@
 package com.safety.recognition.client;
 
-import com.safety.recognition.model.Crime;
+import model.Crime;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
@@ -24,7 +24,7 @@ public class CrimeClientImpl implements CrimeClient {
         ResponseEntity<List<Crime>> response = restTemplate.exchange(
             crimeApiUrl + CRIME_PATH + "?lat=52.629729&lng=-1.131592&date=2017-01",
             HttpMethod.GET,
-            null, new ParameterizedTypeReference<List<Crime>>() {
+            null, new ParameterizedTypeReference<>() {
             });
         return response.getBody();
     }

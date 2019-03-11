@@ -1,8 +1,8 @@
 package com.safety.recognition.scheduling;
 
 import com.safety.recognition.client.CrimeClient;
-import com.safety.recognition.message.producer.CrimeMessageProducer;
-import com.safety.recognition.model.Crime;
+import com.safety.recognition.kafka.CrimeMessageProducer;
+import model.Crime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -20,12 +20,8 @@ public class CrimeFetchScheduledTask {
 
     @Scheduled(fixedRate = 5000)
     public void fetchCrimeData() {
-        System.out.println("before fetching");
         List<Crime> crimes = crimeClient.getCrimes();
-        System.out.println("after fetching");
-        System.out.println("before sending");
-        crimeMessageProducer.sendMessage(crimes.toString());
-        System.out.println("after sending");
+        crimes.forEach(crime -> crimeMessageProducer.sendMessage(crime));
     }
 
 

@@ -1,6 +1,6 @@
 package com.safety.recognition.client;
 
-import com.safety.recognition.model.Crime;
+import model.Crime;
 
 import java.util.List;
 
