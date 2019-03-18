@@ -41,7 +41,6 @@ public class KafkaConsumerConfig {
     @Bean
     public ConcurrentKafkaListenerContainerFactory<Long, Crime>
     kafkaCrimesListenerContainerFactory() {
-
         ConcurrentKafkaListenerContainerFactory<Long, Crime> factory
             = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());

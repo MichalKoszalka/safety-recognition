@@ -44,15 +44,15 @@ public class PreprocessedCrime {
         this.id = crime.getId();
         this.category = crime.getCategory();
         this.persistentId = crime.getPersistentId();
-        this.month = Month.valueOf(crime.getMonth());
+//        this.month = Month.valueOf(crime.getMonth());
         this.locationType = crime.getLocationType();
         this.locationSubtype = crime.getLocationSubtype();
-        this.longitute = crime.getLocation().getLongitude();
-        this.latitude = crime.getLocation().getLatitude();
-        this.streetId = crime.getLocation().getStreet().getId();
-        this.street = crime.getLocation().getStreet().getName();
+//        this.longitute = crime.getLocation().getLongitude();
+//        this.latitude = crime.getLocation().getLatitude();
+//        this.streetId = crime.getLocation().getStreet().getId();
+//        this.street = crime.getLocation().getStreet().getName();
         this.context = crime.getContext();
-        this.outcomeStatusCategory = crime.getOutcomeStatus().getCategory();
-        this.outcomeStatusDate = LocalDate.parse(crime.getOutcomeStatus().getDate());
+//        this.outcomeStatusCategory = crime.getOutcomeStatus().getCategory();
+//        this.outcomeStatusDate = LocalDate.parse(crime.getOutcomeStatus().getDate());
     }
 }
