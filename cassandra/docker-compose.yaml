@@ -1,0 +1,8 @@
+version: "3"
+services:
+
+  kafka:
+    image: cassandra
+    ports:
+      - "9042:9042"
+
