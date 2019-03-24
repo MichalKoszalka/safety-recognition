@@ -2,7 +2,7 @@ package com.safety.recognition.scheduling;
 
 import com.safety.recognition.client.CrimeClient;
 import com.safety.recognition.kafka.CrimeMessageProducer;
-import model.Crime;
+import data.police.uk.model.crime.Crime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -12,11 +12,15 @@ import java.util.List;
 @Component
 public class CrimeFetchScheduledTask {
 
-    @Autowired
-    private CrimeClient crimeClient;
+    private final CrimeClient crimeClient;
+
+    private final CrimeMessageProducer crimeMessageProducer;
 
     @Autowired
-    private CrimeMessageProducer crimeMessageProducer;
+    public CrimeFetchScheduledTask(CrimeClient crimeClient, CrimeMessageProducer crimeMessageProducer) {
+        this.crimeClient = crimeClient;
+        this.crimeMessageProducer = crimeMessageProducer;
+    }
 
     @Scheduled(fixedRate = 5000)
     public void fetchCrimeData() {

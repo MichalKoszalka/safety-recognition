@@ -1,26 +1,27 @@
 package com.safety.recognition.kafka;
 
-import data.police.uk.model.crime.Crime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
-public class CrimeMessageProducer {
+public class SchedulerMessagesProducer {
 
     @Value("${new_crimes.topic}")
     private String topic;
 
-    private final KafkaTemplate<Long, Crime> kafkaTemplate;
+    private final KafkaTemplate<UUID, String> kafkaTemplate;
 
     @Autowired
-    public CrimeMessageProducer(KafkaTemplate<Long, Crime> kafkaTemplate) {
+    public SchedulerMessagesProducer(KafkaTemplate<UUID, String> kafkaTemplate) {
         this.kafkaTemplate = kafkaTemplate;
     }
 
-    public void sendMessage(Crime crime) {
-        kafkaTemplate.send(topic, crime.getId(), crime);
+    public void sendMessage(String topic, String message) {
+        kafkaTemplate.send(topic, UUID.randomUUID(), message);
     }
 
 }

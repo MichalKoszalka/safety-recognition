@@ -1,6 +1,7 @@
 package com.safety.recognition.client;
 
 import data.police.uk.model.crime.Crime;
+import data.police.uk.model.neighbourhood.Neighbourhood;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
@@ -11,20 +12,20 @@ import org.springframework.web.client.RestTemplate;
 import java.util.List;
 
 @Service
-public class CrimeClientImpl implements CrimeClient {
+public class NeighbourhoodClientImpl implements NeighbourhoodClient {
 
     @Value("${crime.api.url}")
     private String crimeApiUrl;
 
-    private static final String CRIME_PATH = "crimes-street/all-crime";
+    private static final String NEIGHBOURHOODS = "metropolitan/neighbourhoods";
 
     @Override
-    public List<Crime> getCrimes() {
+    public List<Neighbourhood> getNeigbourhoods() {
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<List<Crime>> response = restTemplate.exchange(
-            crimeApiUrl + CRIME_PATH + "?lat=52.629729&lng=-1.131592&date=2017-01",
+        ResponseEntity<List<Neighbourhood>> response = restTemplate.exchange(
+            crimeApiUrl + NEIGHBOURHOODS,
             HttpMethod.GET,
-            null, new ParameterizedTypeReference<List<Crime>>() {
+            null, new ParameterizedTypeReference<List<Neighbourhood>>() {
             });
         return response.getBody();
     }
