@@ -27,7 +27,15 @@ public class NeighbourhoodLoader {
     }
 
     public List<Neighbourhood> loadNeighbourhoods() {
-        return neighbourhoodCassandraRepository.saveAll(neighbourhoodClient.getNeigbourhoods().stream().map(this::createNeighbourhood).collect(Collectors.toList()));
+        var neighbourhoods = neighbourhoodCassandraRepository.findAll();
+        if (neighbourhoods.isEmpty()) {
+            neighbourhoods = neighbourhoodClient.getNeigbourhoods()
+                    .stream()
+                    .map(this::createNeighbourhood)
+                    .collect(Collectors.toList());
+            neighbourhoodCassandraRepository.saveAll(neighbourhoods);
+        }
+        return neighbourhoods;
     }
 
     private Neighbourhood createNeighbourhood(data.police.uk.model.neighbourhood.Neighbourhood policeNeighbourhood) {

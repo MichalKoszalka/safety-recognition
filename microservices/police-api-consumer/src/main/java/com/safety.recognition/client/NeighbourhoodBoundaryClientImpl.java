@@ -21,8 +21,8 @@ public class NeighbourhoodBoundaryClientImpl implements NeighbourhoodBoundaryCli
 
     @Override
     public List<Point> getBoundariesByNeighbourhood(String neighbourhoodId) {
-        RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<List<Point>> response = restTemplate.exchange(
+        var restTemplate = new RestTemplate();
+        var response = restTemplate.exchange(
             crimeApiUrl + METROPOLITAN + neighbourhoodId + BOUNDARY,
             HttpMethod.GET,
             null, new ParameterizedTypeReference<List<Point>>() {

@@ -17,4 +17,8 @@ public class Point {
     @CassandraType(type = DataType.Name.DOUBLE)
     private Double longitude;
 
+    @Override
+    public String toString() {
+        return String.format("%s,%s", latitude, longitude);
+    }
 }
