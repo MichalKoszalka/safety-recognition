@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class CrimeMessageProducer {
 
-    @Value("${new_crimes.topic}")
+    @Value("${kafka.topic.new.crimes}")
     private String topic;
 
     private final KafkaTemplate<Long, Crime> kafkaTemplate;

@@ -1,9 +1,9 @@
 package com.safety.recognition.client;
 
-import java.time.LocalDate;
+import data.police.uk.model.LastUpdateDate;
 
 public interface UpdateDateClient {
 
-    LocalDate getUpdateDate();
+    LastUpdateDate getUpdateDate();
 
 }

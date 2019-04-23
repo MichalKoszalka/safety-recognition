@@ -27,5 +27,6 @@ public class NeighbourhoodBoundaryClientImpl implements NeighbourhoodBoundaryCli
             HttpMethod.GET,
             null, new ParameterizedTypeReference<List<Point>>() {
             });
-        return response.getBody();    }
+        return response.getBody();
+    }
 }

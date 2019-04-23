@@ -1,4 +1,4 @@
-package com.safety.recognition.cassandra.kafka;
+package com.safety.recognition.kafka;
 
 import data.police.uk.model.crime.Crime;
 import org.apache.kafka.clients.consumer.ConsumerConfig;

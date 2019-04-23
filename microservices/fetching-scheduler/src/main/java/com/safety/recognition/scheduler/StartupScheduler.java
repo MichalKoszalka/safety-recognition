@@ -23,7 +23,7 @@ public class StartupScheduler {
     }
 
     @PostConstruct
-    @Scheduled() //TODO: add scheduling every one month
+    @Scheduled(cron = "0 0 12 1 * ?")
     public void onStartup() {
         kafkaTemplate.send(startFetchingTopic, "start");
     }
