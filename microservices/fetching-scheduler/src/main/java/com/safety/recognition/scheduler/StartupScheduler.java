@@ -15,6 +15,9 @@ public class StartupScheduler {
     @Value("${kafka.topic.start.fetching.crime.data}")
     private String startFetchingTopic;
 
+    @Value("${kafka.topic.start.fetching.crime.categories}")
+    private String startFetchingCrimeCategoriesTopic;
+
     private final KafkaTemplate<UUID,String> kafkaTemplate;
 
     @Autowired
@@ -24,8 +27,14 @@ public class StartupScheduler {
 
     @PostConstruct
     @Scheduled(cron = "0 0 12 1 * ?")
-    public void onStartup() {
+    public void sendFetchStartMessage() {
         kafkaTemplate.send(startFetchingTopic, "start");
     }
+
+    @PostConstruct
+    public void sendFetchCrimeCategoriesMessage() {
+        kafkaTemplate.send(startFetchingCrimeCategoriesTopic, "start");
+    }
+
 
 }

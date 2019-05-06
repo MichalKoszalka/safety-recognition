@@ -1,0 +1,16 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+name: indexes-calculator
+spec:
+replicas: 1
+template:
+    metadata:
+    labels:
+        app: indexes-calculator
+    spec:
+    containers:
+    - name: indexes-calculator
+        image: michalkoszalka/indexes-calculator
+        ports:
+        - containerPort: 8090

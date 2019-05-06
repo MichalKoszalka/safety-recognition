@@ -5,6 +5,8 @@ import com.safety.recognition.client.CrimeClient;
 import com.safety.recognition.client.UpdateDateClient;
 import com.safety.recognition.service.LastUpdateDateService;
 import com.safety.recognition.service.NeighbourhoodService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
@@ -13,17 +15,19 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Service
-public class StartFetchingMessageListener {
+public class StartFetchingCrimesMessageListener {
+
+    private static final Logger LOG = LoggerFactory.getLogger(StartFetchingCrimesMessageListener.class);
 
     private final NeighbourhoodService neighbourhoodService;
     private final LastUpdateDateService lastUpdateDateService;
     private final CrimeClient crimeClient;
     private final CrimeMessageProducer crimeMessageProducer;
     private final UpdateDateClient updateDateClient;
-    private static final LocalDate CRIME_API_FIRST_DATE = LocalDate.of(2017, 1, 1);
+    private static final LocalDate CRIME_API_FIRST_DATE = LocalDate.of(2018, 12, 1);
 
     @Autowired
-    public StartFetchingMessageListener(NeighbourhoodService neighbourhoodService, LastUpdateDateService lastUpdateDateService, CrimeClient crimeClient, CrimeMessageProducer crimeMessageProducer, UpdateDateClient updateDateClient) {
+    public StartFetchingCrimesMessageListener(NeighbourhoodService neighbourhoodService, LastUpdateDateService lastUpdateDateService, CrimeClient crimeClient, CrimeMessageProducer crimeMessageProducer, UpdateDateClient updateDateClient) {
         this.neighbourhoodService = neighbourhoodService;
         this.lastUpdateDateService = lastUpdateDateService;
         this.crimeClient = crimeClient;
@@ -33,14 +37,18 @@ public class StartFetchingMessageListener {
 
     @KafkaListener(topics = "start_fetching_crime_data", containerFactory = "kafkaStartFetchingListenerFactory")
     public void startFetchingListener() {
-        var neighbourhoods = neighbourhoodService.getNeighbourhoodStream();
+        LOG.info("starting fetching crime data");
+        var neighbourhoods = neighbourhoodService.getNeighbourhoods();
         var lastUpdateDate = lastUpdateDateService.loadLastUpdateDate();
         var policeApiUpdateDate = updateDateClient.getUpdateDate();
         if(lastUpdateDate.isEmpty()) {
+            LOG.info("fetching for the first time");
             loadCrimesToKafka(neighbourhoods, CRIME_API_FIRST_DATE, policeApiUpdateDate.getDate());
         } else {
+            LOG.info("fetching again");
             loadCrimesToKafka(neighbourhoods, lastUpdateDate.get().getPoliceApiLastUpdate(), policeApiUpdateDate.getDate());
         }
+        LOG.info("fetching crime data finished");
     }
 
     private void loadCrimesToKafka(List<Neighbourhood> neighbourhoods, LocalDate from, LocalDate to) {

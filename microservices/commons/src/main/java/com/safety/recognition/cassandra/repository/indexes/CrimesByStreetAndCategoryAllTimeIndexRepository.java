@@ -1,0 +1,8 @@
+package com.safety.recognition.cassandra.repository.indexes;
+
+import com.safety.recognition.cassandra.model.indexes.CrimesByStreetAndCategoryAllTimeIndex;
+import com.safety.recognition.cassandra.model.indexes.CrimesByStreetAndCategoryIndexKey;
+import org.springframework.data.cassandra.repository.CassandraRepository;
+
+public interface CrimesByStreetAndCategoryAllTimeIndexRepository extends CassandraRepository<CrimesByStreetAndCategoryAllTimeIndex, CrimesByStreetAndCategoryIndexKey> {
+}

@@ -16,6 +16,7 @@
 		<module>users-safety-resolver</module>
 		<module>police-api-consumer</module>
         <module>commons</module>
+        <module>indexes-calculator</module>
     </modules>
 
 

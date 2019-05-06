@@ -1,25 +1,19 @@
 package com.safety.recognition.client;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-@Service
 public class RequestPathBuilder {
 
-    @Value("${crime.api.url}")
-    private String crimeApiUrl;
+    private static final Logger LOG = LoggerFactory.getLogger(RequestPathBuilder.class);
 
     private boolean firstQueryParamApplied = false;
 
     private StringBuilder stringBuilder;
 
-    RequestPathBuilder() {
-    }
-
-    RequestPathBuilder newRequest() {
+    RequestPathBuilder(String crimeApiUrl) {
         stringBuilder = new StringBuilder();
         stringBuilder.append(crimeApiUrl);
-        return this;
     }
 
     RequestPathBuilder withMethod(String method) {
@@ -30,8 +24,8 @@ public class RequestPathBuilder {
     RequestPathBuilder withQueryParam(String paramName, String value) {
         if (!firstQueryParamApplied) {
             stringBuilder.append("?");
-        } else {
             firstQueryParamApplied = true;
+        } else {
             stringBuilder.append("&");
         }
         stringBuilder.append(paramName).append("=").append(value);
@@ -39,11 +33,10 @@ public class RequestPathBuilder {
     }
 
     String build() {
-        return stringBuilder.toString();
+        var value = stringBuilder.toString();
+        LOG.info(String.format("Generated path: %s", value));
+        return value;
     }
-
-
-
 
 
 }

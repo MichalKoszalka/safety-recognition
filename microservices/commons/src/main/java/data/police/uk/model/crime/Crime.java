@@ -20,5 +20,6 @@ public class Crime {
     private Location location;
     private String context;
     private OutcomeStatus outcomeStatus;
+    private String neighbourhood;
 
 }

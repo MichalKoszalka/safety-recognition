@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface NeighbourhoodClient {
 
-    List<Neighbourhood> getNeigbourhoods();
+    List<Neighbourhood> getNeighbourhoods();
 
 }
