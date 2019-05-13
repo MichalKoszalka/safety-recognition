@@ -15,10 +15,10 @@ import java.time.LocalDate;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CrimeByCategoryKey {
+public class CrimeKey {
 
     @PrimaryKeyColumn(type = PrimaryKeyType.PARTITIONED)
-    private String category;
+    private Long id;
     @PrimaryKeyColumn(type = PrimaryKeyType.CLUSTERED)
     private LocalDate crimeDate;
 }

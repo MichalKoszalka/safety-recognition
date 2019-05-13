@@ -36,5 +36,4 @@ public class StartupScheduler {
         kafkaTemplate.send(startFetchingCrimeCategoriesTopic, "start");
     }
 
-
 }

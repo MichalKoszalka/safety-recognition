@@ -56,9 +56,9 @@ public class StartFetchingCrimesMessageListener {
         do {
             LocalDate finalCurrentMonth = currentMonth;
             neighbourhoods.parallelStream().flatMap(neighbourhood -> crimeClient.getCrimes(neighbourhood, finalCurrentMonth).stream()).forEach(crimeMessageProducer::sendMessage);
+            lastUpdateDateService.merge(currentMonth);
             currentMonth = currentMonth.plusMonths(1);
         } while (currentMonth.isBefore(to));
-        lastUpdateDateService.merge(currentMonth);
     }
 
 }

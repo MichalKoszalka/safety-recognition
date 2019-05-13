@@ -1,4 +1,4 @@
-package recognition.cassandra;
+package com.safety.recognition.cassandra;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

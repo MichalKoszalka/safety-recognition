@@ -1,4 +1,4 @@
-package recognition;
+package com.safety.recognition;
 
 
 import org.springframework.boot.SpringApplication;

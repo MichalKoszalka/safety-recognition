@@ -1,7 +1,9 @@
-package com.safety.recognition.cassandra.model.indexes;
+package com.safety.recognition.cassandra.model.crime;
 
+import com.safety.recognition.cassandra.model.Point;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.cassandra.core.mapping.Column;
 import org.springframework.data.cassandra.core.mapping.PrimaryKey;
@@ -11,19 +13,11 @@ import org.springframework.data.cassandra.core.mapping.Table;
 @Getter
 @Setter
 @AllArgsConstructor
-public class CrimesForLondonLastYearIndex {
+@NoArgsConstructor
+public class Crime {
 
     @PrimaryKey
-    private String city;
+    private CrimeKey key;
     @Column
-    private Integer numberOfCrimes;
-    @Column
-    private Integer medianByMonth;
-    @Column
-    private Integer meanByMonth;
-    @Column
-    private Integer meanByWeek;
-    @Column
-    private Integer meanByDay;
-
+    private Point location;
 }

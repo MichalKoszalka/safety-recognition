@@ -4,8 +4,6 @@ import com.safety.recognition.cassandra.model.Point;
 import com.safety.recognition.cassandra.model.crime.*;
 import com.safety.recognition.cassandra.repository.crime.*;
 import data.police.uk.model.crime.Crime;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,22 +20,29 @@ public class CrimeProcessor {
     private final CrimeByStreetAndCategoryRepository crimeByStreetAndCategoryRepository;
     private final CrimeByNeighbourhoodRepository crimeByNeighbourhoodRepository;
     private final CrimeByNeighbourhoodAndCategoryRepository crimeByNeighbourhoodAndCategoryRepository;
+    private final CrimeRepository crimeRepository;
 
     @Autowired
-    public CrimeProcessor(CrimeByCategoryRepository crimeByCategoryRepository, CrimeByStreetRepository crimeByStreetRepository, CrimeByStreetAndCategoryRepository crimeByStreetAndCategoryRepository, CrimeByNeighbourhoodRepository crimeByNeighbourhoodRepository, CrimeByNeighbourhoodAndCategoryRepository crimeByNeighbourhoodAndCategoryRepository) {
+    public CrimeProcessor(CrimeByCategoryRepository crimeByCategoryRepository, CrimeByStreetRepository crimeByStreetRepository, CrimeByStreetAndCategoryRepository crimeByStreetAndCategoryRepository, CrimeByNeighbourhoodRepository crimeByNeighbourhoodRepository, CrimeByNeighbourhoodAndCategoryRepository crimeByNeighbourhoodAndCategoryRepository, CrimeRepository crimeRepository) {
         this.crimeByCategoryRepository = crimeByCategoryRepository;
         this.crimeByStreetRepository = crimeByStreetRepository;
         this.crimeByStreetAndCategoryRepository = crimeByStreetAndCategoryRepository;
         this.crimeByNeighbourhoodRepository = crimeByNeighbourhoodRepository;
         this.crimeByNeighbourhoodAndCategoryRepository = crimeByNeighbourhoodAndCategoryRepository;
+        this.crimeRepository = crimeRepository;
     }
 
     public void process(Crime crime) {
+        crimeRepository.save(extractCrime(crime));
         crimeByCategoryRepository.save(extractCrimeByCategory(crime));
         crimeByStreetRepository.save(extractCrimeByStreet(crime));
         crimeByStreetAndCategoryRepository.save(extractCrimeByStreetAndCategory(crime));
         crimeByNeighbourhoodRepository.save(extractCrimeByNeighbourhood(crime));
         crimeByNeighbourhoodAndCategoryRepository.save(extractCrimeByNeighbourhoodAndCategory(crime));
+    }
+
+    private com.safety.recognition.cassandra.model.crime.Crime extractCrime(Crime crime) {
+        return new com.safety.recognition.cassandra.model.crime.Crime(new CrimeKey(crime.getId(), parseDate(crime.getMonth())),new Point(crime.getLocation().getLatitude().doubleValue(), crime.getLocation().getLongitude().doubleValue()));
     }
 
     private CrimeByCategory extractCrimeByCategory(Crime crime) {
