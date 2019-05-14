@@ -1,0 +1,13 @@
+version: '3.2'
+services:
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    ports:
+    - 9090:9090/tcp
+    command:
+    - --config.file=/Volumes/prometheus/prometheus.yaml
+    volumes:
+    - ./prometheus.yaml:/Volumes/prometheus/prometheus.yaml
+    external_links: 
+    - kafka

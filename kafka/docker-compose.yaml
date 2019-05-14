@@ -2,43 +2,59 @@ version: "3"
 services:
 
   zookeeper:
-    image: digitalwonderland/zookeeper
+    image: wurstmeister/zookeeper
     ports:
-    - "2181:2181"
+      - "2181:2181"
 
   kafka:
-    image: wurstmeister/kafka
+    build: .
+    links: 
+      - zookeeper
     environment:
-    - KAFKA_BROKER_ID=1
-    - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://kafka:29092,PLAINTEXT_HOST://localhost:9092
-    - KAFKA_LISTENERS=PLAINTEXT://0.0.0.0:29092,PLAINTEXT_HOST://0.0.0.0:9092
-    - KAFKA_LISTENER_SECURITY_PROTOCOL_MAP=PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
-    - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
-    ports:
-    - "9092:9092"
-    - "29092:29092"
-    depends_on:
-    - zookeeper
+      KAFKA_ADVERTISED_HOST_NAME: kafka
+      KAFKA_BROKER_ID: 1
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://localhost:9092
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:29092,PLAINTEXT_HOST://0.0.0.0:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_JMX_PORT: 7071
+      KAFKA_OPTS: -javaagent:/usr/app/jmx_prometheus_javaagent.jar=7071:/usr/app/prom-jmx-agent-config.yml
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:  
+      - "9092:9092"
+      - "29092:29092"
+      - "7071:7071"
 
-  kafdrop:
-    image: thomsch98/kafdrop
-    environment:
-    - ZK_HOSTS=zookeeper:2181
-    - LISTEN=9010
-    ports:
-    - "9010:9010"
-    depends_on:
-    - zookeeper
-    - kafka
+  # prometheus:
+  #   image: prom/prometheus:latest
+  #   container_name: prometheus
+  #   ports:
+  #     - 9090:9090/tcp
+  #   command:
+  #     - --config.file=/Volumes/prometheus/prometheus.yaml
+  #   volumes:
+  #     - ./prometheus.yaml:/Volumes/prometheus/prometheus.yaml
 
-  kafka-rest:
-    image: confluentinc/cp-kafka-rest:5.1.0
-    environment:
-    - KAFKA_REST_BOOTSTRAP_SERVERS=kafka:29092
-    - KAFKA_REST_HOST_NAME=default
-    - KAFKA_LOG4J_ROOT_LOGLEVEL=WARN
-    ports:
-    - "8082:8082"
-    depends_on:
-    - zookeeper
-    - kafka
+  # kafdrop:
+  #   image: thomsch98/kafdrop
+  #   environment:
+  #   - ZK_HOSTS=zookeeper:2181
+  #   - LISTEN=9010
+  #   ports:
+  #   - "9010:9010"
+  #   depends_on:
+  #   - zookeeper
+  #   - kafka
+
+  # kafka-rest:
+  #   image: confluentinc/cp-kafka-rest:5.1.0
+  #   environment:
+  #   - KAFKA_REST_BOOTSTRAP_SERVERS=kafka:29092
+  #   - KAFKA_REST_HOST_NAME=default
+  #   - KAFKA_LOG4J_ROOT_LOGLEVEL=WARN
+  #   ports:
+  #   - "8082:8082"
+  #   depends_on:
+  #   - zookeeper
+  #   - kafka
