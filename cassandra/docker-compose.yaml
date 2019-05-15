@@ -5,8 +5,9 @@ services:
     image: launcher.gcr.io/google/cassandra3
     environment:
       CASSANDRA_PROMETHEUS_ENABLED: 'true'
+      JMX_EXPORTER_CONFIG: /var/lib/cassandra/prometheus.yaml
     volumes:
-      - ./prometheus.yml:/prometheus/prometheus.yml
+      - ./prometheus.yaml:/var/lib/cassandra/prometheus.yaml
     ports:
       - '7000:7000'
       - '7001:7001'
