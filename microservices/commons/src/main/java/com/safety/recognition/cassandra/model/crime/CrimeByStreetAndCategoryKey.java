@@ -20,6 +20,8 @@ public class CrimeByStreetAndCategoryKey {
     @PrimaryKeyColumn(type = PrimaryKeyType.PARTITIONED)
     private String street;
     @PrimaryKeyColumn(type = PrimaryKeyType.PARTITIONED)
+    private String neighbourhood;
+    @PrimaryKeyColumn(type = PrimaryKeyType.PARTITIONED)
     private String category;
     @PrimaryKeyColumn(type = PrimaryKeyType.CLUSTERED)
     private LocalDate crimeDate;

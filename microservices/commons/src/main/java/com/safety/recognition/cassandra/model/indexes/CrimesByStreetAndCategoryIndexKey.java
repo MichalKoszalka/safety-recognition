@@ -17,5 +17,8 @@ public class CrimesByStreetAndCategoryIndexKey {
     private String street;
 
     @PrimaryKeyColumn(type = PrimaryKeyType.PARTITIONED)
+    private String neighbourhood;
+
+    @PrimaryKeyColumn(type = PrimaryKeyType.PARTITIONED)
     private String category;
 }

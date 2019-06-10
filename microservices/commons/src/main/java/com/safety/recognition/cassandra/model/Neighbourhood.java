@@ -18,9 +18,10 @@ import java.util.List;
 public class Neighbourhood {
 
     @PrimaryKey
-    private String id;
-    @Column
     private String name;
+
+    @Column
+    private Long numericRepresentation;
 
     @Column
     private List<Point> boundary;

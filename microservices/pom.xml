@@ -12,11 +12,10 @@
 		<module>crimes-processor</module>
 		<module>safety-endpoint</module>
 		<module>fetching-scheduler</module>
-		<module>safety-push-notification-server</module>
-		<module>users-safety-resolver</module>
 		<module>police-api-consumer</module>
         <module>commons</module>
         <module>indexes-calculator</module>
+        <module>prediction-calculator</module>
     </modules>
 
 

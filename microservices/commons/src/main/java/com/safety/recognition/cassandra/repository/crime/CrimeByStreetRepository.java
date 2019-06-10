@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface CrimeByStreetRepository extends CassandraRepository<CrimeByStreet, CrimeByStreetKey> {
 
-    List<CrimeByStreet> findCrimeByKeyStreetAndKeyCrimeDateAfter(String street, LocalDate date);
-    List<CrimeByStreet> findCrimeByKeyStreet(String street);
+    List<CrimeByStreet> findCrimeByKeyStreetAndKeyNeighbourhoodAndKeyCrimeDateAfter(String street, String neighbourhood, LocalDate date);
+    List<CrimeByStreet> findCrimeByKeyStreetAndKeyNeighbourhood(String street, String neighbourhood);
 
 }

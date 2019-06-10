@@ -33,7 +33,7 @@ public class CrimeClientImpl implements CrimeClient {
 
     @Override
     public List<Crime> getCrimes(Neighbourhood neighbourhood, LocalDate updateDate) {
-            LOG.info(String.format("fetching crimes for neighbourhood: %s:%s and date: %s. Number of boundary points: %s", neighbourhood.getName(), neighbourhood.getId(), updateDate, neighbourhood.getBoundary().size()));
+            LOG.info(String.format("fetching crimes for neighbourhood: %s:%d and date: %s. Number of boundary points: %s", neighbourhood.getName(), neighbourhood.getNumericRepresentation(), updateDate, neighbourhood.getBoundary().size()));
             var restTemplate = new RestTemplate();
             var response = restTemplate.exchange(
                     new RequestPathBuilder(crimeApiUrl).withMethod(CRIME_PATH).withQueryParam("poly", neighbourhood.getBoundary().stream().map(Point::toString).collect(Collectors.joining(":"))).withQueryParam("date", updateDate.format(DateTimeFormatter.ofPattern("YYYY-MM"))).build(),

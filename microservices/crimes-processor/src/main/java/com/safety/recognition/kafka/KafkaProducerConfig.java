@@ -2,6 +2,7 @@ package com.safety.recognition.kafka;
 
 import com.safety.recognition.cassandra.kafka.messages.NeighbourhoodAndCategory;
 import com.safety.recognition.cassandra.kafka.messages.StreetAndCategory;
+import com.safety.recognition.cassandra.kafka.messages.StreetAndNeighbourhood;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.Serializer;
 import org.apache.kafka.common.serialization.StringSerializer;
@@ -40,6 +41,11 @@ public class KafkaProducerConfig {
     @Bean
     public KafkaTemplate<UUID, String> stringKafkaTemplate() {
         return new KafkaTemplate<>(producerFactory(StringSerializer.class));
+    }
+
+    @Bean
+    public KafkaTemplate<UUID, StreetAndNeighbourhood> streetAndNeighbourhoodKafkaTemplate() {
+        return new KafkaTemplate<>(producerFactory(JsonSerializer.class));
     }
 
     @Bean

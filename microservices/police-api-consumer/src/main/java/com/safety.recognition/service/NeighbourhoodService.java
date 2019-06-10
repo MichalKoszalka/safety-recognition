@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 @Service
@@ -48,8 +49,8 @@ public class NeighbourhoodService {
 
     private Neighbourhood createNeighbourhood(data.police.uk.model.neighbourhood.Neighbourhood policeNeighbourhood) {
         var neighbourhood = new Neighbourhood();
-        neighbourhood.setId(policeNeighbourhood.getId());
         neighbourhood.setName(policeNeighbourhood.getName());
+        neighbourhood.setNumericRepresentation(new Random().nextLong());
         neighbourhood.setBoundary(reducePolygonComplexity(policeNeighbourhood));
         return neighbourhood;
     }

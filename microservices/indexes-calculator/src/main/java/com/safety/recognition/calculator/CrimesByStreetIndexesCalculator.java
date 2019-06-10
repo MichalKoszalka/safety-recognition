@@ -1,11 +1,11 @@
 package com.safety.recognition.calculator;
 
+import com.safety.recognition.cassandra.kafka.messages.StreetAndNeighbourhood;
+import com.safety.recognition.cassandra.model.StreetKey;
 import com.safety.recognition.cassandra.model.indexes.*;
 import com.safety.recognition.cassandra.repository.LastUpdateDateRepository;
 import com.safety.recognition.cassandra.repository.crime.CrimeByStreetRepository;
-import com.safety.recognition.cassandra.repository.indexes.CrimesByStreetAllTimeIndexRepository;
-import com.safety.recognition.cassandra.repository.indexes.CrimesByStreetLast3MonthsIndexRepository;
-import com.safety.recognition.cassandra.repository.indexes.CrimesByStreetLastYearIndexRepository;
+import com.safety.recognition.cassandra.repository.indexes.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -26,71 +27,103 @@ public class CrimesByStreetIndexesCalculator {
     private final CrimesByStreetLastYearIndexRepository crimesByStreetLastYearIndexRepository;
     private final CrimesByStreetLast3MonthsIndexRepository crimesByStreetLast3MonthsIndexRepository;
     private final CrimeByStreetRepository crimeByStreetRepository;
+    private final HighestCrimeLevelRepository highestCrimeLevelRepository;
     private final LastUpdateDateRepository lastUpdateDateRepository;
+    private final CrimeLevelByStreetRepository crimeLevelByStreetRepository;
 
     @Autowired
-    public CrimesByStreetIndexesCalculator(CrimesByStreetAllTimeIndexRepository crimesByStreetAllTimeIndexRepository, CrimesByStreetLastYearIndexRepository crimesByStreetLastYearIndexRepository, CrimesByStreetLast3MonthsIndexRepository crimesByStreetLast3MonthsIndexRepository, CrimeByStreetRepository crimeByStreetRepository, LastUpdateDateRepository lastUpdateDateRepository) {
+    public CrimesByStreetIndexesCalculator(CrimesByStreetAllTimeIndexRepository crimesByStreetAllTimeIndexRepository, CrimesByStreetLastYearIndexRepository crimesByStreetLastYearIndexRepository, CrimesByStreetLast3MonthsIndexRepository crimesByStreetLast3MonthsIndexRepository, CrimeByStreetRepository crimeByStreetRepository, HighestCrimeLevelRepository highestCrimeLevelRepository, LastUpdateDateRepository lastUpdateDateRepository, CrimeLevelByStreetRepository crimeLevelByStreetRepository) {
         this.crimesByStreetAllTimeIndexRepository = crimesByStreetAllTimeIndexRepository;
         this.crimesByStreetLastYearIndexRepository = crimesByStreetLastYearIndexRepository;
         this.crimesByStreetLast3MonthsIndexRepository = crimesByStreetLast3MonthsIndexRepository;
         this.crimeByStreetRepository = crimeByStreetRepository;
+        this.highestCrimeLevelRepository = highestCrimeLevelRepository;
         this.lastUpdateDateRepository = lastUpdateDateRepository;
+        this.crimeLevelByStreetRepository = crimeLevelByStreetRepository;
     }
 
 
-    public void calculate(String street) {
+    public void calculate(StreetAndNeighbourhood streetAndNeighbourhood) {
         var lastUpdateDate = lastUpdateDateRepository.findAll().stream().findFirst();
         if (lastUpdateDate.isPresent()) {
-            LOG.info(String.format("Calculating indexes for street %s.", street));
-            calculateIndexForLastYear(lastUpdateDate.get().getPoliceApiLastUpdate(), street);
-            calculateIndexForLast3Months(lastUpdateDate.get().getPoliceApiLastUpdate(), street);
-            calculateAllTimeIndex(street);
+            LOG.info(String.format("Calculating indexes for street %s in neighbourhood.", streetAndNeighbourhood.getStreet(), streetAndNeighbourhood.getNeighbourhood()));
+            calculateIndexForLastYear(lastUpdateDate.get().getPoliceApiLastUpdate(), streetAndNeighbourhood);
+            calculateIndexForLast3Months(lastUpdateDate.get().getPoliceApiLastUpdate(), streetAndNeighbourhood);
+            calculateAllTimeIndexAndCrimeLevel(streetAndNeighbourhood);
         } else {
             LOG.info("No data for calculation, skipping this time.");
         }
     }
 
-    private void calculateIndexForLastYear(LocalDate policeApiLastUpdate, String street) {
+    private void calculateIndexForLastYear(LocalDate policeApiLastUpdate, StreetAndNeighbourhood streetAndNeighbourhood) {
         var yearBefore = policeApiLastUpdate.minusYears(1);
-        var crimes = crimeByStreetRepository.findCrimeByKeyStreetAndKeyCrimeDateAfter(street, yearBefore);
+        var crimes = crimeByStreetRepository.findCrimeByKeyStreetAndKeyNeighbourhoodAndKeyCrimeDateAfter(streetAndNeighbourhood.getStreet(), streetAndNeighbourhood.getNeighbourhood(), yearBefore);
         var numberOfCrimes = crimes.size();
-        var entriesByMonth = crimes.stream().collect(Collectors.groupingBy(crime -> crime.getKey().getCrimeDate(), Collectors.counting()))
-                .entrySet().stream().sorted(Comparator.comparing(Map.Entry::getValue)).collect(Collectors.toList());
+        var crimesByMonth = crimes.stream().collect(Collectors.groupingBy(crime -> crime.getKey().getCrimeDate(), Collectors.counting()));
+        var entriesByMonth = crimesByMonth.entrySet().stream().sorted(Comparator.comparing(Map.Entry::getValue)).collect(Collectors.toList());
         var medianByMonth = entriesByMonth.get((entriesByMonth.size() - 1) / 2).getValue().intValue();
         var meanByMonth = Long.valueOf(numberOfCrimes / (ChronoUnit.MONTHS.between(yearBefore, LocalDate.now()))).intValue();
         var meanByWeek = Long.valueOf(numberOfCrimes / ChronoUnit.WEEKS.between(yearBefore, LocalDate.now())).intValue();
         var meanByDay = Long.valueOf(numberOfCrimes / ChronoUnit.DAYS.between(yearBefore, LocalDate.now())).intValue();
-        var lastYearCrimesIndex = new CrimesByStreetLastYearIndex(street, numberOfCrimes, medianByMonth, meanByMonth, meanByWeek, meanByDay);
-        crimesByStreetLastYearIndexRepository.deleteById(street);
+        var lastYearCrimesIndex = new CrimesByStreetLastYearIndex(new StreetKey(streetAndNeighbourhood.getStreet(), streetAndNeighbourhood.getNeighbourhood()), numberOfCrimes, medianByMonth, meanByMonth, meanByWeek, meanByDay, crimesByMonth);
+        crimesByStreetLastYearIndexRepository.deleteById(new StreetKey(streetAndNeighbourhood.getStreet(), streetAndNeighbourhood.getNeighbourhood()));
         crimesByStreetLastYearIndexRepository.save(lastYearCrimesIndex);
     }
 
-    private void calculateIndexForLast3Months(LocalDate policeApiLastUpdate, String street) {
+    private void calculateIndexForLast3Months(LocalDate policeApiLastUpdate, StreetAndNeighbourhood streetAndNeighbourhood) {
         var threeMonthsBefore = policeApiLastUpdate.minusMonths(3);
-        var crimes = crimeByStreetRepository.findCrimeByKeyStreetAndKeyCrimeDateAfter(street, threeMonthsBefore);
+        var crimes = crimeByStreetRepository.findCrimeByKeyStreetAndKeyNeighbourhoodAndKeyCrimeDateAfter(streetAndNeighbourhood.getStreet(), streetAndNeighbourhood.getNeighbourhood(), threeMonthsBefore);
         var numberOfCrimes = crimes.size();
-        var entriesByMonth = crimes.stream().collect(Collectors.groupingBy(crime -> crime.getKey().getCrimeDate(), Collectors.counting()))
-                .entrySet().stream().sorted(Comparator.comparing(Map.Entry::getValue)).collect(Collectors.toList());
+        var crimesByMonth = crimes.stream().collect(Collectors.groupingBy(crime -> crime.getKey().getCrimeDate(), Collectors.counting()));
+        var entriesByMonth = crimesByMonth.entrySet().stream().sorted(Comparator.comparing(Map.Entry::getValue)).collect(Collectors.toList());
         var medianByMonth = entriesByMonth.get((entriesByMonth.size() - 1) / 2).getValue().intValue();
         var meanByMonth = Long.valueOf(numberOfCrimes / (ChronoUnit.MONTHS.between(threeMonthsBefore, LocalDate.now()))).intValue();
         var meanByWeek = Long.valueOf(numberOfCrimes / ChronoUnit.WEEKS.between(threeMonthsBefore, LocalDate.now())).intValue();
         var meanByDay = Long.valueOf(numberOfCrimes / ChronoUnit.DAYS.between(threeMonthsBefore, LocalDate.now())).intValue();
-        var lastYearCrimesIndex = new CrimesByStreetLast3MonthsIndex(street, numberOfCrimes, medianByMonth, meanByMonth, meanByWeek, meanByDay);
-        crimesByStreetLast3MonthsIndexRepository.deleteById(street);
+        var lastYearCrimesIndex = new CrimesByStreetLast3MonthsIndex(new StreetKey(streetAndNeighbourhood.getStreet(), streetAndNeighbourhood.getNeighbourhood()), numberOfCrimes, medianByMonth, meanByMonth, meanByWeek, meanByDay, crimesByMonth);
+        crimesByStreetLast3MonthsIndexRepository.deleteById(new StreetKey(streetAndNeighbourhood.getStreet(), streetAndNeighbourhood.getNeighbourhood()));
         crimesByStreetLast3MonthsIndexRepository.save(lastYearCrimesIndex);
     }
 
-    private void calculateAllTimeIndex(String street) {
-        var lastYearCrimes = crimeByStreetRepository.findCrimeByKeyStreet(street);
+    private void calculateAllTimeIndexAndCrimeLevel(StreetAndNeighbourhood streetAndNeighbourhood) {
+        var lastYearCrimes = crimeByStreetRepository.findCrimeByKeyStreetAndKeyNeighbourhood(streetAndNeighbourhood.getStreet(), streetAndNeighbourhood.getNeighbourhood());
         var numberOfCrimes = lastYearCrimes.size();
-        var entriesByMonth = lastYearCrimes.stream().collect(Collectors.groupingBy(crime -> crime.getKey().getCrimeDate(), Collectors.counting()))
-                .entrySet().stream().sorted(Comparator.comparing(Map.Entry::getValue)).collect(Collectors.toList());
+        var crimesByMonth = lastYearCrimes.stream().collect(Collectors.groupingBy(crime -> crime.getKey().getCrimeDate(), Collectors.counting()));
+        calculateHighestCrimeLevel(crimesByMonth);
+        calculateCrimeLevelByStreet(crimesByMonth, streetAndNeighbourhood.getStreet(), streetAndNeighbourhood.getNeighbourhood());
+        var entriesByMonth = crimesByMonth.entrySet().stream().sorted(Comparator.comparing(Map.Entry::getValue)).collect(Collectors.toList());
         var medianByMonth = entriesByMonth.get((entriesByMonth.size() - 1) / 2).getValue().intValue();
         var meanByMonth = Long.valueOf(numberOfCrimes / (ChronoUnit.MONTHS.between(entriesByMonth.get(0).getKey(), LocalDate.now()))).intValue();
         var meanByWeek = Long.valueOf(numberOfCrimes / ChronoUnit.WEEKS.between(entriesByMonth.get(0).getKey(), LocalDate.now())).intValue();
         var meanByDay = Long.valueOf(numberOfCrimes / ChronoUnit.DAYS.between(entriesByMonth.get(0).getKey(), LocalDate.now())).intValue();
-       var lastYearCrimesIndex = new CrimesByStreetAllTimeIndex(street, numberOfCrimes, medianByMonth, meanByMonth, meanByWeek, meanByDay);
-        crimesByStreetAllTimeIndexRepository.deleteById(street);
+        var lastYearCrimesIndex = new CrimesByStreetAllTimeIndex(new StreetKey(streetAndNeighbourhood.getStreet(), streetAndNeighbourhood.getNeighbourhood()), numberOfCrimes, medianByMonth, meanByMonth, meanByWeek, meanByDay, crimesByMonth);
+        crimesByStreetAllTimeIndexRepository.deleteById(new StreetKey(streetAndNeighbourhood.getStreet(), streetAndNeighbourhood.getNeighbourhood()));
         crimesByStreetAllTimeIndexRepository.save(lastYearCrimesIndex);
+    }
+
+    private void calculateHighestCrimeLevel(Map<LocalDate, Long> crimesByMonth) {
+        var highestCrimeLevel = highestCrimeLevelRepository.findAll().stream().findAny();
+        if(highestCrimeLevel.isPresent()) {
+            var highestCrimeLevelValue = highestCrimeLevel.get();
+            Map<LocalDate, Long> newHighestCrimeLevelForStreetByMonth = new HashMap<>();
+            highestCrimeLevelValue.getHighestLevelForStreetByMonth().forEach((moth, level) -> {
+                if(crimesByMonth.containsKey(moth) && crimesByMonth.get(moth) > level) {
+                    newHighestCrimeLevelForStreetByMonth.put(moth, crimesByMonth.get(moth));
+                } else {
+                    newHighestCrimeLevelForStreetByMonth.put(moth, level);
+                }
+            });
+            highestCrimeLevelValue.setHighestLevelForStreetByMonth(newHighestCrimeLevelForStreetByMonth);
+            highestCrimeLevelRepository.save(highestCrimeLevelValue);
+        } else {
+            var newHighestCrimeLevel = new HighestCrimeLevel();
+            newHighestCrimeLevel.setId(1L);
+            newHighestCrimeLevel.setHighestLevelForStreetByMonth(crimesByMonth);
+            highestCrimeLevelRepository.save(newHighestCrimeLevel);
+        }
+    }
+
+    private void calculateCrimeLevelByStreet(Map<LocalDate, Long> crimesByMonth, String street, String neighbourhood) {
+        crimeLevelByStreetRepository.save(new CrimeLevelByStreet(new StreetKey(street, neighbourhood), crimesByMonth));
     }
 }

@@ -11,7 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class StreetAndCategory {
 
-    String street;
+    StreetAndNeighbourhood streetAndNeighbourhood;
     String category;
 
 }

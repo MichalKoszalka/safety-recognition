@@ -3,6 +3,7 @@ package com.safety.recognition.kafka;
 import com.safety.recognition.calculator.*;
 import com.safety.recognition.cassandra.kafka.messages.NeighbourhoodAndCategory;
 import com.safety.recognition.cassandra.kafka.messages.StreetAndCategory;
+import com.safety.recognition.cassandra.kafka.messages.StreetAndNeighbourhood;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -44,17 +45,17 @@ public class CalculateIndexesListener {
     }
 
     @KafkaListener(topics = "calculate_indexes_by_street", containerFactory = "kafkaCalculateIndexesStringListenerFactory")
-    public void crimesByStreetIndexesCalculatorListener(String street) {
-        LOG.info(String.format("Starting calculating indexes for London and street %s", street));
-        crimesByStreetIndexesCalculator.calculate(street);
-        LOG.info(String.format("Finished calculating indexes for London and street %s", street));
+    public void crimesByStreetIndexesCalculatorListener(StreetAndNeighbourhood streetAndNeighbourhood) {
+        LOG.info(String.format("Starting calculating indexes for London and street %s in neighbourhood %s", streetAndNeighbourhood.getStreet(), streetAndNeighbourhood.getNeighbourhood()));
+        crimesByStreetIndexesCalculator.calculate(streetAndNeighbourhood);
+        LOG.info(String.format("Finished calculating indexes for London and street %s in neighbourhood %s", streetAndNeighbourhood.getStreet(), streetAndNeighbourhood.getNeighbourhood()));
     }
 
     @KafkaListener(topics = "calculate_indexes_by_street_and_category", containerFactory = "kafkaCalculateIndexesStreetAndCategoryListenerFactory")
     public void crimesByStreetAndCategoryIndexesCalculatorListener(StreetAndCategory streetAndCategory) {
-        LOG.info(String.format("Starting calculating indexes for London and street %s and category %s", streetAndCategory.getStreet(), streetAndCategory.getCategory()));
-        crimesByStreetAndCategoryIndexesCalculator.calculate(streetAndCategory.getStreet(), streetAndCategory.getCategory());
-        LOG.info(String.format("Finished calculating indexes for London and street %s and category %s", streetAndCategory.getStreet(), streetAndCategory.getCategory()));
+        LOG.info(String.format("Starting calculating indexes for London and street %s in neighbourhood %s and category %s", streetAndCategory.getStreetAndNeighbourhood().getStreet(), streetAndCategory.getStreetAndNeighbourhood().getNeighbourhood(), streetAndCategory.getCategory()));
+        crimesByStreetAndCategoryIndexesCalculator.calculate(streetAndCategory.getStreetAndNeighbourhood(), streetAndCategory.getCategory());
+        LOG.info(String.format("Finished calculating indexes for London and street %s in neighbourhood %s and category %s", streetAndCategory.getStreetAndNeighbourhood().getStreet(), streetAndCategory.getStreetAndNeighbourhood().getNeighbourhood(), streetAndCategory.getCategory()));
     }
 
     @KafkaListener(topics = "calculate_indexes_by_neighbourhood", containerFactory = "kafkaCalculateIndexesStringListenerFactory")

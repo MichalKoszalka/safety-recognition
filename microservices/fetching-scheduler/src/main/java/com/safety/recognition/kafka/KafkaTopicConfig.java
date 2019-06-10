@@ -54,6 +54,41 @@ public class KafkaTopicConfig {
     }
 
     @Bean
+    public NewTopic calculatePrediction() {
+        return new NewTopic("calculate_prediction", 5, (short) 1);
+    }
+
+    @Bean
+    public NewTopic calculatePredictionForLondon() {
+        return new NewTopic("calculate_prediction_for_london", 5, (short) 1);
+    }
+
+    @Bean
+    public NewTopic calculatePredictionForLondonByCategory() {
+        return new NewTopic("calculate_prediction_for_london_by_category", 5, (short) 1);
+    }
+
+    @Bean
+    public NewTopic calculatePredictionByStreet() {
+        return new NewTopic("calculate_prediction_by_street", 5, (short) 1);
+    }
+
+    @Bean
+    public NewTopic calculatePredictionByStreetAndCategory() {
+        return new NewTopic("calculate_prediction_by_street_and_category", 5, (short) 1);
+    }
+
+    @Bean
+    public NewTopic calculatePredictionByNeighbourhood() {
+        return new NewTopic("calculate_prediction_by_neighbourhood", 5, (short) 1);
+    }
+
+    @Bean
+    public NewTopic calculatePredictionByNeighbourhoodAndCategory() {
+        return new NewTopic("calculate_prediction_by_neighbourhood_and_category", 5, (short) 1);
+    }
+
+    @Bean
     public NewTopic newCrimes() {
         return new NewTopic("new_crimes", 5, (short) 1);
     }

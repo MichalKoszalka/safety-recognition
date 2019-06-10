@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
+import java.util.Random;
+
 @Service
 public class StartFetchingCrimeCategoriesMessageListener {
 
@@ -24,9 +26,11 @@ public class StartFetchingCrimeCategoriesMessageListener {
 
     @KafkaListener(topics = "start_fetching_crime_categories", containerFactory = "kafkaStartFetchingListenerFactory")
     public void startFetchingListener() {
-        if(crimeCategoryRepository.findAll().isEmpty()) {
+        if (crimeCategoryRepository.findAll().isEmpty()) {
             LOG.info("starting fetching crime categories");
-            crimeCategoryRepository.saveAll(crimeCategoryClient.getCrimeCategories());
+            var crimeCategories = crimeCategoryClient.getCrimeCategories();
+            crimeCategories.forEach(crimeCategory -> crimeCategory.setNumericRepresentation(new Random().nextLong()));
+            crimeCategoryRepository.saveAll(crimeCategories);
             LOG.info("fetching crime categories finished");
         } else {
             LOG.info("skipping fetching crime categories, data already exists");

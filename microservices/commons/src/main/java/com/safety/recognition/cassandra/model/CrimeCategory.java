@@ -19,6 +19,9 @@ public class CrimeCategory {
     private String url;
 
     @Column
+    private Long numericRepresentation;
+
+    @Column
     private String name;
 
 }
