@@ -30,7 +30,7 @@ public class KafkaConsumerConfig {
     @Value("${prediction.calculators_consumer.group.id}")
     private String groupId;
 
-    private ConsumerFactory<String, MonthDate> consumerFactory() {
+    private ConsumerFactory<String, String> consumerFactory() {
         Map<String, Object> props = new HashMap<>();
         props.put(
                 ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG,
@@ -38,12 +38,12 @@ public class KafkaConsumerConfig {
         props.put(
                 ConsumerConfig.GROUP_ID_CONFIG,
                 groupId);
-        return new DefaultKafkaConsumerFactory<>(props, new StringDeserializer(), new JsonDeserializer<>(MonthDate.class));
+        return new DefaultKafkaConsumerFactory<>(props, new StringDeserializer(), new StringDeserializer());
     }
 
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, MonthDate> kafkaCalculatePredictionListenerFactory() {
-        ConcurrentKafkaListenerContainerFactory<String, MonthDate> factory
+    public ConcurrentKafkaListenerContainerFactory<String, String> kafkaCalculatePredictionListenerFactory() {
+        ConcurrentKafkaListenerContainerFactory<String, String> factory
                 = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());
         return factory;

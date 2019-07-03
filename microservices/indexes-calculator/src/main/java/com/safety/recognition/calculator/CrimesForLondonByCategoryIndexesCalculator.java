@@ -1,5 +1,6 @@
 package com.safety.recognition.calculator;
 
+import com.safety.recognition.cassandra.model.LastUpdateDate;
 import com.safety.recognition.cassandra.model.indexes.*;
 import com.safety.recognition.cassandra.repository.LastUpdateDateRepository;
 import com.safety.recognition.cassandra.repository.crime.CrimeByCategoryRepository;
@@ -8,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -40,16 +42,10 @@ public class CrimesForLondonByCategoryIndexesCalculator {
         this.crimeLevelByCategoryRepository = crimeLevelByCategoryRepository;
     }
 
-    public void calculate(String category) {
-        var lastUpdateDate = lastUpdateDateRepository.findAll().stream().findFirst();
-        if(lastUpdateDate.isPresent()) {
-            LOG.info(String.format("Calculating indexes for london and category %s.", category));
-            calculateIndexForLastYear(lastUpdateDate.get().getPoliceApiLastUpdate(), category);
-            calculateIndexForLast3Months(lastUpdateDate.get().getPoliceApiLastUpdate(), category);
+    public void calculate(LastUpdateDate lastUpdateDate, String category) {
+            calculateIndexForLastYear(lastUpdateDate.getPoliceApiLastUpdate(), category);
+            calculateIndexForLast3Months(lastUpdateDate.getPoliceApiLastUpdate(), category);
             calculateAllTimeIndex(category);
-        } else {
-            LOG.info("No data for calculation, skipping this time.");
-        }
     }
 
     private void calculateIndexForLastYear(LocalDate policeApiLastUpdate, String category) {
@@ -100,14 +96,14 @@ public class CrimesForLondonByCategoryIndexesCalculator {
 
     private void calculateHighestCrimeLevel(Map<LocalDate, Long> crimesByMonth, String category) {
         var highestCrimeLevel = highestCrimeLevelByCategoryRepository.findById(category);
-        if(highestCrimeLevel.isPresent()) {
+        if(highestCrimeLevel.isPresent() && !CollectionUtils.isEmpty(highestCrimeLevel.get().getHighestLevelForLondonByMonth())) {
             var highestCrimeLevelValue = highestCrimeLevel.get();
             Map<LocalDate, Long> newHighestCrimeLevelForLondonByMonth = new HashMap<>();
-            highestCrimeLevelValue.getHighestLevelForLondonByMonth().forEach((moth, level) -> {
-                if(crimesByMonth.containsKey(moth) && crimesByMonth.get(moth) > level) {
-                    newHighestCrimeLevelForLondonByMonth.put(moth, crimesByMonth.get(moth));
+            highestCrimeLevelValue.getHighestLevelForLondonByMonth().forEach((month, level) -> {
+                if(crimesByMonth.containsKey(month) && crimesByMonth.get(month) > level) {
+                    newHighestCrimeLevelForLondonByMonth.put(month, crimesByMonth.get(month));
                 } else {
-                    newHighestCrimeLevelForLondonByMonth.put(moth, level);
+                    newHighestCrimeLevelForLondonByMonth.put(month, level);
                 }
             });
             highestCrimeLevelValue.setHighestLevelForLondonByMonth(newHighestCrimeLevelForLondonByMonth);

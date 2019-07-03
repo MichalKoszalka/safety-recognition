@@ -36,16 +36,15 @@ public class CrimeByStreetAndCategoryPredictionCalculator {
     @Autowired
     public CrimeByStreetAndCategoryPredictionCalculator(CrimeLevelByStreetAndCategoryRepository crimeLevelByStreetAndCategoryRepository, StreetRepository streetRepository, PredictionNetwork predictionNetwork, CrimeCategoryRepository crimeCategoryRepository) {
         this.crimeLevelByStreetAndCategoryRepository = crimeLevelByStreetAndCategoryRepository;
-        this.streetsNormalised = streetRepository.findAll().stream().collect(Collectors.toMap(street1 -> street1.getKey(), Street::getNumericRepresentation));
+        this.streetsNormalised = streetRepository.findAll().stream().collect(Collectors.toMap(Street::getKey, Street::getNumericRepresentation));
         this.categoriesNormalised = crimeCategoryRepository.findAll().stream().collect(Collectors.toMap(CrimeCategory::getName, CrimeCategory::getNumericRepresentation));
         this.predictionNetwork = predictionNetwork;
     }
 
     public void calculate(LocalDate nextMonth) {
         var crimeLevelsByStreetCategory = crimeLevelByStreetAndCategoryRepository.findAll();
-        var trainData = parseCrimeData(crimeLevelsByStreetCategory);
         var testData = crimeLevelsByStreetCategory.stream().map(crimeLevelByStreetCategory -> parseSingleMonthForTest(nextMonth, categoriesNormalised.get(crimeLevelByStreetCategory.getKey().getCategory()), streetsNormalised.get(new StreetKey(crimeLevelByStreetCategory.getKey().getStreet(), crimeLevelByStreetCategory.getKey().getNeighbourhood())))).collect(Collectors.toList());
-        predictionNetwork.predict(trainData, crimeByStreetAndCategoryModelPath, testData);
+        predictionNetwork.predict(crimeByStreetAndCategoryModelPath, testData);
     }
 
     private List<List<Writable>>  parseCrimeData(List<CrimeLevelByStreetAndCategory> crimeLevelsByStreetCategory) {
@@ -60,7 +59,6 @@ public class CrimeByStreetAndCategoryPredictionCalculator {
         writables.add(streetNormalised);
         writables.add(new IntWritable(crimesNumberForMonth.getKey().getYear()));
         writables.add(new IntWritable(crimesNumberForMonth.getKey().getMonthValue()));
-        writables.add(new LongWritable(crimesNumberForMonth.getValue()));
         return writables;
     }
 

@@ -31,10 +31,8 @@ public class CrimeForLondonPredictionCalculator {
     }
 
     public void calculate(LocalDate nextMonth) {
-        var crimeLevelsByCategory = crimeLevelRepository.findAll();
-        var trainData = parseCrimeData(crimeLevelsByCategory);
         var testData = Collections.singletonList(parseSingleMonthForTest(nextMonth));
-        predictionNetwork.predict(trainData, crimeForLondonModelPath, testData);
+        predictionNetwork.predict(crimeForLondonModelPath, testData);
     }
 
     private List<List<Writable>> parseCrimeData(List<CrimeLevel> crimeLevels) {
@@ -47,7 +45,6 @@ public class CrimeForLondonPredictionCalculator {
         var writables =  new ArrayList<Writable>();
         writables.add(new IntWritable(crimesNumberForMonth.getKey().getYear()));
         writables.add(new IntWritable(crimesNumberForMonth.getKey().getMonthValue()));
-        writables.add(new LongWritable(crimesNumberForMonth.getValue()));
         return writables;
     }
 

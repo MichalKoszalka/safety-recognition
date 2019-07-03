@@ -43,12 +43,11 @@ public class CrimeByNeighbourhoodAndCategoryPredictionCalculator {
 
     public void calculate(LocalDate nextMonth) {
         var crimeLevelsByNeighbourhoodCategory = crimeLevelByNeighbourhoodAndCategoryRepository.findAll();
-        var trainData = parseCrimeData(crimeLevelsByNeighbourhoodCategory);
         var testData = crimeLevelsByNeighbourhoodCategory.stream().map(crimeLevelByNeighbourhoodCategory -> parseSingleMonthForTest(nextMonth, categoriesNormalised.get(crimeLevelByNeighbourhoodCategory.getKey().getCategory()), neighbourhoodsNormalised.get(crimeLevelByNeighbourhoodCategory.getKey().getNeighbourhood()))).collect(Collectors.toList());
-        predictionNetwork.predict(trainData, crimeByNeighbourhoodAndCategoryModelPath, testData);
+        predictionNetwork.predict(crimeByNeighbourhoodAndCategoryModelPath, testData);
     }
 
-    private List<List<Writable>>  parseCrimeData(List<CrimeLevelByNeighbourhoodAndCategory> crimeLevelsByNeighbourhoodCategory) {
+    private List<List<Writable>> parseCrimeData(List<CrimeLevelByNeighbourhoodAndCategory> crimeLevelsByNeighbourhoodCategory) {
         return crimeLevelsByNeighbourhoodCategory.stream().map(crimeLevelByNeighbourhoodAndCategory ->
                 crimeLevelByNeighbourhoodAndCategory.getCrimesByMonth().entrySet().stream()
                         .map(localDateLongEntry -> parseSingleMonthForTraining(localDateLongEntry, new LongWritable(categoriesNormalised.get(crimeLevelByNeighbourhoodAndCategory.getKey().getCategory())), new LongWritable(neighbourhoodsNormalised.get(crimeLevelByNeighbourhoodAndCategory.getKey().getNeighbourhood()))))).flatMap(listStream -> listStream).collect(Collectors.toList());
@@ -60,7 +59,6 @@ public class CrimeByNeighbourhoodAndCategoryPredictionCalculator {
         writables.add(neighbourhoodNormalised);
         writables.add(new IntWritable(crimesNumberForMonth.getKey().getYear()));
         writables.add(new IntWritable(crimesNumberForMonth.getKey().getMonthValue()));
-        writables.add(new LongWritable(crimesNumberForMonth.getValue()));
         return writables;
     }
 

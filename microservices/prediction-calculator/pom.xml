@@ -21,7 +21,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>11</java.version>
-        <dl4j.version>0.9.1</dl4j.version>
+        <dl4j.version>1.0.0-beta4</dl4j.version>
     </properties>
 
     <dependencies>

@@ -2,12 +2,12 @@ package com.safety.recognition.cassandra.model.indexes;
 
 public enum IndexType {
 
-    LONDON("London"),
-    LONDON_AND_CATEGORY("London and category"),
-    NEIGHBOURHOOD("Neighbourhood"),
-    NEIGHBOURHOOD_AND_CATEGORY("Neighbourhood and category"),
-    STREET("Street"),
-    STREET_AND_CATEGORY("Street and category");
+    LONDON("LONDON"),
+    LONDON_AND_CATEGORY("LONDON_AND_CATEGORY"),
+    NEIGHBOURHOOD("NEIGHBOURHOOD"),
+    NEIGHBOURHOOD_AND_CATEGORY("NEIGHBOURHOOD_AND_CATEGORY"),
+    STREET("STREET"),
+    STREET_AND_CATEGORY("STREET_AND_CATEGORY");
 
     private final String name;
 
@@ -18,4 +18,8 @@ public enum IndexType {
     public String getName() {
         return name;
     }
+
+
+
+
 }

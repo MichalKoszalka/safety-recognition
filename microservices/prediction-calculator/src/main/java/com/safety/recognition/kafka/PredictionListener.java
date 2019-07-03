@@ -3,6 +3,7 @@ package com.safety.recognition.kafka;
 import com.safety.recognition.calculator.*;
 import com.safety.recognition.cassandra.kafka.messages.MonthDate;
 import com.safety.recognition.cassandra.model.indexes.IndexType;
+import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 @Service
 public class PredictionListener {
@@ -34,14 +36,14 @@ public class PredictionListener {
     }
 
     @KafkaListener(topics = "calculate_prediction", containerFactory = "kafkaCalculatePredictionListenerFactory")
-    public void crimesForLondonPredictionCalculatorListener(String indexType, MonthDate monthDate) {
+    public void crimesForLondonPredictionCalculatorListener(ConsumerRecord<String, String> record) {
         LOG.info("Starting calculating prediction");
-            calculatePredictionBasedOnIndexType(indexType, monthDate.getDate());
+        calculatePredictionBasedOnIndexType(record.key(), LocalDate.parse(record.value(), DateTimeFormatter.ISO_DATE));
         LOG.info("Finished calculating prediction");
     }
 
     private void calculatePredictionBasedOnIndexType(String indexType, LocalDate nextMonth) {
-        switch(IndexType.valueOf(indexType)) {
+        switch (IndexType.valueOf(indexType)) {
             case LONDON:
                 crimeForLondonPredictionCalculator.calculate(nextMonth);
             case LONDON_AND_CATEGORY:
@@ -55,8 +57,8 @@ public class PredictionListener {
                 crimeByStreetPredictionCalculator.calculate(nextMonth);
             case STREET_AND_CATEGORY:
                 crimeByStreetAndCategoryPredictionCalculator.calculate(nextMonth);
-                default:
-                    break;
+            default:
+                break;
         }
 
     }

@@ -21,5 +21,6 @@ public class Crime {
     private String context;
     private OutcomeStatus outcomeStatus;
     private String neighbourhood;
+    private Long offsetId;
 
 }

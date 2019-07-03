@@ -13,6 +13,6 @@ import java.time.LocalDate;
 @Setter
 public class MonthDate {
 
-    private LocalDate date;
+    private String date;
 
 }

@@ -1,5 +1,6 @@
 package com.safety.recognition.calculator;
 
+import com.safety.recognition.cassandra.model.LastUpdateDate;
 import com.safety.recognition.cassandra.model.indexes.*;
 import com.safety.recognition.cassandra.repository.LastUpdateDateRepository;
 import com.safety.recognition.cassandra.repository.crime.CrimeByNeighbourhoodRepository;
@@ -8,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -40,16 +42,10 @@ public class CrimesByNeighbourhoodIndexesCalculator {
         this.crimeLevelByNeighbourhoodRepository = crimeLevelByNeighbourhoodRepository;
     }
 
-    public void calculate(String neighbourhood) {
-        var lastUpdateDate = lastUpdateDateRepository.findAll().stream().findFirst();
-        if(lastUpdateDate.isPresent()) {
-            LOG.info(String.format("Calculating indexes for neighbourhood %s.", neighbourhood));
-            calculateIndexForLastYear(lastUpdateDate.get().getPoliceApiLastUpdate(), neighbourhood);
-            calculateIndexForLast3Months(lastUpdateDate.get().getPoliceApiLastUpdate(), neighbourhood);
+    public void calculate(LastUpdateDate lastUpdateDate, String neighbourhood) {
+            calculateIndexForLastYear(lastUpdateDate.getPoliceApiLastUpdate(), neighbourhood);
+            calculateIndexForLast3Months(lastUpdateDate.getPoliceApiLastUpdate(), neighbourhood);
             calculateAllTimeIndexAndCrimeLevel(neighbourhood);
-        } else {
-            LOG.info("No data for calculation, skipping this time.");
-        }
     }
 
     private void calculateIndexForLastYear(LocalDate policeApiLastUpdate, String neighbourhood) {
@@ -101,14 +97,14 @@ public class CrimesByNeighbourhoodIndexesCalculator {
 
     private void calculateHighestCrimeLevel(Map<LocalDate, Long> crimesByMonth) {
         var highestCrimeLevel = highestCrimeLevelRepository.findAll().stream().findAny();
-        if(highestCrimeLevel.isPresent()) {
+        if(highestCrimeLevel.isPresent() && !CollectionUtils.isEmpty(highestCrimeLevel.get().getHighestLevelForNeighbourhoodByMonth())) {
             var highestCrimeLevelValue = highestCrimeLevel.get();
             Map<LocalDate, Long> newHighestCrimeLevelForNeighbourhoodByMonth = new HashMap<>();
-            highestCrimeLevelValue.getHighestLevelForNeighbourhoodByMonth().forEach((moth, level) -> {
-                if(crimesByMonth.containsKey(moth) && crimesByMonth.get(moth) > level) {
-                    newHighestCrimeLevelForNeighbourhoodByMonth.put(moth, crimesByMonth.get(moth));
+            highestCrimeLevelValue.getHighestLevelForNeighbourhoodByMonth().forEach((month, level) -> {
+                if(crimesByMonth.containsKey(month) && crimesByMonth.get(month) > level) {
+                    newHighestCrimeLevelForNeighbourhoodByMonth.put(month, crimesByMonth.get(month));
                 } else {
-                    newHighestCrimeLevelForNeighbourhoodByMonth.put(moth, level);
+                    newHighestCrimeLevelForNeighbourhoodByMonth.put(month, level);
                 }
             });
             highestCrimeLevelValue.setHighestLevelForNeighbourhoodByMonth(newHighestCrimeLevelForNeighbourhoodByMonth);

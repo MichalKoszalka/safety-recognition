@@ -1,6 +1,7 @@
 package com.safety.recognition.calculator;
 
 import com.safety.recognition.cassandra.kafka.messages.StreetAndNeighbourhood;
+import com.safety.recognition.cassandra.model.LastUpdateDate;
 import com.safety.recognition.cassandra.model.StreetKey;
 import com.safety.recognition.cassandra.model.indexes.*;
 import com.safety.recognition.cassandra.repository.LastUpdateDateRepository;
@@ -10,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -43,16 +45,10 @@ public class CrimesByStreetIndexesCalculator {
     }
 
 
-    public void calculate(StreetAndNeighbourhood streetAndNeighbourhood) {
-        var lastUpdateDate = lastUpdateDateRepository.findAll().stream().findFirst();
-        if (lastUpdateDate.isPresent()) {
-            LOG.info(String.format("Calculating indexes for street %s in neighbourhood.", streetAndNeighbourhood.getStreet(), streetAndNeighbourhood.getNeighbourhood()));
-            calculateIndexForLastYear(lastUpdateDate.get().getPoliceApiLastUpdate(), streetAndNeighbourhood);
-            calculateIndexForLast3Months(lastUpdateDate.get().getPoliceApiLastUpdate(), streetAndNeighbourhood);
+    public void calculate(LastUpdateDate lastUpdateDate, StreetAndNeighbourhood streetAndNeighbourhood) {
+            calculateIndexForLastYear(lastUpdateDate.getPoliceApiLastUpdate(), streetAndNeighbourhood);
+            calculateIndexForLast3Months(lastUpdateDate.getPoliceApiLastUpdate(), streetAndNeighbourhood);
             calculateAllTimeIndexAndCrimeLevel(streetAndNeighbourhood);
-        } else {
-            LOG.info("No data for calculation, skipping this time.");
-        }
     }
 
     private void calculateIndexForLastYear(LocalDate policeApiLastUpdate, StreetAndNeighbourhood streetAndNeighbourhood) {
@@ -103,14 +99,14 @@ public class CrimesByStreetIndexesCalculator {
 
     private void calculateHighestCrimeLevel(Map<LocalDate, Long> crimesByMonth) {
         var highestCrimeLevel = highestCrimeLevelRepository.findAll().stream().findAny();
-        if(highestCrimeLevel.isPresent()) {
+        if(highestCrimeLevel.isPresent() && !CollectionUtils.isEmpty(highestCrimeLevel.get().getHighestLevelForStreetByMonth())) {
             var highestCrimeLevelValue = highestCrimeLevel.get();
             Map<LocalDate, Long> newHighestCrimeLevelForStreetByMonth = new HashMap<>();
-            highestCrimeLevelValue.getHighestLevelForStreetByMonth().forEach((moth, level) -> {
-                if(crimesByMonth.containsKey(moth) && crimesByMonth.get(moth) > level) {
-                    newHighestCrimeLevelForStreetByMonth.put(moth, crimesByMonth.get(moth));
+            highestCrimeLevelValue.getHighestLevelForStreetByMonth().forEach((month, level) -> {
+                if(crimesByMonth.containsKey(month) && crimesByMonth.get(month) > level) {
+                    newHighestCrimeLevelForStreetByMonth.put(month, crimesByMonth.get(month));
                 } else {
-                    newHighestCrimeLevelForStreetByMonth.put(moth, level);
+                    newHighestCrimeLevelForStreetByMonth.put(month, level);
                 }
             });
             highestCrimeLevelValue.setHighestLevelForStreetByMonth(newHighestCrimeLevelForStreetByMonth);

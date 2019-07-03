@@ -36,11 +36,6 @@ public class KafkaProducerConfig {
     }
 
     @Bean
-    public KafkaTemplate<Long, Crime> crimesFetchedMessageProducer() {
-        return new KafkaTemplate<>(producerFactory(LongSerializer.class, JsonSerializer.class));
-    }
-
-    @Bean
     public KafkaTemplate<String, String> predictMessageProducer() {
         return new KafkaTemplate<>(producerFactory(StringSerializer.class, StringSerializer.class));
     }

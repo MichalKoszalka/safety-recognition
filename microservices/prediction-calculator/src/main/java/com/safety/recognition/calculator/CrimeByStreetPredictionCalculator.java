@@ -41,15 +41,19 @@ public class CrimeByStreetPredictionCalculator {
 
     public void calculate(LocalDate nextMonth) {
         var crimeLevelsByStreet = crimeLevelByStreetRepository.findAll();
-        var trainData = parseCrimeData(crimeLevelsByStreet);
         var testData = crimeLevelsByStreet.stream().map(crimeLevelByStreet -> parseSingleMonthForTest(nextMonth, streetsNormalised.get(new StreetKey(crimeLevelByStreet.getKey().getStreet(), crimeLevelByStreet.getKey().getNeighbourhood())))).collect(Collectors.toList());
-        predictionNetwork.predict(trainData, crimeByStreetModelPath, testData);
+        predictionNetwork.predict(crimeByStreetModelPath, testData);
     }
 
-    private List<List<Writable>>  parseCrimeData(List<CrimeLevelByStreet> crimeLevelsByStreetCategory) {
-        return crimeLevelsByStreetCategory.stream().map(crimeLevelByStreetAndCategory ->
-                crimeLevelByStreetAndCategory.getCrimesByMonth().entrySet().stream()
-                        .map(localDateLongEntry -> parseSingleMonthForTraining(localDateLongEntry, new LongWritable(streetsNormalised.get(new StreetKey(crimeLevelByStreetAndCategory.getKey().getStreet(), crimeLevelByStreetAndCategory.getKey().getNeighbourhood())))))).flatMap(listStream -> listStream).collect(Collectors.toList());
+    private List<List<Writable>> parseCrimeData(List<CrimeLevelByStreet> crimeLevelsByStreetCategory) {
+        List<List<Writable>> collect = new ArrayList<>();
+        for (var crimeLevelByStreetAndCategory : crimeLevelsByStreetCategory) {
+            for(var entry : crimeLevelByStreetAndCategory.getCrimesByMonth().entrySet()) {
+                collect.add(parseSingleMonthForTraining(entry, new LongWritable(streetsNormalised.get(new StreetKey(crimeLevelByStreetAndCategory.getKey().getStreet(), crimeLevelByStreetAndCategory.getKey().getNeighbourhood())))));
+
+            }
+        }
+        return collect;
     }
 
     private List<Writable> parseSingleMonthForTraining(Map.Entry<LocalDate, Long> crimesNumberForMonth, LongWritable neighbourhoodNormalised) {
@@ -57,7 +61,6 @@ public class CrimeByStreetPredictionCalculator {
         writables.add(neighbourhoodNormalised);
         writables.add(new IntWritable(crimesNumberForMonth.getKey().getYear()));
         writables.add(new IntWritable(crimesNumberForMonth.getKey().getMonthValue()));
-        writables.add(new LongWritable(crimesNumberForMonth.getValue()));
         return writables;
     }
 
