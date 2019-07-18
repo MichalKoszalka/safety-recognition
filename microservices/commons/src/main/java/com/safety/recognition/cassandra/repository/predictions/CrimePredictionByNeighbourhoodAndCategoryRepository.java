@@ -1,0 +1,9 @@
+package com.safety.recognition.cassandra.repository.predictions;
+
+import com.safety.recognition.cassandra.model.indexes.NeighbourhoodAndCategoryKey;
+import com.safety.recognition.cassandra.model.predictions.CrimePredictionByNeighbourhoodAndCategory;
+import org.springframework.data.cassandra.repository.CassandraRepository;
+
+public interface CrimePredictionByNeighbourhoodAndCategoryRepository extends CassandraRepository<CrimePredictionByNeighbourhoodAndCategory, NeighbourhoodAndCategoryKey> {
+
+}

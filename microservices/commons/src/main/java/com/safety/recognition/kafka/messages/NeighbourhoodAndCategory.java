@@ -1,4 +1,4 @@
-package com.safety.recognition.cassandra.kafka.messages;
+package com.safety.recognition.kafka.messages;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

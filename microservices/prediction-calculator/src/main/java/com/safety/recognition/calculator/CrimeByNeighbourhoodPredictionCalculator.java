@@ -42,7 +42,7 @@ public class CrimeByNeighbourhoodPredictionCalculator {
         predictionNetwork.predict(crimeByNeighbourhoodModelPath, testData);
     }
 
-    private List<List<Writable>>  parseCrimeData(List<CrimeLevelByNeighbourhood> crimeLevelsByNeighbourhoodCategory) {
+    private List<List<Writable>> parseCrimeData(List<CrimeLevelByNeighbourhood> crimeLevelsByNeighbourhoodCategory) {
         return crimeLevelsByNeighbourhoodCategory.stream().map(crimeLevelByNeighbourhoodAndCategory ->
                 crimeLevelByNeighbourhoodAndCategory.getCrimesByMonth().entrySet().stream()
                         .map(localDateLongEntry -> parseSingleMonthForTraining(localDateLongEntry, new LongWritable(neighbourhoodsNormalised.get(crimeLevelByNeighbourhoodAndCategory.getNeighbourhood()))))).flatMap(listStream -> listStream).collect(Collectors.toList());

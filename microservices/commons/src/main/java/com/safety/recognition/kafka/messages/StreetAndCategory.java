@@ -1,4 +1,4 @@
-package com.safety.recognition.cassandra.kafka.messages;
+package com.safety.recognition.kafka.messages;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,4 +14,11 @@ public class StreetAndCategory {
     StreetAndNeighbourhood streetAndNeighbourhood;
     String category;
 
+    @Override
+    public String toString() {
+        return "StreetAndCategory{" +
+                "streetAndNeighbourhood=" + streetAndNeighbourhood +
+                ", category='" + category + '\'' +
+                '}';
+    }
 }

@@ -1,8 +1,8 @@
 package com.safety.recognition.kafka;
 
 import com.safety.recognition.calculator.*;
-import com.safety.recognition.cassandra.kafka.messages.MonthDate;
 import com.safety.recognition.cassandra.model.indexes.IndexType;
+import data.police.uk.utils.MonthParser;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,7 +38,7 @@ public class PredictionListener {
     @KafkaListener(topics = "calculate_prediction", containerFactory = "kafkaCalculatePredictionListenerFactory")
     public void crimesForLondonPredictionCalculatorListener(ConsumerRecord<String, String> record) {
         LOG.info("Starting calculating prediction");
-        calculatePredictionBasedOnIndexType(record.key(), LocalDate.parse(record.value(), DateTimeFormatter.ISO_DATE));
+        calculatePredictionBasedOnIndexType(record.key(), MonthParser.toLocalDate(record.value()).plusMonths(1));
         LOG.info("Finished calculating prediction");
     }
 

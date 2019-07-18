@@ -1,5 +1,6 @@
 package com.safety.recognition.kafka;
 
+import com.safety.recognition.kafka.messages.Crimes;
 import data.police.uk.model.crime.Crime;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.LongSerializer;
@@ -14,6 +15,7 @@ import org.springframework.kafka.core.ProducerFactory;
 import org.springframework.kafka.support.serializer.JsonSerializer;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Configuration
@@ -32,12 +34,13 @@ public class KafkaProducerConfig {
         configProps.put(
                 ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG,
                 valueSerializer);
+        configProps.put(JsonSerializer.ADD_TYPE_INFO_HEADERS, false);
         return new DefaultKafkaProducerFactory<>(configProps);
     }
 
     @Bean
-    public KafkaTemplate<Long, Crime> crimesFetchedMessageProducer() {
-        return new KafkaTemplate<>(producerFactory(LongSerializer.class, JsonSerializer.class));
+    public KafkaTemplate<String, Crimes> crimesFetchedMessageProducer() {
+        return new KafkaTemplate<>(producerFactory(StringSerializer.class, JsonSerializer.class));
     }
 
     @Bean

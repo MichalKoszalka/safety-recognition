@@ -7,15 +7,20 @@ import com.safety.recognition.cassandra.model.crime.*;
 import com.safety.recognition.cassandra.repository.StreetRepository;
 import com.safety.recognition.cassandra.repository.crime.*;
 import data.police.uk.model.crime.Crime;
+import data.police.uk.utils.MonthParser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Random;
 
 @Service
 public class CrimeProcessor {
+
+    private static final Logger LOG = LoggerFactory.getLogger(CrimeProcessor.class);
+
 
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
@@ -39,6 +44,8 @@ public class CrimeProcessor {
     }
 
     public void process(Crime crime) {
+        LOG.info(String.format("Starting processing crime with id: %s, street: %s, category: %s and neighbourhood: %s", crime.getId(), crime.getLocation().getStreet().getName(), crime.getCategory(), crime.getNeighbourhood()));
+        crime = reduceCategoryUpperCasing(crime);
         processStreet(crime);
         crimeRepository.save(extractCrime(crime));
         crimeByCategoryRepository.save(extractCrimeByCategory(crime));
@@ -46,6 +53,12 @@ public class CrimeProcessor {
         crimeByStreetAndCategoryRepository.save(extractCrimeByStreetAndCategory(crime));
         crimeByNeighbourhoodRepository.save(extractCrimeByNeighbourhood(crime));
         crimeByNeighbourhoodAndCategoryRepository.save(extractCrimeByNeighbourhoodAndCategory(crime));
+        LOG.info(String.format("Finished processing crime with id: %s, street: %s, category: %s and neighbourhood: %s", crime.getId(), crime.getLocation().getStreet().getName(), crime.getCategory(), crime.getNeighbourhood()));
+    }
+
+    private Crime reduceCategoryUpperCasing(Crime crime) {
+        crime.setCategory(crime.getCategory().toLowerCase());
+        return crime;
     }
 
     private void processStreet(Crime crime) {
@@ -56,31 +69,27 @@ public class CrimeProcessor {
     }
 
     private com.safety.recognition.cassandra.model.crime.Crime extractCrime(Crime crime) {
-        return new com.safety.recognition.cassandra.model.crime.Crime(new CrimeKey(crime.getId(), parseDate(crime.getMonth())),new Point(crime.getLocation().getLatitude().doubleValue(), crime.getLocation().getLongitude().doubleValue()));
+        return new com.safety.recognition.cassandra.model.crime.Crime(new CrimeKey(crime.getId(), MonthParser.toLocalDate(crime.getMonth())),new Point(crime.getLocation().getLatitude().doubleValue(), crime.getLocation().getLongitude().doubleValue()));
     }
 
     private CrimeByCategory extractCrimeByCategory(Crime crime) {
-        return new CrimeByCategory(crime.getId(), new CrimeByCategoryKey(crime.getCategory(), parseDate(crime.getMonth())), new Point(crime.getLocation().getLatitude().doubleValue(), crime.getLocation().getLongitude().doubleValue()));
+        return new CrimeByCategory(crime.getId(), new CrimeByCategoryKey(crime.getCategory(), MonthParser.toLocalDate(crime.getMonth())), new Point(crime.getLocation().getLatitude().doubleValue(), crime.getLocation().getLongitude().doubleValue()));
     }
 
     private CrimeByStreet extractCrimeByStreet(Crime crime) {
-        return new CrimeByStreet(crime.getId(), new CrimeByStreetKey(crime.getLocation().getStreet().getName(), crime.getNeighbourhood(), parseDate(crime.getMonth())), new Point(crime.getLocation().getLatitude().doubleValue(), crime.getLocation().getLongitude().doubleValue()));
+        return new CrimeByStreet(crime.getId(), new CrimeByStreetKey(crime.getLocation().getStreet().getName(), crime.getNeighbourhood(), MonthParser.toLocalDate(crime.getMonth())), new Point(crime.getLocation().getLatitude().doubleValue(), crime.getLocation().getLongitude().doubleValue()));
     }
 
     private CrimeByStreetAndCategory extractCrimeByStreetAndCategory(Crime crime) {
-        return new CrimeByStreetAndCategory(crime.getId(), new CrimeByStreetAndCategoryKey(crime.getLocation().getStreet().getName(), crime.getNeighbourhood(), crime.getCategory(), parseDate(crime.getMonth())), new Point(crime.getLocation().getLatitude().doubleValue(), crime.getLocation().getLongitude().doubleValue()));
+        return new CrimeByStreetAndCategory(crime.getId(), new CrimeByStreetAndCategoryKey(crime.getLocation().getStreet().getName(), crime.getNeighbourhood(), crime.getCategory(), MonthParser.toLocalDate(crime.getMonth())), new Point(crime.getLocation().getLatitude().doubleValue(), crime.getLocation().getLongitude().doubleValue()));
     }
 
     private CrimeByNeighbourhood extractCrimeByNeighbourhood(Crime crime) {
-        return new CrimeByNeighbourhood(crime.getId(), new CrimeByNeighbourhoodKey(crime.getNeighbourhood(), parseDate(crime.getMonth())), new Point(crime.getLocation().getLatitude().doubleValue(), crime.getLocation().getLongitude().doubleValue()));
+        return new CrimeByNeighbourhood(crime.getId(), new CrimeByNeighbourhoodKey(crime.getNeighbourhood(), MonthParser.toLocalDate(crime.getMonth())), new Point(crime.getLocation().getLatitude().doubleValue(), crime.getLocation().getLongitude().doubleValue()));
     }
 
     private CrimeByNeighbourhoodAndCategory extractCrimeByNeighbourhoodAndCategory(Crime crime) {
-        return new CrimeByNeighbourhoodAndCategory(crime.getId(), new CrimeByNeighbourhoodAndCategoryKey(crime.getNeighbourhood(), crime.getCategory(), parseDate(crime.getMonth())), new Point(crime.getLocation().getLatitude().doubleValue(), crime.getLocation().getLongitude().doubleValue()));
-    }
-
-    private LocalDate parseDate(String month) {
-        return LocalDate.parse(month + "-01", FORMATTER);
+        return new CrimeByNeighbourhoodAndCategory(crime.getId(), new CrimeByNeighbourhoodAndCategoryKey(crime.getNeighbourhood(), crime.getCategory(), MonthParser.toLocalDate(crime.getMonth())), new Point(crime.getLocation().getLatitude().doubleValue(), crime.getLocation().getLongitude().doubleValue()));
     }
 
 }

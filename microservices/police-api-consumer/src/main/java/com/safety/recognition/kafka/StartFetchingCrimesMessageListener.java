@@ -3,6 +3,7 @@ package com.safety.recognition.kafka;
 import com.safety.recognition.cassandra.model.Neighbourhood;
 import com.safety.recognition.client.CrimeClient;
 import com.safety.recognition.client.UpdateDateClient;
+import com.safety.recognition.kafka.messages.Crimes;
 import com.safety.recognition.service.LastUpdateDateService;
 import com.safety.recognition.service.NeighbourhoodService;
 import com.safety.recognition.utils.ParallelRunner;
@@ -28,17 +29,15 @@ public class StartFetchingCrimesMessageListener {
     private final CrimeClient crimeClient;
     private final CrimeMessageProducer crimeMessageProducer;
     private final UpdateDateClient updateDateClient;
-    private final KafkaTemplate<String, String> kafkaTemplate;
     private static final LocalDate CRIME_API_FIRST_DATE = LocalDate.of(2018, 12, 1);
 
     @Autowired
-    public StartFetchingCrimesMessageListener(NeighbourhoodService neighbourhoodService, LastUpdateDateService lastUpdateDateService, CrimeClient crimeClient, CrimeMessageProducer crimeMessageProducer, UpdateDateClient updateDateClient, KafkaTemplate<String, String> kafkaTemplate) {
+    public StartFetchingCrimesMessageListener(NeighbourhoodService neighbourhoodService, LastUpdateDateService lastUpdateDateService, CrimeClient crimeClient, CrimeMessageProducer crimeMessageProducer, UpdateDateClient updateDateClient) {
         this.neighbourhoodService = neighbourhoodService;
         this.lastUpdateDateService = lastUpdateDateService;
         this.crimeClient = crimeClient;
         this.crimeMessageProducer = crimeMessageProducer;
         this.updateDateClient = updateDateClient;
-        this.kafkaTemplate = kafkaTemplate;
     }
 
     @KafkaListener(topics = "start_fetching_crime_data", containerFactory = "kafkaStartFetchingListenerFactory")
@@ -69,7 +68,7 @@ public class StartFetchingCrimesMessageListener {
     }
 
     private void getAndSendCrimes(Neighbourhood neighbourhood, LocalDate finalCurrentMonth) {
-        crimeClient.getCrimes(neighbourhood, finalCurrentMonth).forEach(crimeMessageProducer::sendMessage);
+        crimeMessageProducer.sendMessage(neighbourhood.getName(), new Crimes(crimeClient.getCrimes(neighbourhood, finalCurrentMonth)));
     }
 
 }

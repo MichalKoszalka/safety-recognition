@@ -1,6 +1,5 @@
 package com.safety.recognition.calculator;
 
-import com.safety.recognition.cassandra.model.LastUpdateDate;
 import com.safety.recognition.cassandra.model.indexes.*;
 import com.safety.recognition.cassandra.repository.LastUpdateDateRepository;
 import com.safety.recognition.cassandra.repository.crime.CrimeByNeighbourhoodRepository;
@@ -42,10 +41,10 @@ public class CrimesByNeighbourhoodIndexesCalculator {
         this.crimeLevelByNeighbourhoodRepository = crimeLevelByNeighbourhoodRepository;
     }
 
-    public void calculate(LastUpdateDate lastUpdateDate, String neighbourhood) {
-            calculateIndexForLastYear(lastUpdateDate.getPoliceApiLastUpdate(), neighbourhood);
-            calculateIndexForLast3Months(lastUpdateDate.getPoliceApiLastUpdate(), neighbourhood);
-            calculateAllTimeIndexAndCrimeLevel(neighbourhood);
+    public CrimeLevelByNeighbourhood calculate(LocalDate lastUpdatedMonth, String neighbourhood) {
+            calculateIndexForLastYear(lastUpdatedMonth, neighbourhood);
+            calculateIndexForLast3Months(lastUpdatedMonth, neighbourhood);
+            return calculateAllTimeIndexAndCrimeLevel(neighbourhood);
     }
 
     private void calculateIndexForLastYear(LocalDate policeApiLastUpdate, String neighbourhood) {
@@ -78,12 +77,11 @@ public class CrimesByNeighbourhoodIndexesCalculator {
         crimesByNeighbourhoodLast3MonthsIndexRepository.save(lastYearCrimesIndex);
     }
 
-    private void calculateAllTimeIndexAndCrimeLevel(String neighbourhood) {
+    private CrimeLevelByNeighbourhood calculateAllTimeIndexAndCrimeLevel(String neighbourhood) {
         var lastYearCrimes = crimeByNeighbourhoodRepository.findCrimeByKeyNeighbourhood(neighbourhood);
         var numberOfCrimes = lastYearCrimes.size();
         var crimesByMonth = lastYearCrimes.stream().collect(Collectors.groupingBy(crime -> crime.getKey().getCrimeDate(), Collectors.counting()));
         calculateHighestCrimeLevel(crimesByMonth);
-        calculateCrimeLevelByNeighbourhood(crimesByMonth, neighbourhood);
         var entriesByMonth = crimesByMonth.entrySet().stream().sorted(Comparator.comparing(Map.Entry::getValue)).collect(Collectors.toList());
         var medianByMonth = entriesByMonth.get((entriesByMonth.size()-1)/2).getValue().intValue();
         var meanByMonth = Long.valueOf(numberOfCrimes / (ChronoUnit.MONTHS.between(entriesByMonth.get(0).getKey(), LocalDate.now()))).intValue();
@@ -92,6 +90,7 @@ public class CrimesByNeighbourhoodIndexesCalculator {
         var lastYearCrimesIndex = new CrimesByNeighbourhoodAllTimeIndex(neighbourhood, numberOfCrimes, medianByMonth, meanByMonth, meanByWeek, meanByDay, crimesByMonth);
         crimesByNeighbourhoodAllTimeIndexRepository.deleteById(neighbourhood);
         crimesByNeighbourhoodAllTimeIndexRepository.save(lastYearCrimesIndex);
+        return calculateCrimeLevelByNeighbourhood(crimesByMonth, neighbourhood);
     }
 
 
@@ -117,7 +116,7 @@ public class CrimesByNeighbourhoodIndexesCalculator {
         }
     }
 
-    private void calculateCrimeLevelByNeighbourhood(Map<LocalDate, Long> crimesByMonth, String neighbourhood) {
-        crimeLevelByNeighbourhoodRepository.save(new CrimeLevelByNeighbourhood(neighbourhood, crimesByMonth));
+    private CrimeLevelByNeighbourhood calculateCrimeLevelByNeighbourhood(Map<LocalDate, Long> crimesByMonth, String neighbourhood) {
+        return crimeLevelByNeighbourhoodRepository.save(new CrimeLevelByNeighbourhood(neighbourhood, crimesByMonth));
     }
 }

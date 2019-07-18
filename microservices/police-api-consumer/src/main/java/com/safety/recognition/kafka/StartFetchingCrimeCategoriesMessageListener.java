@@ -29,7 +29,10 @@ public class StartFetchingCrimeCategoriesMessageListener {
         if (crimeCategoryRepository.findAll().isEmpty()) {
             LOG.info("starting fetching crime categories");
             var crimeCategories = crimeCategoryClient.getCrimeCategories();
-            crimeCategories.forEach(crimeCategory -> crimeCategory.setNumericRepresentation(new Random().nextLong()));
+            crimeCategories.forEach(crimeCategory -> {
+                crimeCategory.setNumericRepresentation(new Random().nextLong());
+                crimeCategory.setName(crimeCategory.getName().toLowerCase().replace("-", " ").replace(" and ", " "));
+            });
             crimeCategoryRepository.saveAll(crimeCategories);
             LOG.info("fetching crime categories finished");
         } else {

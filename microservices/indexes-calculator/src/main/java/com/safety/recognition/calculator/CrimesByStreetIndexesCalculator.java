@@ -1,7 +1,6 @@
 package com.safety.recognition.calculator;
 
-import com.safety.recognition.cassandra.kafka.messages.StreetAndNeighbourhood;
-import com.safety.recognition.cassandra.model.LastUpdateDate;
+import com.safety.recognition.kafka.messages.StreetAndNeighbourhood;
 import com.safety.recognition.cassandra.model.StreetKey;
 import com.safety.recognition.cassandra.model.indexes.*;
 import com.safety.recognition.cassandra.repository.LastUpdateDateRepository;
@@ -45,10 +44,10 @@ public class CrimesByStreetIndexesCalculator {
     }
 
 
-    public void calculate(LastUpdateDate lastUpdateDate, StreetAndNeighbourhood streetAndNeighbourhood) {
-            calculateIndexForLastYear(lastUpdateDate.getPoliceApiLastUpdate(), streetAndNeighbourhood);
-            calculateIndexForLast3Months(lastUpdateDate.getPoliceApiLastUpdate(), streetAndNeighbourhood);
-            calculateAllTimeIndexAndCrimeLevel(streetAndNeighbourhood);
+    public CrimeLevelByStreet calculate(LocalDate lastUpdateDate, StreetAndNeighbourhood streetAndNeighbourhood) {
+            calculateIndexForLastYear(lastUpdateDate, streetAndNeighbourhood);
+            calculateIndexForLast3Months(lastUpdateDate, streetAndNeighbourhood);
+            return calculateAllTimeIndexAndCrimeLevel(streetAndNeighbourhood);
     }
 
     private void calculateIndexForLastYear(LocalDate policeApiLastUpdate, StreetAndNeighbourhood streetAndNeighbourhood) {
@@ -81,12 +80,11 @@ public class CrimesByStreetIndexesCalculator {
         crimesByStreetLast3MonthsIndexRepository.save(lastYearCrimesIndex);
     }
 
-    private void calculateAllTimeIndexAndCrimeLevel(StreetAndNeighbourhood streetAndNeighbourhood) {
+    private CrimeLevelByStreet calculateAllTimeIndexAndCrimeLevel(StreetAndNeighbourhood streetAndNeighbourhood) {
         var lastYearCrimes = crimeByStreetRepository.findCrimeByKeyStreetAndKeyNeighbourhood(streetAndNeighbourhood.getStreet(), streetAndNeighbourhood.getNeighbourhood());
         var numberOfCrimes = lastYearCrimes.size();
         var crimesByMonth = lastYearCrimes.stream().collect(Collectors.groupingBy(crime -> crime.getKey().getCrimeDate(), Collectors.counting()));
         calculateHighestCrimeLevel(crimesByMonth);
-        calculateCrimeLevelByStreet(crimesByMonth, streetAndNeighbourhood.getStreet(), streetAndNeighbourhood.getNeighbourhood());
         var entriesByMonth = crimesByMonth.entrySet().stream().sorted(Comparator.comparing(Map.Entry::getValue)).collect(Collectors.toList());
         var medianByMonth = entriesByMonth.get((entriesByMonth.size() - 1) / 2).getValue().intValue();
         var meanByMonth = Long.valueOf(numberOfCrimes / (ChronoUnit.MONTHS.between(entriesByMonth.get(0).getKey(), LocalDate.now()))).intValue();
@@ -95,6 +93,7 @@ public class CrimesByStreetIndexesCalculator {
         var lastYearCrimesIndex = new CrimesByStreetAllTimeIndex(new StreetKey(streetAndNeighbourhood.getStreet(), streetAndNeighbourhood.getNeighbourhood()), numberOfCrimes, medianByMonth, meanByMonth, meanByWeek, meanByDay, crimesByMonth);
         crimesByStreetAllTimeIndexRepository.deleteById(new StreetKey(streetAndNeighbourhood.getStreet(), streetAndNeighbourhood.getNeighbourhood()));
         crimesByStreetAllTimeIndexRepository.save(lastYearCrimesIndex);
+        return calculateCrimeLevelByStreet(crimesByMonth, streetAndNeighbourhood.getStreet(), streetAndNeighbourhood.getNeighbourhood());
     }
 
     private void calculateHighestCrimeLevel(Map<LocalDate, Long> crimesByMonth) {
@@ -119,7 +118,7 @@ public class CrimesByStreetIndexesCalculator {
         }
     }
 
-    private void calculateCrimeLevelByStreet(Map<LocalDate, Long> crimesByMonth, String street, String neighbourhood) {
-        crimeLevelByStreetRepository.save(new CrimeLevelByStreet(new StreetKey(street, neighbourhood), crimesByMonth));
+    private CrimeLevelByStreet calculateCrimeLevelByStreet(Map<LocalDate, Long> crimesByMonth, String street, String neighbourhood) {
+        return crimeLevelByStreetRepository.save(new CrimeLevelByStreet(new StreetKey(street, neighbourhood), crimesByMonth));
     }
 }

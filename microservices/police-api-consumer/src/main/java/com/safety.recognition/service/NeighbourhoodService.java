@@ -49,7 +49,7 @@ public class NeighbourhoodService {
 
     private Neighbourhood createNeighbourhood(data.police.uk.model.neighbourhood.Neighbourhood policeNeighbourhood) {
         var neighbourhood = new Neighbourhood();
-        neighbourhood.setName(policeNeighbourhood.getName());
+        neighbourhood.setName(policeNeighbourhood.getName().toLowerCase());
         neighbourhood.setNumericRepresentation(new Random().nextLong());
         neighbourhood.setBoundary(reducePolygonComplexity(policeNeighbourhood));
         return neighbourhood;

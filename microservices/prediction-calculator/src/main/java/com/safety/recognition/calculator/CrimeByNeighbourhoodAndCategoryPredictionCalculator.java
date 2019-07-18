@@ -1,16 +1,20 @@
 package com.safety.recognition.calculator;
 
+import com.codepoetics.protonpack.maps.MapStream;
 import com.safety.recognition.cassandra.model.CrimeCategory;
 import com.safety.recognition.cassandra.model.Neighbourhood;
 import com.safety.recognition.cassandra.model.indexes.CrimeLevelByNeighbourhoodAndCategory;
-import com.safety.recognition.cassandra.model.indexes.CrimeLevelByStreetAndCategory;
+import com.safety.recognition.cassandra.model.indexes.NeighbourhoodAndCategoryKey;
+import com.safety.recognition.cassandra.model.predictions.CrimePredictionByNeighbourhoodAndCategory;
 import com.safety.recognition.cassandra.repository.CrimeCategoryRepository;
 import com.safety.recognition.cassandra.repository.NeighbourhoodRepository;
 import com.safety.recognition.cassandra.repository.indexes.CrimeLevelByNeighbourhoodAndCategoryRepository;
+import com.safety.recognition.cassandra.repository.predictions.CrimePredictionByNeighbourhoodAndCategoryRepository;
 import com.safety.recognition.deeplearning.PredictionNetwork;
 import org.datavec.api.writable.IntWritable;
 import org.datavec.api.writable.LongWritable;
 import org.datavec.api.writable.Writable;
+import org.nd4j.linalg.api.ndarray.INDArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -28,33 +32,43 @@ public class CrimeByNeighbourhoodAndCategoryPredictionCalculator {
     private String crimeByNeighbourhoodAndCategoryModelPath;
 
     private final CrimeLevelByNeighbourhoodAndCategoryRepository crimeLevelByNeighbourhoodAndCategoryRepository;
+    private final CrimePredictionByNeighbourhoodAndCategoryRepository crimePredictionByNeighbourhoodAndCategoryRepository;
     private final Map<String, Long> neighbourhoodsNormalised;
+    private final Map<Long, String> inversedNeighbourhoodsNormalised;
     private final Map<String, Long> categoriesNormalised;
+    private final Map<Long, String> inversedCategoriesNormalised;
 
     private final PredictionNetwork predictionNetwork;
 
     @Autowired
-    public CrimeByNeighbourhoodAndCategoryPredictionCalculator(CrimeLevelByNeighbourhoodAndCategoryRepository crimeLevelByNeighbourhoodAndCategoryRepository, NeighbourhoodRepository neighbourhoodRepository, PredictionNetwork predictionNetwork, CrimeCategoryRepository crimeCategoryRepository) {
+    public CrimeByNeighbourhoodAndCategoryPredictionCalculator(CrimeLevelByNeighbourhoodAndCategoryRepository crimeLevelByNeighbourhoodAndCategoryRepository, CrimePredictionByNeighbourhoodAndCategoryRepository crimePredictionByNeighbourhoodAndCategoryRepository, NeighbourhoodRepository neighbourhoodRepository, PredictionNetwork predictionNetwork, CrimeCategoryRepository crimeCategoryRepository) {
         this.crimeLevelByNeighbourhoodAndCategoryRepository = crimeLevelByNeighbourhoodAndCategoryRepository;
+        this.crimePredictionByNeighbourhoodAndCategoryRepository = crimePredictionByNeighbourhoodAndCategoryRepository;
         this.neighbourhoodsNormalised = neighbourhoodRepository.findAll().stream().collect(Collectors.toMap(Neighbourhood::getName, Neighbourhood::getNumericRepresentation));
+        this.inversedNeighbourhoodsNormalised = MapStream.of(neighbourhoodsNormalised).inverseMapping().collect();
         this.categoriesNormalised = crimeCategoryRepository.findAll().stream().collect(Collectors.toMap(CrimeCategory::getName, CrimeCategory::getNumericRepresentation));
+        this.inversedCategoriesNormalised = MapStream.of(categoriesNormalised).inverseMapping().collect();
         this.predictionNetwork = predictionNetwork;
     }
 
     public void calculate(LocalDate nextMonth) {
         var crimeLevelsByNeighbourhoodCategory = crimeLevelByNeighbourhoodAndCategoryRepository.findAll();
-        var testData = crimeLevelsByNeighbourhoodCategory.stream().map(crimeLevelByNeighbourhoodCategory -> parseSingleMonthForTest(nextMonth, categoriesNormalised.get(crimeLevelByNeighbourhoodCategory.getKey().getCategory()), neighbourhoodsNormalised.get(crimeLevelByNeighbourhoodCategory.getKey().getNeighbourhood()))).collect(Collectors.toList());
-        predictionNetwork.predict(crimeByNeighbourhoodAndCategoryModelPath, testData);
+        var testData = crimeLevelsByNeighbourhoodCategory.stream().map(crimeLevelByNeighbourhoodCategory -> parseSingleMonthWithoutLabel(nextMonth, categoriesNormalised.get(crimeLevelByNeighbourhoodCategory.getKey().getCategory()), neighbourhoodsNormalised.get(crimeLevelByNeighbourhoodCategory.getKey().getNeighbourhood()))).collect(Collectors.toList());
+        var predictionResult = predictionNetwork.predict(crimeByNeighbourhoodAndCategoryModelPath, testData);
+        predictionResult.ifPresent(prediction -> savePredictionResult(prediction, testData));
     }
 
-    private List<List<Writable>> parseCrimeData(List<CrimeLevelByNeighbourhoodAndCategory> crimeLevelsByNeighbourhoodCategory) {
-        return crimeLevelsByNeighbourhoodCategory.stream().map(crimeLevelByNeighbourhoodAndCategory ->
-                crimeLevelByNeighbourhoodAndCategory.getCrimesByMonth().entrySet().stream()
-                        .map(localDateLongEntry -> parseSingleMonthForTraining(localDateLongEntry, new LongWritable(categoriesNormalised.get(crimeLevelByNeighbourhoodAndCategory.getKey().getCategory())), new LongWritable(neighbourhoodsNormalised.get(crimeLevelByNeighbourhoodAndCategory.getKey().getNeighbourhood()))))).flatMap(listStream -> listStream).collect(Collectors.toList());
+    public void train(CrimeLevelByNeighbourhoodAndCategory crimeLevelByNeighbourhoodAndCategory) {
+        predictionNetwork.train(parseCrimeData(crimeLevelByNeighbourhoodAndCategory), crimeByNeighbourhoodAndCategoryModelPath);
     }
 
-    private List<Writable> parseSingleMonthForTraining(Map.Entry<LocalDate, Long> crimesNumberForMonth, LongWritable categoryNormalised, LongWritable neighbourhoodNormalised) {
-        var writables =  new ArrayList<Writable>();
+    private List<List<Writable>> parseCrimeData(CrimeLevelByNeighbourhoodAndCategory crimeLevelByNeighbourhoodCategory) {
+        return crimeLevelByNeighbourhoodCategory.getCrimesByMonth().entrySet().stream()
+                .map(localDateLongEntry -> parseSingleMonthWithLabel(localDateLongEntry, new LongWritable(categoriesNormalised.get(crimeLevelByNeighbourhoodCategory.getKey().getCategory())), new LongWritable(neighbourhoodsNormalised.get(crimeLevelByNeighbourhoodCategory.getKey().getNeighbourhood())))).collect(Collectors.toList());
+    }
+
+    private List<Writable> parseSingleMonthWithLabel(Map.Entry<LocalDate, Long> crimesNumberForMonth, LongWritable categoryNormalised, LongWritable neighbourhoodNormalised) {
+        var writables = new ArrayList<Writable>();
         writables.add(categoryNormalised);
         writables.add(neighbourhoodNormalised);
         writables.add(new IntWritable(crimesNumberForMonth.getKey().getYear()));
@@ -62,7 +76,25 @@ public class CrimeByNeighbourhoodAndCategoryPredictionCalculator {
         return writables;
     }
 
-    private List<Writable> parseSingleMonthForTest(LocalDate nextMonth, Long categoryNormalised, Long neighbourhoodNormalised) {
+    private void savePredictionResult(INDArray prediction, List<List<Writable>> testData) {
+        for (var i = 0; i < prediction.rows(); i++) {
+            saveSinglePrediction(prediction.getLong(i), testData.get(i));
+        }
+    }
+
+    private void saveSinglePrediction(long predictedCrimeLevel, List<Writable> testDataRecord) {
+        String category = inversedCategoriesNormalised.get(testDataRecord.get(0).toLong());
+        String neighbourhood = inversedNeighbourhoodsNormalised.get(testDataRecord.get(1).toLong());
+        var neighbourhoodAndCategoryKey = new NeighbourhoodAndCategoryKey(neighbourhood, category);
+        LocalDate month = LocalDate.of(testDataRecord.get(2).toInt(), testDataRecord.get(3).toInt(), 1);
+        crimePredictionByNeighbourhoodAndCategoryRepository.findById(neighbourhoodAndCategoryKey).ifPresentOrElse(crimePredictionByNeighbourhoodAndCategory -> {
+                    crimePredictionByNeighbourhoodAndCategory.getCrimesByMonth().put(month, predictedCrimeLevel);
+                    crimePredictionByNeighbourhoodAndCategoryRepository.save(crimePredictionByNeighbourhoodAndCategory);
+                },
+                () -> crimePredictionByNeighbourhoodAndCategoryRepository.save(new CrimePredictionByNeighbourhoodAndCategory(new NeighbourhoodAndCategoryKey(neighbourhood, category), Map.of(month, predictedCrimeLevel))));
+    }
+
+    private List<Writable> parseSingleMonthWithoutLabel(LocalDate nextMonth, Long categoryNormalised, Long neighbourhoodNormalised) {
         var writables = new ArrayList<Writable>();
         writables.add(new LongWritable(categoryNormalised));
         writables.add(new LongWritable(neighbourhoodNormalised));

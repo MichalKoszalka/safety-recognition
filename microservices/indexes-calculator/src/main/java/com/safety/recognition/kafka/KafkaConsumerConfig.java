@@ -1,7 +1,7 @@
 package com.safety.recognition.kafka;
 
-import com.safety.recognition.cassandra.kafka.messages.NeighbourhoodAndCategory;
-import com.safety.recognition.cassandra.kafka.messages.StreetAndCategory;
+import com.safety.recognition.kafka.messages.NeighbourhoodAndCategory;
+import com.safety.recognition.kafka.messages.StreetAndCategory;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.Deserializer;
 import org.apache.kafka.common.serialization.StringDeserializer;
@@ -29,7 +29,7 @@ public class KafkaConsumerConfig {
     @Value("${indexes.calculators_consumer.group.id}")
     private String groupId;
 
-    private <T> ConsumerFactory<UUID, T> consumerFactory(Deserializer<T> valueDeserializer) {
+    private <T> ConsumerFactory<String, T> consumerFactory(Deserializer<T> valueDeserializer) {
         Map<String, Object> props = new HashMap<>();
         props.put(
                 ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG,
@@ -37,28 +37,28 @@ public class KafkaConsumerConfig {
         props.put(
                 ConsumerConfig.GROUP_ID_CONFIG,
                 groupId);
-        return new DefaultKafkaConsumerFactory<>(props, new UUIDDeserializer(), valueDeserializer);
+        return new DefaultKafkaConsumerFactory<>(props, new StringDeserializer(), valueDeserializer);
     }
 
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<UUID, String> kafkaCalculateIndexesStringListenerFactory() {
-        ConcurrentKafkaListenerContainerFactory<UUID, String> factory
+    public ConcurrentKafkaListenerContainerFactory<String, String> kafkaCalculateIndexesStringListenerFactory() {
+        ConcurrentKafkaListenerContainerFactory<String, String> factory
                 = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory(new StringDeserializer()));
         return factory;
     }
 
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<UUID, NeighbourhoodAndCategory> kafkaCalculateIndexesNeighbourhoodAndCategoryListenerFactory() {
-        ConcurrentKafkaListenerContainerFactory<UUID, NeighbourhoodAndCategory> factory
+    public ConcurrentKafkaListenerContainerFactory<String, NeighbourhoodAndCategory> kafkaCalculateIndexesNeighbourhoodAndCategoryListenerFactory() {
+        ConcurrentKafkaListenerContainerFactory<String, NeighbourhoodAndCategory> factory
                 = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory(new JsonDeserializer(NeighbourhoodAndCategory.class)));
         return factory;
     }
 
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<UUID, StreetAndCategory> kafkaCalculateIndexesStreetAndCategoryListenerFactory() {
-        ConcurrentKafkaListenerContainerFactory<UUID, StreetAndCategory> factory
+    public ConcurrentKafkaListenerContainerFactory<String, StreetAndCategory> kafkaCalculateIndexesStreetAndCategoryListenerFactory() {
+        ConcurrentKafkaListenerContainerFactory<String, StreetAndCategory> factory
                 = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory(new JsonDeserializer(StreetAndCategory.class)));
         return factory;

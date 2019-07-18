@@ -42,9 +42,9 @@ public class CrimesForLondonByCategoryIndexesCalculator {
         this.crimeLevelByCategoryRepository = crimeLevelByCategoryRepository;
     }
 
-    public void calculate(LastUpdateDate lastUpdateDate, String category) {
-            calculateIndexForLastYear(lastUpdateDate.getPoliceApiLastUpdate(), category);
-            calculateIndexForLast3Months(lastUpdateDate.getPoliceApiLastUpdate(), category);
+    public void calculate(LocalDate lastUpdateDate, String category) {
+            calculateIndexForLastYear(lastUpdateDate, category);
+            calculateIndexForLast3Months(lastUpdateDate, category);
             calculateAllTimeIndex(category);
     }
 
