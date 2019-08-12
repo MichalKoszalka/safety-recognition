@@ -14,9 +14,16 @@
       spec:
         containers:
         - name: crimes-processor
-          image: michalkoszalka/crimes-processor:0.0.4
+          image: michalkoszalka/crimes-processor:latest
           ports:
           - containerPort: 8080
             name: server
           - containerPort: 8081
             name: management
+          env:
+          - name: KAFKA_BOOTSTRAP
+            value: kafka-2.kafka-svc.default.svc.cluster.local:9093
+          - name: CASSANDRA_HOST
+            value: cassandra-0.cassandra.default.svc.cluster.local
+          - name: CASSANDRA_PORT
+            value: 9042

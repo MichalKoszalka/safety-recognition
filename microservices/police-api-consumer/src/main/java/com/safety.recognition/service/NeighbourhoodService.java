@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.UUID;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 @Service
@@ -35,22 +37,22 @@ public class NeighbourhoodService {
         this.neighbourhoodCassandraRepository = neighbourhoodCassandraRepository;
     }
 
-    public List<Neighbourhood> getNeighbourhoods() {
+    public void loadNeighbourhoods() {
         var neighbourhoods = neighbourhoodCassandraRepository.findAll();
         if (neighbourhoods.isEmpty()) {
-            neighbourhoods = neighbourhoodClient.getNeighbourhoods()
+            var numericRepresentation = new AtomicInteger();
+            neighbourhoodClient.getNeighbourhoods()
                     .parallelStream()
-                    .map(this::createNeighbourhood)
-                    .map(neighbourhoodCassandraRepository::save).collect(Collectors.toList());
+                    .map((data.police.uk.model.neighbourhood.Neighbourhood policeNeighbourhood) -> createNeighbourhood(policeNeighbourhood, numericRepresentation.getAndIncrement()))
+                    .forEach(neighbourhoodCassandraRepository::save);
 
         }
-        return neighbourhoods;
     }
 
-    private Neighbourhood createNeighbourhood(data.police.uk.model.neighbourhood.Neighbourhood policeNeighbourhood) {
+    private Neighbourhood createNeighbourhood(data.police.uk.model.neighbourhood.Neighbourhood policeNeighbourhood, int numericRepresentation) {
         var neighbourhood = new Neighbourhood();
         neighbourhood.setName(policeNeighbourhood.getName().toLowerCase());
-        neighbourhood.setNumericRepresentation(new Random().nextLong());
+        neighbourhood.setNumericRepresentation(numericRepresentation);
         neighbourhood.setBoundary(reducePolygonComplexity(policeNeighbourhood));
         return neighbourhood;
     }

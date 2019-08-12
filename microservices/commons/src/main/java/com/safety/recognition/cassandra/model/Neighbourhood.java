@@ -21,7 +21,7 @@ public class Neighbourhood {
     private String name;
 
     @Column
-    private Long numericRepresentation;
+    private Integer numericRepresentation;
 
     @Column
     private List<Point> boundary;

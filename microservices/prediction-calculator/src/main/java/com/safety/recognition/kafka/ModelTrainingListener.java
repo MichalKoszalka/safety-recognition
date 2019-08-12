@@ -3,6 +3,7 @@ package com.safety.recognition.kafka;
 import com.safety.recognition.calculator.*;
 import com.safety.recognition.cassandra.model.indexes.CrimeLevelByNeighbourhoodAndCategory;
 import com.safety.recognition.cassandra.model.indexes.IndexType;
+import data.police.uk.utils.MonthParser;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,26 +36,26 @@ public class ModelTrainingListener {
         this.predictionMessageProducer = predictionMessageProducer;
     }
 
-//    @KafkaListener(topics = "train_prediction_model_for_london", containerFactory = "kafkaCalculatePredictionListenerFactory")
-//    public void crimesForLondonPredictionModelTrainListener(ConsumerRecord<String, CrimeLevel> record) {
-//        LOG.info("Starting training prediction");
-//        trainModelBasedOnIndexType(record.key(), LocalDate.parse(record.value(), DateTimeFormatter.ISO_DATE));
-//        LOG.info("Finished calculating prediction");
-//    }
-//
-//    @KafkaListener(topics = "train_prediction_model_by_category", containerFactory = "kafkaCalculatePredictionListenerFactory")
-//    public void crimesForLondonPredictionModelTrainListener(ConsumerRecord<String, String> record) {
-//        LOG.info("Starting training prediction");
-//        trainModelBasedOnIndexType(record.key(), LocalDate.parse(record.value(), DateTimeFormatter.ISO_DATE));
-//        LOG.info("Finished calculating prediction");
-//    }
-//
-//    @KafkaListener(topics = "train_prediction_model_by_neighbourhood", containerFactory = "kafkaCalculatePredictionListenerFactory")
-//    public void crimesForLondonPredictionModelTrainListener(ConsumerRecord<String, String> record) {
-//        LOG.info("Starting training prediction");
-//        trainModelBasedOnIndexType(record.key(), LocalDate.parse(record.value(), DateTimeFormatter.ISO_DATE));
-//        LOG.info("Finished calculating prediction");
-//    }
+    @KafkaListener(topics = "train_prediction_model_for_london", containerFactory = "kafkaCalculatePredictionListenerFactory")
+    public void crimesForLondonPredictionModelTrainListener(ConsumerRecord<String, CrimeLevel> record) {
+        LOG.info("Starting training prediction");
+        trainModelBasedOnIndexType(record.key(), LocalDate.parse(record.value(), DateTimeFormatter.ISO_DATE));
+        LOG.info("Finished calculating prediction");
+    }
+
+    @KafkaListener(topics = "train_prediction_model_by_category", containerFactory = "kafkaCalculatePredictionListenerFactory")
+    public void crimesForLondonPredictionModelTrainListener(ConsumerRecord<String, String> record) {
+        LOG.info("Starting training prediction");
+        trainModelBasedOnIndexType(record.key(), LocalDate.parse(record.value(), DateTimeFormatter.ISO_DATE));
+        LOG.info("Finished calculating prediction");
+    }
+
+    @KafkaListener(topics = "train_prediction_model_by_neighbourhood", containerFactory = "kafkaCalculatePredictionListenerFactory")
+    public void crimesForLondonPredictionModelTrainListener(ConsumerRecord<String, String> record) {
+        LOG.info("Starting training prediction");
+        trainModelBasedOnIndexType(record.key(), LocalDate.parse(record.value(), DateTimeFormatter.ISO_DATE));
+        LOG.info("Finished calculating prediction");
+    }
     @KafkaListener(topics = "train_prediction_model_by_neighbourhood_and_category", containerFactory = "kafkaTrainPredictionModelByNeighbourhoodAndCategoryListenerFactory")
     public void crimesByNeighbourhoodAndCategoryPredictionModelTrainListener(ConsumerRecord<String, CrimeLevelByNeighbourhoodAndCategory> record) {
         LOG.info("Starting training model");
@@ -63,17 +64,17 @@ public class ModelTrainingListener {
         predictionMessageProducer.send("calculate_prediction", IndexType.NEIGHBOURHOOD_AND_CATEGORY.getName(), record.key());
 
     }
-//    @KafkaListener(topics = "train_prediction_model_by_street", containerFactory = "kafkaCalculatePredictionListenerFactory")
-//    public void crimesForLondonPredictionModelTrainListener(ConsumerRecord<String, String> record) {
-//        LOG.info("Starting training prediction");
-//        trainModelBasedOnIndexType(record.key(), LocalDate.parse(record.value(), DateTimeFormatter.ISO_DATE));
-//        LOG.info("Finished calculating prediction");
-//    }
-//    @KafkaListener(topics = "train_prediction_model_by_street_and_category", containerFactory = "kafkaCalculatePredictionListenerFactory")
-//    public void crimesForLondonPredictionModelTrainListener(ConsumerRecord<String, String> record) {
-//        LOG.info("Starting training prediction");
-//        trainModelBasedOnIndexType(record.key(), LocalDate.parse(record.value(), DateTimeFormatter.ISO_DATE));
-//        LOG.info("Finished calculating prediction");
-//    }
+    @KafkaListener(topics = "train_prediction_model_by_street", containerFactory = "kafkaCalculatePredictionListenerFactory")
+    public void crimesForLondonPredictionModelTrainListener(ConsumerRecord<String, String> record) {
+        LOG.info("Starting training prediction");
+        trainModelBasedOnIndexType(record.key(), LocalDate.parse(record.value(), DateTimeFormatter.ISO_DATE));
+        LOG.info("Finished calculating prediction");
+    }
+    @KafkaListener(topics = "train_prediction_model_by_street_and_category", containerFactory = "kafkaCalculatePredictionListenerFactory")
+    public void crimesForLondonPredictionModelTrainListener(ConsumerRecord<String, String> record) {
+        LOG.info("Starting training prediction");
+        trainModelBasedOnIndexType(record.key(), LocalDate.parse(record.value(), DateTimeFormatter.ISO_DATE));
+        LOG.info("Finished calculating prediction");
+    }
 
 }

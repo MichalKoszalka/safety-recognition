@@ -19,7 +19,7 @@ public class CrimeCategory {
     private String url;
 
     @Column
-    private Long numericRepresentation;
+    private Integer numericRepresentation;
 
     @Column
     private String name;

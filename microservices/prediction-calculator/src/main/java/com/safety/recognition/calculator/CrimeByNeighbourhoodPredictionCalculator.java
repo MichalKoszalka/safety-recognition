@@ -25,7 +25,7 @@ public class CrimeByNeighbourhoodPredictionCalculator {
     private String crimeByNeighbourhoodModelPath;
 
     private final CrimeLevelByNeighbourhoodRepository crimeLevelByNeighbourhoodRepository;
-    private final Map<String, Long> neighbourhoodsNormalised;
+    private final Map<String, Integer> neighbourhoodsNormalised;
 
     private final PredictionNetwork predictionNetwork;
 
@@ -45,10 +45,10 @@ public class CrimeByNeighbourhoodPredictionCalculator {
     private List<List<Writable>> parseCrimeData(List<CrimeLevelByNeighbourhood> crimeLevelsByNeighbourhoodCategory) {
         return crimeLevelsByNeighbourhoodCategory.stream().map(crimeLevelByNeighbourhoodAndCategory ->
                 crimeLevelByNeighbourhoodAndCategory.getCrimesByMonth().entrySet().stream()
-                        .map(localDateLongEntry -> parseSingleMonthForTraining(localDateLongEntry, new LongWritable(neighbourhoodsNormalised.get(crimeLevelByNeighbourhoodAndCategory.getNeighbourhood()))))).flatMap(listStream -> listStream).collect(Collectors.toList());
+                        .map(localDateLongEntry -> parseSingleMonthForTraining(localDateLongEntry, new IntWritable(neighbourhoodsNormalised.get(crimeLevelByNeighbourhoodAndCategory.getNeighbourhood()))))).flatMap(listStream -> listStream).collect(Collectors.toList());
     }
 
-    private List<Writable> parseSingleMonthForTraining(Map.Entry<LocalDate, Long> crimesNumberForMonth, LongWritable neighbourhoodNormalised) {
+    private List<Writable> parseSingleMonthForTraining(Map.Entry<LocalDate, Long> crimesNumberForMonth, IntWritable neighbourhoodNormalised) {
         var writables =  new ArrayList<Writable>();
         writables.add(neighbourhoodNormalised);
         writables.add(new IntWritable(crimesNumberForMonth.getKey().getYear()));
@@ -56,7 +56,7 @@ public class CrimeByNeighbourhoodPredictionCalculator {
         return writables;
     }
 
-    private List<Writable> parseSingleMonthForTest(LocalDate nextMonth, Long neighbourhoodNormalised) {
+    private List<Writable> parseSingleMonthForTest(LocalDate nextMonth, Integer neighbourhoodNormalised) {
         var writables = new ArrayList<Writable>();
         writables.add(new LongWritable(neighbourhoodNormalised));
         writables.add(new IntWritable(nextMonth.getYear()));

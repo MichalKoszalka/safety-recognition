@@ -1,6 +1,5 @@
 package com.safety.recognition.calculator;
 
-import com.safety.recognition.cassandra.model.LastUpdateDate;
 import com.safety.recognition.cassandra.model.indexes.*;
 import com.safety.recognition.cassandra.repository.LastUpdateDateRepository;
 import com.safety.recognition.cassandra.repository.crime.CrimeByCategoryRepository;
@@ -21,31 +20,28 @@ import java.util.stream.Collectors;
 @Service
 public class CrimesForLondonByCategoryIndexesCalculator {
 
-    private static final Logger LOG = LoggerFactory.getLogger(CrimesForLondonByCategoryIndexesCalculator.class);
 
     private final CrimesForLondonByCategoryAllTimeIndexRepository crimesForLondonByCategoryAllTimeIndexRepository;
     private final CrimesForLondonByCategoryLastYearIndexRepository crimesForLondonByCategoryLastYearIndexRepository;
     private final CrimesForLondonByCategoryLast3MonthsIndexRepository crimesForLondonByCategoryLast3MonthsIndexRepository;
     private final CrimeByCategoryRepository crimeByCategoryRepository;
-    private final LastUpdateDateRepository lastUpdateDateRepository;
     private final HighestCrimeLevelByCategoryRepository highestCrimeLevelByCategoryRepository;
     private final CrimeLevelByCategoryRepository crimeLevelByCategoryRepository;
 
     @Autowired
-    public CrimesForLondonByCategoryIndexesCalculator(CrimesForLondonByCategoryAllTimeIndexRepository crimesForLondonByCategoryAllTimeIndexRepository, CrimesForLondonByCategoryLastYearIndexRepository crimesForLondonByCategoryLastYearIndexRepository, CrimesForLondonByCategoryLast3MonthsIndexRepository crimesForLondonByCategoryLast3MonthsIndexRepository, CrimeByCategoryRepository crimeByCategoryRepository, LastUpdateDateRepository lastUpdateDateRepository, HighestCrimeLevelByCategoryRepository highestCrimeLevelByCategoryRepository, CrimeLevelByCategoryRepository crimeLevelByCategoryRepository) {
+    public CrimesForLondonByCategoryIndexesCalculator(CrimesForLondonByCategoryAllTimeIndexRepository crimesForLondonByCategoryAllTimeIndexRepository, CrimesForLondonByCategoryLastYearIndexRepository crimesForLondonByCategoryLastYearIndexRepository, CrimesForLondonByCategoryLast3MonthsIndexRepository crimesForLondonByCategoryLast3MonthsIndexRepository, CrimeByCategoryRepository crimeByCategoryRepository, HighestCrimeLevelByCategoryRepository highestCrimeLevelByCategoryRepository, CrimeLevelByCategoryRepository crimeLevelByCategoryRepository) {
         this.crimesForLondonByCategoryAllTimeIndexRepository = crimesForLondonByCategoryAllTimeIndexRepository;
         this.crimesForLondonByCategoryLastYearIndexRepository = crimesForLondonByCategoryLastYearIndexRepository;
         this.crimesForLondonByCategoryLast3MonthsIndexRepository = crimesForLondonByCategoryLast3MonthsIndexRepository;
         this.crimeByCategoryRepository = crimeByCategoryRepository;
-        this.lastUpdateDateRepository = lastUpdateDateRepository;
         this.highestCrimeLevelByCategoryRepository = highestCrimeLevelByCategoryRepository;
         this.crimeLevelByCategoryRepository = crimeLevelByCategoryRepository;
     }
 
-    public void calculate(LocalDate lastUpdateDate, String category) {
+    public CrimeLevelByCategory calculate(LocalDate lastUpdateDate, String category) {
             calculateIndexForLastYear(lastUpdateDate, category);
             calculateIndexForLast3Months(lastUpdateDate, category);
-            calculateAllTimeIndex(category);
+            return calculateAllTimeIndex(category);
     }
 
     private void calculateIndexForLastYear(LocalDate policeApiLastUpdate, String category) {
@@ -78,12 +74,11 @@ public class CrimesForLondonByCategoryIndexesCalculator {
         crimesForLondonByCategoryLast3MonthsIndexRepository.save(lastYearCrimesIndex);
     }
 
-    private void calculateAllTimeIndex(String category) {
+    private CrimeLevelByCategory calculateAllTimeIndex(String category) {
         var lastYearCrimes = crimeByCategoryRepository.findCrimeByKeyCategory(category);
         var numberOfCrimes = lastYearCrimes.size();
         var crimesByMonth = lastYearCrimes.stream().collect(Collectors.groupingBy(crime -> crime.getKey().getCrimeDate(), Collectors.counting()));
         calculateHighestCrimeLevel(crimesByMonth, category);
-        calculateCrimeLevelByCategory(crimesByMonth, category);
         var entriesByMonth = crimesByMonth.entrySet().stream().sorted(Comparator.comparing(Map.Entry::getValue)).collect(Collectors.toList());
         var medianByMonth = entriesByMonth.get((entriesByMonth.size()-1)/2).getValue().intValue();
         var meanByMonth = Long.valueOf(numberOfCrimes / (ChronoUnit.MONTHS.between(entriesByMonth.get(0).getKey(), LocalDate.now()))).intValue();
@@ -92,6 +87,7 @@ public class CrimesForLondonByCategoryIndexesCalculator {
         var lastYearCrimesIndex = new CrimesForLondonByCategoryAllTimeIndex(category, numberOfCrimes, medianByMonth, meanByMonth, meanByWeek, meanByDay, crimesByMonth);
         crimesForLondonByCategoryAllTimeIndexRepository.deleteById(category);
         crimesForLondonByCategoryAllTimeIndexRepository.save(lastYearCrimesIndex);
+        return calculateCrimeLevelByCategory(crimesByMonth, category);
     }
 
     private void calculateHighestCrimeLevel(Map<LocalDate, Long> crimesByMonth, String category) {
@@ -116,8 +112,8 @@ public class CrimesForLondonByCategoryIndexesCalculator {
         }
     }
 
-    private void calculateCrimeLevelByCategory(Map<LocalDate, Long> crimesByMonth, String category) {
-        crimeLevelByCategoryRepository.save(new CrimeLevelByCategory(category, crimesByMonth));
+    private CrimeLevelByCategory calculateCrimeLevelByCategory(Map<LocalDate, Long> crimesByMonth, String category) {
+        return crimeLevelByCategoryRepository.save(new CrimeLevelByCategory(category, crimesByMonth));
 
     }
 }

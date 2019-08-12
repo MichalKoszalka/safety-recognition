@@ -19,6 +19,6 @@ public class Street {
     private StreetKey key;
 
     @Column
-    private Long numericRepresentation;
+    private Integer numericRepresentation;
 
 }

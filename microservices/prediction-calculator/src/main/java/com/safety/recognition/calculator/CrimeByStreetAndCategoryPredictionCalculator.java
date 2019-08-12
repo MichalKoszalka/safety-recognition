@@ -28,8 +28,8 @@ public class CrimeByStreetAndCategoryPredictionCalculator {
     private String crimeByStreetAndCategoryModelPath;
 
     private final CrimeLevelByStreetAndCategoryRepository crimeLevelByStreetAndCategoryRepository;
-    private final Map<StreetKey, Long> streetsNormalised;
-    private final Map<String, Long> categoriesNormalised;
+    private final Map<StreetKey, Integer> streetsNormalised;
+    private final Map<String, Integer> categoriesNormalised;
 
     private final PredictionNetwork predictionNetwork;
 
@@ -47,13 +47,13 @@ public class CrimeByStreetAndCategoryPredictionCalculator {
         predictionNetwork.predict(crimeByStreetAndCategoryModelPath, testData);
     }
 
-    private List<List<Writable>>  parseCrimeData(List<CrimeLevelByStreetAndCategory> crimeLevelsByStreetCategory) {
+    private List<List<Writable>> parseCrimeData(List<CrimeLevelByStreetAndCategory> crimeLevelsByStreetCategory) {
         return crimeLevelsByStreetCategory.stream().map(crimeLevelByStreetAndCategory ->
                 crimeLevelByStreetAndCategory.getCrimesByMonth().entrySet().stream()
-                        .map(localDateLongEntry -> parseSingleMonthForTraining(localDateLongEntry, new LongWritable(categoriesNormalised.get(crimeLevelByStreetAndCategory.getKey().getCategory())), new LongWritable(streetsNormalised.get(new StreetKey(crimeLevelByStreetAndCategory.getKey().getStreet(), crimeLevelByStreetAndCategory.getKey().getNeighbourhood())))))).flatMap(listStream -> listStream).collect(Collectors.toList());
+                        .map(localDateLongEntry -> parseSingleMonthForTraining(localDateLongEntry, new IntWritable(categoriesNormalised.get(crimeLevelByStreetAndCategory.getKey().getCategory())), new IntWritable(streetsNormalised.get(new StreetKey(crimeLevelByStreetAndCategory.getKey().getStreet(), crimeLevelByStreetAndCategory.getKey().getNeighbourhood())))))).flatMap(listStream -> listStream).collect(Collectors.toList());
     }
 
-    private List<Writable> parseSingleMonthForTraining(Map.Entry<LocalDate, Long> crimesNumberForMonth, LongWritable categoryNormalised, LongWritable streetNormalised) {
+    private List<Writable> parseSingleMonthForTraining(Map.Entry<LocalDate, Long> crimesNumberForMonth, IntWritable categoryNormalised, IntWritable streetNormalised) {
         var writables =  new ArrayList<Writable>();
         writables.add(categoryNormalised);
         writables.add(streetNormalised);
@@ -62,7 +62,7 @@ public class CrimeByStreetAndCategoryPredictionCalculator {
         return writables;
     }
 
-    private List<Writable> parseSingleMonthForTest(LocalDate nextMonth, Long categoryNormalised, Long streetNormalised) {
+    private List<Writable> parseSingleMonthForTest(LocalDate nextMonth, Integer categoryNormalised, Integer streetNormalised) {
         var writables = new ArrayList<Writable>();
         writables.add(new LongWritable(categoryNormalised));
         writables.add(new LongWritable(streetNormalised));

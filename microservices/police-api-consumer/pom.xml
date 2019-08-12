@@ -41,7 +41,7 @@
         <dependency>
             <groupId>safety-recognition</groupId>
             <artifactId>commons</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.apache.kafka</groupId>
@@ -71,27 +71,27 @@
 
     </dependencies>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>com.google.cloud.tools</groupId>
-                <artifactId>jib-maven-plugin</artifactId>
-                <version>0.10.1</version>
-                <configuration>
-                    <from>
-                        <image>adoptopenjdk/openjdk11:alpine</image>
-                    </from>
-                    <to>
-                        <image>registry.hub.docker.com/michalkoszalka/police-api-consumer</image>
-                    </to>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+        <build>
+            <plugins>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                </plugin>
+                <plugin>
+                    <groupId>com.google.cloud.tools</groupId>
+                    <artifactId>jib-maven-plugin</artifactId>
+                    <version>0.10.1</version>
+                    <configuration>
+                        <from>
+                            <image>adoptopenjdk/openjdk11:alpine</image>
+                        </from>
+                        <to>
+                            <image>registry.hub.docker.com/michalkoszalka/police-api-consumer</image>
+                        </to>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </build>
 
 
 </project>

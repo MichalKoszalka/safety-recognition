@@ -5,10 +5,13 @@ import com.safety.recognition.client.CrimeCategoryClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
-import java.util.Random;
+import java.util.UUID;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
 public class StartFetchingCrimeCategoriesMessageListener {
@@ -29,9 +32,11 @@ public class StartFetchingCrimeCategoriesMessageListener {
         if (crimeCategoryRepository.findAll().isEmpty()) {
             LOG.info("starting fetching crime categories");
             var crimeCategories = crimeCategoryClient.getCrimeCategories();
+            AtomicInteger numericRepresentation = new AtomicInteger();
             crimeCategories.forEach(crimeCategory -> {
-                crimeCategory.setNumericRepresentation(new Random().nextLong());
                 crimeCategory.setName(crimeCategory.getName().toLowerCase().replace("-", " ").replace(" and ", " "));
+                crimeCategory.setUrl(crimeCategory.getUrl().toLowerCase().replace("-", " ").replace(" and ", " "));
+                crimeCategory.setNumericRepresentation(numericRepresentation.getAndIncrement());
             });
             crimeCategoryRepository.saveAll(crimeCategories);
             LOG.info("fetching crime categories finished");

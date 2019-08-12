@@ -29,7 +29,6 @@ public class CrimeLevelByNeighbourhoodAndCategory {
     private NeighbourhoodAndCategoryKey key;
 
     @Column
-//    @JsonSerialize(keyUsing = LocalDateSerializer.class)
     @JsonDeserialize(keyUsing = LocalDateKeyDeserializer.class)
     private Map<LocalDate, Long> crimesByMonth;
 

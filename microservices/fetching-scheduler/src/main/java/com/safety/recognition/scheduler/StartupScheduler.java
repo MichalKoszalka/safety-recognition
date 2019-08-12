@@ -1,5 +1,7 @@
 package com.safety.recognition.scheduler;
 
+import com.safety.recognition.cassandra.repository.CrimeCategoryRepository;
+import com.safety.recognition.cassandra.repository.NeighbourhoodRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -18,22 +20,29 @@ public class StartupScheduler {
     @Value("${kafka.topic.start.fetching.crime.categories}")
     private String startFetchingCrimeCategoriesTopic;
 
+    @Value("${kafka.topic.start.fetching.neighbourhoods}")
+    private String startFetchingNeighbourhoodsTopic;
+
     private final KafkaTemplate<UUID,String> kafkaTemplate;
+    private final CrimeCategoryRepository crimeCategoryRepository;
+    private final NeighbourhoodRepository neighbourhoodRepository;
 
     @Autowired
-    public StartupScheduler(KafkaTemplate<UUID, String> kafkaTemplate) {
+    public StartupScheduler(KafkaTemplate<UUID, String> kafkaTemplate, CrimeCategoryRepository crimeCategoryRepository, NeighbourhoodRepository neighbourhoodRepository) {
         this.kafkaTemplate = kafkaTemplate;
+        this.crimeCategoryRepository = crimeCategoryRepository;
+        this.neighbourhoodRepository = neighbourhoodRepository;
     }
 
     @PostConstruct
-    @Scheduled(cron = "0 0 12 1 * ?")
     public void sendFetchStartMessage() {
-        kafkaTemplate.send(startFetchingTopic, "start");
+        kafkaTemplate.send(startFetchingCrimeCategoriesTopic, "start");
+        kafkaTemplate.send(startFetchingNeighbourhoodsTopic, "start");
     }
 
-    @PostConstruct
+    @Scheduled(cron = "0 0 12 1 * ?")
     public void sendFetchCrimeCategoriesMessage() {
-        kafkaTemplate.send(startFetchingCrimeCategoriesTopic, "start");
+        kafkaTemplate.send(startFetchingTopic, "start");
     }
 
 }

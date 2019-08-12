@@ -28,7 +28,7 @@ public class CrimeByStreetPredictionCalculator {
     private String crimeByStreetModelPath;
 
     private final CrimeLevelByStreetRepository crimeLevelByStreetRepository;
-    private final Map<StreetKey, Long> streetsNormalised;
+    private final Map<StreetKey, Integer> streetsNormalised;
 
     private final PredictionNetwork predictionNetwork;
 
@@ -49,14 +49,14 @@ public class CrimeByStreetPredictionCalculator {
         List<List<Writable>> collect = new ArrayList<>();
         for (var crimeLevelByStreetAndCategory : crimeLevelsByStreetCategory) {
             for(var entry : crimeLevelByStreetAndCategory.getCrimesByMonth().entrySet()) {
-                collect.add(parseSingleMonthForTraining(entry, new LongWritable(streetsNormalised.get(new StreetKey(crimeLevelByStreetAndCategory.getKey().getStreet(), crimeLevelByStreetAndCategory.getKey().getNeighbourhood())))));
+                collect.add(parseSingleMonthForTraining(entry, new IntWritable(streetsNormalised.get(new StreetKey(crimeLevelByStreetAndCategory.getKey().getStreet(), crimeLevelByStreetAndCategory.getKey().getNeighbourhood())))));
 
             }
         }
         return collect;
     }
 
-    private List<Writable> parseSingleMonthForTraining(Map.Entry<LocalDate, Long> crimesNumberForMonth, LongWritable neighbourhoodNormalised) {
+    private List<Writable> parseSingleMonthForTraining(Map.Entry<LocalDate, Long> crimesNumberForMonth, IntWritable neighbourhoodNormalised) {
         var writables =  new ArrayList<Writable>();
         writables.add(neighbourhoodNormalised);
         writables.add(new IntWritable(crimesNumberForMonth.getKey().getYear()));
@@ -64,7 +64,7 @@ public class CrimeByStreetPredictionCalculator {
         return writables;
     }
 
-    private List<Writable> parseSingleMonthForTest(LocalDate nextMonth, Long neighbourhoodNormalised) {
+    private List<Writable> parseSingleMonthForTest(LocalDate nextMonth, Integer neighbourhoodNormalised) {
         var writables = new ArrayList<Writable>();
         writables.add(new LongWritable(neighbourhoodNormalised));
         writables.add(new IntWritable(nextMonth.getYear()));

@@ -5,7 +5,6 @@ import com.safety.recognition.kafka.messages.NeighbourhoodAndCategory;
 import com.safety.recognition.kafka.messages.StreetAndCategory;
 import com.safety.recognition.kafka.messages.StreetAndNeighbourhood;
 import com.safety.recognition.processor.CrimeProcessor;
-import data.police.uk.model.crime.Crime;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

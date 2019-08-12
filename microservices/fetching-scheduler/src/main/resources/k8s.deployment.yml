@@ -1,16 +1,25 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1beta1 # for versions before 1.8.0 use apps/v1beta1
 kind: Deployment
 metadata:
-name: safety-level-scheduler-deployment
+    name: fetching-scheduler
 spec:
-replicas: 1
-template:
-    metadata:
-    labels:
-        app: safety-level-scheduler
-    spec:
-    containers:
-    - name: safety-level-scheduler
-        image: michalkoszalka/safety-level-scheduler
-        ports:
-        - containerPort: 8090
+    selector:
+        matchLabels:
+            app: fetching-scheduler
+    replicas: 1 # tells deployment to run 3 pods matching the template
+    template: # create pods using pod definition in this template
+        metadata:
+            labels:
+                app: fetching-scheduler
+        spec:
+            containers:
+                - name: fetching-scheduler
+                  image: michalkoszalka/fetching-scheduler:latest
+                  ports:
+                      - containerPort: 8080
+                        name: server
+                      - containerPort: 8081
+                        name: management
+                  env:
+                    - name: KAFKA_BOOTSTRAP
+                      value: kafka-2.kafka-svc.default.svc.cluster.local:9093
