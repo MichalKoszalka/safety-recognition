@@ -4,7 +4,6 @@ import com.codepoetics.protonpack.maps.MapStream;
 import com.safety.recognition.cassandra.model.CrimeCategory;
 import com.safety.recognition.cassandra.model.Neighbourhood;
 import com.safety.recognition.cassandra.model.indexes.CrimeLevelByNeighbourhoodAndCategory;
-import com.safety.recognition.cassandra.model.indexes.IndexType;
 import com.safety.recognition.cassandra.model.indexes.NeighbourhoodAndCategoryKey;
 import com.safety.recognition.cassandra.model.predictions.CrimePredictionByNeighbourhoodAndCategory;
 import com.safety.recognition.cassandra.repository.CrimeCategoryRepository;
@@ -53,13 +52,13 @@ public class CrimeByNeighbourhoodAndCategoryPredictionCalculator {
         loadNeighbourhoodsAndCategories();
         var crimeLevelsByNeighbourhoodCategory = crimeLevelByNeighbourhoodAndCategoryRepository.findAll();
         var testData = crimeLevelsByNeighbourhoodCategory.stream().map(crimeLevelByNeighbourhoodCategory -> parseSingleMonthWithoutLabel(nextMonth, categoriesNormalised.get(crimeLevelByNeighbourhoodCategory.getKey().getCategory()), neighbourhoodsNormalised.get(crimeLevelByNeighbourhoodCategory.getKey().getNeighbourhood()))).collect(Collectors.toList());
-        var predictionResult = predictionNetwork.predict(crimeByNeighbourhoodAndCategoryModelPath, IndexType.NEIGHBOURHOOD_AND_CATEGORY, testData);
+        var predictionResult = predictionNetwork.predict(crimeByNeighbourhoodAndCategoryModelPath, testData);
         predictionResult.ifPresent(prediction -> savePredictionResult(prediction, testData));
     }
 
     public void train(CrimeLevelByNeighbourhoodAndCategory crimeLevelByNeighbourhoodAndCategory) {
         loadNeighbourhoodsAndCategories();
-        predictionNetwork.train(parseCrimeData(crimeLevelByNeighbourhoodAndCategory), IndexType.NEIGHBOURHOOD_AND_CATEGORY, crimeByNeighbourhoodAndCategoryModelPath);
+        predictionNetwork.train(parseCrimeData(crimeLevelByNeighbourhoodAndCategory), crimeByNeighbourhoodAndCategoryModelPath);
     }
 
     private void loadNeighbourhoodsAndCategories() {

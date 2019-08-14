@@ -1,6 +1,5 @@
 package com.safety.recognition.deeplearning;
 
-import com.safety.recognition.cassandra.model.indexes.IndexType;
 import com.safety.recognition.ui.NeuralNetworkUI;
 import org.apache.commons.io.FileUtils;
 import org.datavec.api.records.reader.impl.collection.CollectionRecordReader;
@@ -28,17 +27,13 @@ import org.springframework.stereotype.Service;
 import javax.inject.Inject;
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @Service
 public class PredictionNetwork {
 
     private static final Logger LOG = LoggerFactory.getLogger(PredictionNetwork.class);
-
-    private static Map<IndexType, MultiLayerNetwork> models = new HashMap<>();
 
     private final NeuralNetworkUI neuralNetworkUI;
 
@@ -60,9 +55,9 @@ public class PredictionNetwork {
                         .nIn(inputNeurons * 200).nOut(1).build()).backpropType(BackpropType.Standard).build();
     }
 
-    public Optional<INDArray> predict(String modelPath, IndexType indexType, List<List<Writable>> predictData) {
+    public Optional<INDArray> predict(String modelPath, List<List<Writable>> predictData) {
         LOG.info(String.format("Starting level prediction with model %s", modelPath));
-        return loadModel(modelPath, indexType).map(model -> {
+        return loadModel(modelPath).map(model -> {
                     var predictDataIterator = normalizeData(createDataSetIteratorWithoutLabel(predictData));
                     var output = model.output(predictDataIterator);
                     System.out.println(String.format("Prediction finished for model %s, outcome is \n: %s", modelPath, output));
@@ -70,18 +65,18 @@ public class PredictionNetwork {
                 }).orElse(Optional.empty());
     }
 
-    public void train(List<List<Writable>> trainData, IndexType indexType, String modelPath) {
+    public void train(List<List<Writable>> trainData, String modelPath) {
         LOG.info(String.format("Starting training model %s", modelPath));
-        var model = getOrCreateModel(modelPath, indexType, calculateInputNeurons(trainData));
+        var model = getOrCreateModel(modelPath, calculateInputNeurons(trainData));
         var iterator = normalizeData(new RecordReaderDataSetIterator.Builder(createDataReader(trainData), 10).regression(0).build());
         model.fit(iterator, 20);
         var evaluation = model.evaluateRegression(normalizeData(new RecordReaderDataSetIterator.Builder(createDataReader(trainData), 10).regression(0).build()));
         System.out.println(String.format("Evaluation finished, outcome is \n: %s", evaluation.stats()));
-        saveModel(model, indexType, modelPath);
+        saveModel(model, modelPath);
     }
 
-    private MultiLayerNetwork getOrCreateModel(String modelPath, IndexType indexType, int inputNeurons) {
-        return loadModel(modelPath, indexType).orElseGet(() -> createModel(createNetworkConfiguration(inputNeurons)));
+    private MultiLayerNetwork getOrCreateModel(String modelPath, int inputNeurons) {
+        return loadModel(modelPath).orElseGet(() -> createModel(createNetworkConfiguration(inputNeurons)));
     }
 
     private int calculateInputNeurons(List<List<Writable>> testData) {
@@ -95,11 +90,7 @@ public class PredictionNetwork {
         return neuralNetwork;
     }
 
-    private Optional<MultiLayerNetwork> loadModel(String modelPath, IndexType indexType) {
-        var model = models.get(indexType);
-        if(model != null) {
-            return Optional.of(model);
-        }
+    private Optional<MultiLayerNetwork> loadModel(String modelPath) {
         var resourceFile = getFileIfExists(this.getClass().getClassLoader().getResource("").getPath()+modelPath);
         if (resourceFile.isPresent()) {
             try {
@@ -117,9 +108,8 @@ public class PredictionNetwork {
         return file.exists() ? Optional.of(file) : Optional.empty();
     }
 
-    private void saveModel(MultiLayerNetwork model, IndexType indexType, String modelPath) {
+    private void saveModel(MultiLayerNetwork model, String modelPath) {
         try {
-            models.put(indexType, model);
             var pathInResources = this.getClass().getClassLoader().getResource("").getPath()+modelPath;
             var file = new File(pathInResources);
             if(!file.exists()) {

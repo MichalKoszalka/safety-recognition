@@ -10,7 +10,6 @@
 	<version>1.0-SNAPSHOT</version>
 	<modules>
 		<module>crimes-processor</module>
-		<module>safety-endpoint</module>
 		<module>fetching-scheduler</module>
 		<module>police-api-consumer</module>
         <module>commons</module>

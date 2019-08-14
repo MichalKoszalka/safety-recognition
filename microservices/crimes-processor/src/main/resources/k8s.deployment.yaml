@@ -6,7 +6,7 @@
     selector:
       matchLabels:
         app: crimes-processor
-    replicas: 1 # tells deployment to run 3 pods matching the template
+    replicas: 2 # tells deployment to run 3 pods matching the template
     template: # create pods using pod definition in this template
       metadata:
         labels:
@@ -26,4 +26,4 @@
           - name: CASSANDRA_HOST
             value: cassandra-0.cassandra.default.svc.cluster.local
           - name: CASSANDRA_PORT
-            value: 9042
+            value: "9042"

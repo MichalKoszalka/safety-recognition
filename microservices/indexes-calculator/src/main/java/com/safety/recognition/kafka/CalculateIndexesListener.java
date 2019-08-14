@@ -1,9 +1,8 @@
 package com.safety.recognition.kafka;
 
 import com.safety.recognition.calculator.*;
-import com.safety.recognition.kafka.messages.NeighbourhoodAndCategory;
 import com.safety.recognition.cassandra.model.indexes.*;
-import com.safety.recognition.cassandra.repository.LastUpdateDateRepository;
+import com.safety.recognition.kafka.messages.NeighbourhoodAndCategory;
 import com.safety.recognition.kafka.messages.StreetAndCategory;
 import com.safety.recognition.kafka.messages.StreetAndNeighbourhood;
 import data.police.uk.utils.MonthParser;
@@ -48,18 +47,18 @@ public class CalculateIndexesListener {
         this.crimeLevelByNeighbourhoodAndCategoryTrainMessageProducer = crimeLevelByNeighbourhoodAndCategoryTrainMessageProducer;
     }
 
-    @KafkaListener(topics = "calculate_indexes_for_london", containerFactory = "kafkaTrainPredictionModelForLondonListenerFactory")
-    public void crimesForLondonIndexesCalculatorListener(String month, String london) {
+    @KafkaListener(topics = "calculate_indexes_for_london", containerFactory = "kafkaCalculateIndexesStringListenerFactory")
+    public void crimesForLondonIndexesCalculatorListener(ConsumerRecord<String, String> cityByMonth) {
         LOG.info("Starting calculating indexes for London");
-        var lastUpdatedMonth = MonthParser.toLocalDate(month);
+        var lastUpdatedMonth = MonthParser.toLocalDate(cityByMonth.key());
         var highestCrimeLevel = crimesForLondonIndexesCalculator.calculate(lastUpdatedMonth);
         if (!highestCrimeLevel.getCrimesByMonth().isEmpty()) {
-            crimeLevelTrainMessageProducer.send("train_prediction_model_for_london", month, highestCrimeLevel);
+            crimeLevelTrainMessageProducer.send("train_prediction_model_for_london", cityByMonth.key(), highestCrimeLevel);
         }
         LOG.info("Finished calculating indexes for London");
     }
 
-    @KafkaListener(topics = "calculate_indexes_for_london_by_category", containerFactory = "kafkaTrainPredictionModelByCategoryistenerFactory")
+        @KafkaListener(topics = "calculate_indexes_for_london_by_category", containerFactory = "kafkaCalculateIndexesStringListenerFactory")
     public void crimesForLondonByCategoryIndexesCalculatorListener(ConsumerRecord<String, String> categoryByMonth) {
         LOG.info(String.format("Starting calculating indexes for London and category %s", categoryByMonth.value()));
         var lastUpdatedMonth = MonthParser.toLocalDate(categoryByMonth.key());
@@ -70,7 +69,7 @@ public class CalculateIndexesListener {
         LOG.info(String.format("Finished calculating indexes for London and category %s", categoryByMonth.value()));
     }
 
-    @KafkaListener(topics = "calculate_indexes_by_street", containerFactory = "kafkaCalculateIndexesStreetAndCategoryListenerFactory")
+    @KafkaListener(topics = "calculate_indexes_by_street", containerFactory = "kafkaCalculateIndexesStreetAndNeighbourhoodListenerFactory")
     public void crimesByStreetIndexesCalculatorListener(ConsumerRecord<String, StreetAndNeighbourhood> streetAndNeighbourhoodByMonth) {
         LOG.info(String.format("Starting calculating indexes for London and street %s in neighbourhood %s", streetAndNeighbourhoodByMonth.value().getStreet(), streetAndNeighbourhoodByMonth.value().getNeighbourhood()));
         var lastUpdatedMonth = MonthParser.toLocalDate(streetAndNeighbourhoodByMonth.key());

@@ -24,42 +24,57 @@ public class KafkaTopicConfig {
     }
 
     @Bean
+    public NewTopic neighbourhoodsFetched() {
+        return new NewTopic("neighbourhoods_fetched", 1, (short) 3);
+    }
+
+    @Bean
+    public NewTopic startFetchingCrimeData() {
+        return new NewTopic("start_fetching_crime_data", 1, (short) 3);
+    }
+
+    @Bean
+    public NewTopic fetchCrimes() {
+        return new NewTopic("fetch_crimes", 1, (short) 3);
+    }
+
+    @Bean
     public NewTopic calculateIndexesForLondon() {
-        return new NewTopic("calculate_indexes_for_london", 5, (short) 1);
+        return new NewTopic("calculate_indexes_for_london", 5, (short) 3);
     }
 
     @Bean
     public NewTopic calculateIndexesForLondonByCategory() {
-        return new NewTopic("calculate_indexes_for_london_by_category", 5, (short) 1);
+        return new NewTopic("calculate_indexes_for_london_by_category", 5, (short) 3);
     }
 
     @Bean
     public NewTopic calculateIndexesByStreet() {
-        return new NewTopic("calculate_indexes_by_street", 5, (short) 1);
+        return new NewTopic("calculate_indexes_by_street", 5, (short) 3);
     }
 
     @Bean
     public NewTopic calculateIndexesByStreetAndCategory() {
-        return new NewTopic("calculate_indexes_by_street_and_category", 5, (short) 1);
+        return new NewTopic("calculate_indexes_by_street_and_category", 5, (short) 3);
     }
 
     @Bean
     public NewTopic calculateIndexesByNeighbourhood() {
-        return new NewTopic("calculate_indexes_by_neighbourhood", 5, (short) 1);
+        return new NewTopic("calculate_indexes_by_neighbourhood", 5, (short) 3);
     }
 
     @Bean
     public NewTopic calculateIndexesByNeighbourhoodAndCategory() {
-        return new NewTopic("calculate_indexes_by_neighbourhood_and_category", 5, (short) 1);
+        return new NewTopic("calculate_indexes_by_neighbourhood_and_category", 5, (short) 3);
     }
 
     @Bean
     public NewTopic calculatePrediction() {
-        return new NewTopic("calculate_prediction", 30, (short) 1);
+        return new NewTopic("calculate_prediction", 5, (short) 3);
     }
 
     @Bean
     public NewTopic newCrimes() {
-        return new NewTopic("new_crimes", 5, (short) 1);
+        return new NewTopic("new_crimes", 2, (short) 3);
     }
 }
