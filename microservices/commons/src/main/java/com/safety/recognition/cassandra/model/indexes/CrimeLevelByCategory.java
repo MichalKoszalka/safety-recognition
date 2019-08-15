@@ -1,5 +1,7 @@
 package com.safety.recognition.cassandra.model.indexes;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.key.LocalDateKeyDeserializer;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,6 +24,7 @@ public class CrimeLevelByCategory {
     private String category;
 
     @Column
+    @JsonDeserialize(keyUsing = LocalDateKeyDeserializer.class)
     private Map<LocalDate, Long> crimesByMonth;
 
 }

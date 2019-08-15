@@ -34,7 +34,7 @@ public class ModelTrainingListener {
         this.predictionMessageProducer = predictionMessageProducer;
     }
 
-    @KafkaListener(topics = "train_prediction_model_for_london", containerFactory = "kafkaCalculatePredictionListenerFactory")
+    @KafkaListener(topics = "train_prediction_model_for_london", containerFactory = "kafkaTrainPredictionModelForLondonListenerFactory")
     public void crimesForLondonPredictionModelTrainListener(ConsumerRecord<String, CrimeLevel> record) {
         LOG.info("Starting training model");
         crimeForLondonPredictionCalculator.train(record.value());
@@ -42,7 +42,7 @@ public class ModelTrainingListener {
         predictionMessageProducer.send("calculate_prediction", IndexType.LONDON.getName(), record.key());
     }
 
-    @KafkaListener(topics = "train_prediction_model_by_category", containerFactory = "kafkaCalculatePredictionListenerFactory")
+    @KafkaListener(topics = "train_prediction_model_by_category", containerFactory = "kafkaTrainPredictionModelByCategoryListenerFactory")
     public void crimesByCategoryPredictionModelTrainListener(ConsumerRecord<String, CrimeLevelByCategory> record) {
         LOG.info("Starting training model");
         crimeForLondonByCategoryPredictionCalculator.train(record.value());
@@ -50,7 +50,7 @@ public class ModelTrainingListener {
         predictionMessageProducer.send("calculate_prediction", IndexType.LONDON_AND_CATEGORY.getName(), record.key());
     }
 
-    @KafkaListener(topics = "train_prediction_model_by_neighbourhood", containerFactory = "kafkaCalculatePredictionListenerFactory")
+    @KafkaListener(topics = "train_prediction_model_by_neighbourhood", containerFactory = "kafkaTrainPredictionModelByNeighbourhoodListenerFactory")
     public void crimesByNeighbourhoodPredictionModelTrainListener(ConsumerRecord<String, CrimeLevelByNeighbourhood> record) {
         LOG.info("Starting training model");
         crimeByNeighbourhoodPredictionCalculator.train(record.value());
@@ -66,7 +66,7 @@ public class ModelTrainingListener {
         predictionMessageProducer.send("calculate_prediction", IndexType.NEIGHBOURHOOD_AND_CATEGORY.getName(), record.key());
     }
 
-    @KafkaListener(topics = "train_prediction_model_by_street", containerFactory = "kafkaCalculatePredictionListenerFactory")
+    @KafkaListener(topics = "train_prediction_model_by_street", containerFactory = "kafkaTrainPredictionModelByStreetListenerFactory")
     public void crimesByStreetPredictionModelTrainListener(ConsumerRecord<String, CrimeLevelByStreet> record) {
         LOG.info("Starting training model");
         crimeByStreetPredictionCalculator.train(record.value());
@@ -74,7 +74,7 @@ public class ModelTrainingListener {
         predictionMessageProducer.send("calculate_prediction", IndexType.STREET.getName(), record.key());
     }
 
-    @KafkaListener(topics = "train_prediction_model_by_street_and_category", containerFactory = "kafkaCalculatePredictionListenerFactory")
+    @KafkaListener(topics = "train_prediction_model_by_street_and_category", containerFactory = "kafkaTrainPredictionModelByStreetAndCategoryListenerFactory")
     public void crimesByStreetAndCategoryPredictionModelTrainListener(ConsumerRecord<String, CrimeLevelByStreetAndCategory> record) {
         LOG.info("Starting training model");
         crimeByStreetAndCategoryPredictionCalculator.train(record.value());

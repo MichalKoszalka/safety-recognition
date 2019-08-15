@@ -1,5 +1,7 @@
 package com.safety.recognition.cassandra.model.indexes;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.key.LocalDateKeyDeserializer;
 import com.safety.recognition.cassandra.model.StreetKey;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,6 +25,7 @@ public class CrimeLevelByStreet {
     private StreetKey key;
 
     @Column
+    @JsonDeserialize(keyUsing = LocalDateKeyDeserializer.class)
     private Map<LocalDate, Long> crimesByMonth;
 
 }
