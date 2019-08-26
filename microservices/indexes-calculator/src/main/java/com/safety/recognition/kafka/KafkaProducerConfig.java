@@ -36,37 +36,8 @@ public class KafkaProducerConfig {
     }
 
     @Bean
-    public KafkaTemplate<String, String> predictMessageProducer() {
-        return new KafkaTemplate<>(producerFactory(StringSerializer.class));
-    }
-
-    @Bean
-    public KafkaTemplate<String, CrimeLevel> crimeLevelKafkaTemplate() {
-        return new KafkaTemplate<>(producerFactory(JsonSerializer.class));
-    }
-
-    @Bean
-    public KafkaTemplate<String, CrimeLevelByCategory> crimeLevelByCategoryKafkaTemplate() {
-        return new KafkaTemplate<>(producerFactory(JsonSerializer.class));
-    }
-
-    @Bean
-    public KafkaTemplate<String, CrimeLevelByNeighbourhood> crimeLevelByNeighbourhoodKafkaTemplate() {
-        return new KafkaTemplate<>(producerFactory(JsonSerializer.class));
-    }
-
-    @Bean
     public KafkaTemplate<String, CrimeLevelByNeighbourhoodAndCategory> crimeLevelByNeighbourhoodAndCategoryKafkaTemplate() {
         return new KafkaTemplate<>(producerFactory(JsonSerializer.class));
     }
 
-    @Bean
-    public KafkaTemplate<String, CrimeLevelByStreet> crimeLevelByStreetKafkaTemplate() {
-        return new KafkaTemplate<>(producerFactory(JsonSerializer.class));
-    }
-
-    @Bean
-    public KafkaTemplate<String, CrimeLevelByStreetAndCategory> crimeLevelByStreetAndCategoryKafkaTemplate() {
-        return new KafkaTemplate<>(producerFactory(JsonSerializer.class));
-    }
 }

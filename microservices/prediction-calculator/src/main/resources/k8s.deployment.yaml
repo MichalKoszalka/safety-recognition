@@ -18,7 +18,7 @@ spec:
     selector:
         matchLabels:
             app: prediction-calculator
-    replicas: 5 # tells deployment to run 3 pods matching the template
+    replicas: 1 # tells deployment to run 3 pods matching the template
     template: # create pods using pod definition in this template
         metadata:
             labels:
@@ -41,6 +41,10 @@ spec:
                         value: cassandra-0.cassandra.default.svc.cluster.local
                       - name: CASSANDRA_PORT
                         value: "9042"
+                  resources:
+                    requests:
+                      memory: "4Gi"
+                      cpu: 2000m
             volumes:
             - name: models-data
               persistentVolumeClaim:

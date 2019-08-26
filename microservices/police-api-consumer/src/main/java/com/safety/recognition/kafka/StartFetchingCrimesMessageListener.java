@@ -1,6 +1,8 @@
 package com.safety.recognition.kafka;
 
+import com.safety.recognition.cassandra.model.CrimesFetchingStatus;
 import com.safety.recognition.cassandra.model.Neighbourhood;
+import com.safety.recognition.cassandra.repository.FetchingStatusRepository;
 import com.safety.recognition.cassandra.repository.NeighbourhoodRepository;
 import com.safety.recognition.client.CrimeClient;
 import com.safety.recognition.client.UpdateDateClient;
@@ -27,20 +29,23 @@ public class StartFetchingCrimesMessageListener {
     private final CrimeClient crimeClient;
     private final CrimeMessageProducer crimeMessageProducer;
     private final UpdateDateClient updateDateClient;
-    private static final LocalDate CRIME_API_FIRST_DATE = LocalDate.of(2017, 1, 1);
+    private final FetchingStatusRepository fetchingStatusRepository;
+    private static final LocalDate CRIME_API_FIRST_DATE = LocalDate.of(2016, 8, 1);
 
     @Autowired
-    public StartFetchingCrimesMessageListener(NeighbourhoodRepository neighbourhoodRepository, LastUpdateDateService lastUpdateDateService, CrimeClient crimeClient, CrimeMessageProducer crimeMessageProducer, UpdateDateClient updateDateClient) {
+    public StartFetchingCrimesMessageListener(NeighbourhoodRepository neighbourhoodRepository, LastUpdateDateService lastUpdateDateService, CrimeClient crimeClient, CrimeMessageProducer crimeMessageProducer, UpdateDateClient updateDateClient, FetchingStatusRepository fetchingStatusRepository) {
         this.neighbourhoodRepository = neighbourhoodRepository;
         this.lastUpdateDateService = lastUpdateDateService;
         this.crimeClient = crimeClient;
         this.crimeMessageProducer = crimeMessageProducer;
         this.updateDateClient = updateDateClient;
+        this.fetchingStatusRepository = fetchingStatusRepository;
     }
 
     @KafkaListener(topics = "start_fetching_crime_data", containerFactory = "kafkaStartFetchingListenerFactory")
     public void startFetchingListener() {
         LOG.info("starting fetching crime data");
+        updateFetchingStatus(CrimesFetchingStatus.FETCHING_IN_PROGESS);
         var neighbourhoods = neighbourhoodRepository.findAll();
         var lastUpdateDate = lastUpdateDateService.loadLastUpdateDate();
         var policeApiUpdateDate = updateDateClient.getUpdateDate();
@@ -51,6 +56,7 @@ public class StartFetchingCrimesMessageListener {
             LOG.info("fetching again");
             loadCrimesToKafka(neighbourhoods, lastUpdateDate.get().getPoliceApiLastUpdate(), policeApiUpdateDate.getDate());
         }
+        updateFetchingStatus(CrimesFetchingStatus.FETCHED);
         LOG.info("fetching crime data finished");
     }
 
@@ -58,7 +64,7 @@ public class StartFetchingCrimesMessageListener {
         var currentMonth = LocalDate.from(from);
         do {
             LocalDate finalCurrentMonth = currentMonth;
-            ParallelRunner parallelRunner = new ParallelRunner(5, Duration.ofSeconds(1L));
+            ParallelRunner parallelRunner = new ParallelRunner(4, Duration.ofSeconds(1L));
             parallelRunner.submit(neighbourhoods, (neighbourhood) -> getAndSendCrimes(neighbourhood, finalCurrentMonth));
             lastUpdateDateService.merge(currentMonth);
             currentMonth = currentMonth.plusMonths(1);
@@ -67,6 +73,13 @@ public class StartFetchingCrimesMessageListener {
 
     private void getAndSendCrimes(Neighbourhood neighbourhood, LocalDate finalCurrentMonth) {
         crimeMessageProducer.sendMessage(neighbourhood.getName(), new Crimes(crimeClient.getCrimes(neighbourhood, finalCurrentMonth)));
+    }
+
+    private void updateFetchingStatus(CrimesFetchingStatus crimesFetchingStatus) {
+        fetchingStatusRepository.findById(1L).ifPresent((status) -> {
+            status.setCrimesFetchingStatus(crimesFetchingStatus);
+            fetchingStatusRepository.save(status);
+        });
     }
 
 }

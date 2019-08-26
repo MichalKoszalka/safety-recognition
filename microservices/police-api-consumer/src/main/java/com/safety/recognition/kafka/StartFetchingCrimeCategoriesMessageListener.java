@@ -1,16 +1,14 @@
 package com.safety.recognition.kafka;
 
 import com.safety.recognition.cassandra.repository.CrimeCategoryRepository;
+import com.safety.recognition.cassandra.repository.FetchingStatusRepository;
 import com.safety.recognition.client.CrimeCategoryClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.annotation.KafkaListener;
-import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
-import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
@@ -20,11 +18,13 @@ public class StartFetchingCrimeCategoriesMessageListener {
 
     private final CrimeCategoryClient crimeCategoryClient;
     private final CrimeCategoryRepository crimeCategoryRepository;
+    private final FetchingStatusRepository fetchingStatusRepository;
 
     @Autowired
-    public StartFetchingCrimeCategoriesMessageListener(CrimeCategoryClient crimeCategoryClient, CrimeCategoryRepository crimeCategoryRepository) {
+    public StartFetchingCrimeCategoriesMessageListener(CrimeCategoryClient crimeCategoryClient, CrimeCategoryRepository crimeCategoryRepository, FetchingStatusRepository fetchingStatusRepository) {
         this.crimeCategoryClient = crimeCategoryClient;
         this.crimeCategoryRepository = crimeCategoryRepository;
+        this.fetchingStatusRepository = fetchingStatusRepository;
     }
 
     @KafkaListener(topics = "start_fetching_crime_categories", containerFactory = "kafkaStartFetchingListenerFactory")
@@ -39,6 +39,10 @@ public class StartFetchingCrimeCategoriesMessageListener {
                 crimeCategory.setNumericRepresentation(numericRepresentation.getAndIncrement());
             });
             crimeCategoryRepository.saveAll(crimeCategories);
+            fetchingStatusRepository.findById(1L).ifPresent((status) -> {
+                status.setCategoriesFetched(true);
+                fetchingStatusRepository.save(status);
+            });
             LOG.info("fetching crime categories finished");
         } else {
             LOG.info("skipping fetching crime categories, data already exists");

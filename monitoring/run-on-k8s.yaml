@@ -2443,6 +2443,32 @@ data:
         static_configs:
           - targets: ['kafka-minion:8080']
 
+      - job_name: 'prediction-calculator'
+        scrape_interval: 5s
+        static_configs:
+          - targets: ['prediction-calculator:8080']
+
+      - job_name: 'police-api-consumer'
+        scrape_interval: 5s
+        static_configs:
+          - targets: ['police-api-consumer:8080']
+
+      - job_name: 'fetching-scheduler'
+        scrape_interval: 5s
+        static_configs:
+          - targets: ['fetching-scheduler:8080']
+
+      - job_name: 'crimes-processor'
+        scrape_interval: 5s
+        static_configs:
+          - targets: ['crimes-processor:8080']
+
+      - job_name: 'indexes-calculator'
+        scrape_interval: 5s
+        static_configs:
+          - targets: ['indexes-calculator:8080']
+
+
       # https://github.com/prometheus/prometheus/blob/master/documentation/examples/prometheus-kubernetes.yml#L37
       - job_name: 'kubernetes-nodes'
         tls_config:

@@ -8,6 +8,8 @@ import org.springframework.data.cassandra.core.cql.PrimaryKeyType;
 import org.springframework.data.cassandra.core.mapping.PrimaryKeyClass;
 import org.springframework.data.cassandra.core.mapping.PrimaryKeyColumn;
 
+import java.util.Objects;
+
 @PrimaryKeyClass
 @AllArgsConstructor
 @NoArgsConstructor
@@ -21,5 +23,17 @@ public class NeighbourhoodAndCategoryKey {
     @PrimaryKeyColumn(type = PrimaryKeyType.PARTITIONED)
     private String category;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        NeighbourhoodAndCategoryKey that = (NeighbourhoodAndCategoryKey) o;
+        return Objects.equals(neighbourhood, that.neighbourhood) &&
+                Objects.equals(category, that.category);
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(neighbourhood, category);
+    }
 }

@@ -24,26 +24,16 @@ public class CalculateIndexesListener {
     private final CrimesByStreetIndexesCalculator crimesByStreetIndexesCalculator;
     private final CrimesForLondonByCategoryIndexesCalculator crimesForLondonByCategoryIndexesCalculator;
     private final CrimesForLondonIndexesCalculator crimesForLondonIndexesCalculator;
-    private final KafkaTemplate<String, CrimeLevel> crimeLevelTrainMessageProducer;
-    private final KafkaTemplate<String, CrimeLevelByCategory> crimeLevelByCategoryTrainMessageProducer;
-    private final KafkaTemplate<String, CrimeLevelByStreet> crimeLevelByStreetTrainMessageProducer;
-    private final KafkaTemplate<String, CrimeLevelByStreetAndCategory> crimeLevelByStreetAndCategoryTrainMessageProducer;
-    private final KafkaTemplate<String, CrimeLevelByNeighbourhood> crimeLevelByNeighbourhoodTrainMessageProducer;
     private final KafkaTemplate<String, CrimeLevelByNeighbourhoodAndCategory> crimeLevelByNeighbourhoodAndCategoryTrainMessageProducer;
 
 
-    public CalculateIndexesListener(CrimesByNeighbourhoodAndCategoryIndexesCalculator crimesByNeighbourhoodAndCategoryIndexesCalculator, CrimesByNeighbourhoodIndexesCalculator crimesByNeighbourhoodIndexesCalculator, CrimesByStreetAndCategoryIndexesCalculator crimesByStreetAndCategoryIndexesCalculator, CrimesByStreetIndexesCalculator crimesByStreetIndexesCalculator, CrimesForLondonByCategoryIndexesCalculator crimesForLondonByCategoryIndexesCalculator, CrimesForLondonIndexesCalculator crimesForLondonIndexesCalculator, KafkaTemplate<String, CrimeLevel> crimeLevelTrainMessageProducer, KafkaTemplate<String, CrimeLevelByCategory> crimeLevelByCategoryTrainMessageProducer, KafkaTemplate<String, CrimeLevelByStreet> crimeLevelByStreetTrainMessageProducer, KafkaTemplate<String, CrimeLevelByStreetAndCategory> crimeLevelByStreetAndCategoryTrainMessageProducer, KafkaTemplate<String, CrimeLevelByNeighbourhood> crimeLevelByNeighbourhoodTrainMessageProducer, KafkaTemplate<String, CrimeLevelByNeighbourhoodAndCategory> crimeLevelByNeighbourhoodAndCategoryTrainMessageProducer) {
+    public CalculateIndexesListener(CrimesByNeighbourhoodAndCategoryIndexesCalculator crimesByNeighbourhoodAndCategoryIndexesCalculator, CrimesByNeighbourhoodIndexesCalculator crimesByNeighbourhoodIndexesCalculator, CrimesByStreetAndCategoryIndexesCalculator crimesByStreetAndCategoryIndexesCalculator, CrimesByStreetIndexesCalculator crimesByStreetIndexesCalculator, CrimesForLondonByCategoryIndexesCalculator crimesForLondonByCategoryIndexesCalculator, CrimesForLondonIndexesCalculator crimesForLondonIndexesCalculator, KafkaTemplate<String, CrimeLevelByNeighbourhoodAndCategory> crimeLevelByNeighbourhoodAndCategoryTrainMessageProducer) {
         this.crimesByNeighbourhoodAndCategoryIndexesCalculator = crimesByNeighbourhoodAndCategoryIndexesCalculator;
         this.crimesByNeighbourhoodIndexesCalculator = crimesByNeighbourhoodIndexesCalculator;
         this.crimesByStreetAndCategoryIndexesCalculator = crimesByStreetAndCategoryIndexesCalculator;
         this.crimesByStreetIndexesCalculator = crimesByStreetIndexesCalculator;
         this.crimesForLondonByCategoryIndexesCalculator = crimesForLondonByCategoryIndexesCalculator;
         this.crimesForLondonIndexesCalculator = crimesForLondonIndexesCalculator;
-        this.crimeLevelTrainMessageProducer = crimeLevelTrainMessageProducer;
-        this.crimeLevelByCategoryTrainMessageProducer = crimeLevelByCategoryTrainMessageProducer;
-        this.crimeLevelByStreetTrainMessageProducer = crimeLevelByStreetTrainMessageProducer;
-        this.crimeLevelByStreetAndCategoryTrainMessageProducer = crimeLevelByStreetAndCategoryTrainMessageProducer;
-        this.crimeLevelByNeighbourhoodTrainMessageProducer = crimeLevelByNeighbourhoodTrainMessageProducer;
         this.crimeLevelByNeighbourhoodAndCategoryTrainMessageProducer = crimeLevelByNeighbourhoodAndCategoryTrainMessageProducer;
     }
 
@@ -51,10 +41,7 @@ public class CalculateIndexesListener {
     public void crimesForLondonIndexesCalculatorListener(ConsumerRecord<String, String> cityByMonth) {
         LOG.info("Starting calculating indexes for London");
         var lastUpdatedMonth = MonthParser.toLocalDate(cityByMonth.key());
-        var highestCrimeLevel = crimesForLondonIndexesCalculator.calculate(lastUpdatedMonth);
-        if (!highestCrimeLevel.getCrimesByMonth().isEmpty()) {
-            crimeLevelTrainMessageProducer.send("train_prediction_model_for_london", cityByMonth.key(), highestCrimeLevel);
-        }
+        crimesForLondonIndexesCalculator.calculate(lastUpdatedMonth);
         LOG.info("Finished calculating indexes for London");
     }
 
@@ -62,10 +49,7 @@ public class CalculateIndexesListener {
     public void crimesForLondonByCategoryIndexesCalculatorListener(ConsumerRecord<String, String> categoryByMonth) {
         LOG.info(String.format("Starting calculating indexes for London and category %s", categoryByMonth.value()));
         var lastUpdatedMonth = MonthParser.toLocalDate(categoryByMonth.key());
-        var highestCrimeLevel = crimesForLondonByCategoryIndexesCalculator.calculate(lastUpdatedMonth, categoryByMonth.value());
-        if (!highestCrimeLevel.getCrimesByMonth().isEmpty()) {
-            crimeLevelByCategoryTrainMessageProducer.send("train_prediction_model_for_london_by_category", categoryByMonth.key(), highestCrimeLevel);
-        }
+        crimesForLondonByCategoryIndexesCalculator.calculate(lastUpdatedMonth, categoryByMonth.value());
         LOG.info(String.format("Finished calculating indexes for London and category %s", categoryByMonth.value()));
     }
 
@@ -73,10 +57,7 @@ public class CalculateIndexesListener {
     public void crimesByStreetIndexesCalculatorListener(ConsumerRecord<String, StreetAndNeighbourhood> streetAndNeighbourhoodByMonth) {
         LOG.info(String.format("Starting calculating indexes for London and street %s in neighbourhood %s", streetAndNeighbourhoodByMonth.value().getStreet(), streetAndNeighbourhoodByMonth.value().getNeighbourhood()));
         var lastUpdatedMonth = MonthParser.toLocalDate(streetAndNeighbourhoodByMonth.key());
-        var highestCrimeLevel = crimesByStreetIndexesCalculator.calculate(lastUpdatedMonth, streetAndNeighbourhoodByMonth.value());
-        if (!highestCrimeLevel.getCrimesByMonth().isEmpty()) {
-            crimeLevelByStreetTrainMessageProducer.send("train_prediction_model_by_street", streetAndNeighbourhoodByMonth.key(), highestCrimeLevel);
-        }
+        crimesByStreetIndexesCalculator.calculate(lastUpdatedMonth, streetAndNeighbourhoodByMonth.value());
         LOG.info(String.format("Finished calculating indexes for London and street %s in neighbourhood %s", streetAndNeighbourhoodByMonth.value().getStreet(), streetAndNeighbourhoodByMonth.value().getNeighbourhood()));
     }
 
@@ -84,10 +65,7 @@ public class CalculateIndexesListener {
     public void crimesByStreetAndCategoryIndexesCalculatorListener(ConsumerRecord<String, StreetAndCategory> streetAndCategoryByMonth) {
         LOG.info(String.format("Starting calculating indexes for London and street %s in neighbourhood %s and category %s", streetAndCategoryByMonth.value().getStreetAndNeighbourhood().getStreet(), streetAndCategoryByMonth.value().getStreetAndNeighbourhood().getNeighbourhood(), streetAndCategoryByMonth.value().getCategory()));
         var lastUpdatedMonth = MonthParser.toLocalDate(streetAndCategoryByMonth.key());
-        var highestCrimeLevel = crimesByStreetAndCategoryIndexesCalculator.calculate(lastUpdatedMonth, streetAndCategoryByMonth.value().getStreetAndNeighbourhood(), streetAndCategoryByMonth.value().getCategory());
-        if (!highestCrimeLevel.getCrimesByMonth().isEmpty()) {
-            crimeLevelByStreetAndCategoryTrainMessageProducer.send("train_prediction_model_by_street_and_category", streetAndCategoryByMonth.key(), highestCrimeLevel);
-        }
+        crimesByStreetAndCategoryIndexesCalculator.calculate(lastUpdatedMonth, streetAndCategoryByMonth.value().getStreetAndNeighbourhood(), streetAndCategoryByMonth.value().getCategory());
         LOG.info(String.format("Finished calculating indexes for London and street %s in neighbourhood %s and category %s", streetAndCategoryByMonth.value().getStreetAndNeighbourhood().getStreet(), streetAndCategoryByMonth.value().getStreetAndNeighbourhood().getNeighbourhood(), streetAndCategoryByMonth.value().getCategory()));
     }
 
@@ -95,10 +73,7 @@ public class CalculateIndexesListener {
     public void crimesByNeighbourhoodIndexesCalculatorListener(ConsumerRecord<String, String> neighbourhoodByMonth) {
         LOG.info(String.format("Starting calculating indexes for London and neighbourhood %s", neighbourhoodByMonth.value()));
         var lastUpdatedMonth = MonthParser.toLocalDate(neighbourhoodByMonth.key());
-        var highestCrimeLevel = crimesByNeighbourhoodIndexesCalculator.calculate(lastUpdatedMonth, neighbourhoodByMonth.value());
-        if (!highestCrimeLevel.getCrimesByMonth().isEmpty()) {
-            crimeLevelByNeighbourhoodTrainMessageProducer.send("train_prediction_model_by_neighbourhood", neighbourhoodByMonth.key(), highestCrimeLevel);
-        }
+        crimesByNeighbourhoodIndexesCalculator.calculate(lastUpdatedMonth, neighbourhoodByMonth.value());
         LOG.info(String.format("Finished calculating indexes for London and neighbourhood %s", neighbourhoodByMonth.value()));
     }
 

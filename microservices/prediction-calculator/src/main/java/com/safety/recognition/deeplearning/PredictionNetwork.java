@@ -1,5 +1,6 @@
 package com.safety.recognition.deeplearning;
 
+import com.safety.recognition.metrics.EvaluationMetricsManager;
 import com.safety.recognition.ui.NeuralNetworkUI;
 import org.apache.commons.io.FileUtils;
 import org.datavec.api.records.reader.impl.collection.CollectionRecordReader;
@@ -33,12 +34,15 @@ import java.util.Optional;
 @Service
 public class PredictionNetwork {
 
+    private final EvaluationMetricsManager evaluationMetricsManager;
+
     private static final Logger LOG = LoggerFactory.getLogger(PredictionNetwork.class);
 
     private final NeuralNetworkUI neuralNetworkUI;
 
     @Inject
-    public PredictionNetwork(NeuralNetworkUI neuralNetworkUI) {
+    public PredictionNetwork(EvaluationMetricsManager evaluationMetricsManager, NeuralNetworkUI neuralNetworkUI) {
+        this.evaluationMetricsManager = evaluationMetricsManager;
         this.neuralNetworkUI = neuralNetworkUI;
     }
 
@@ -60,7 +64,7 @@ public class PredictionNetwork {
         return loadModel(modelPath).map(model -> {
                     var predictDataIterator = normalizeData(createDataSetIteratorWithoutLabel(predictData));
                     var output = model.output(predictDataIterator);
-                    System.out.println(String.format("Prediction finished for model %s, outcome is \n: %s", modelPath, output));
+                    LOG.info(String.format("Prediction finished for model %s, outcome is \n: %s", modelPath, output));
                     return Optional.of(output);
                 }).orElse(Optional.empty());
     }
@@ -71,7 +75,8 @@ public class PredictionNetwork {
         var iterator = normalizeData(new RecordReaderDataSetIterator.Builder(createDataReader(trainData), 10).regression(0).build());
         model.fit(iterator, 20);
         var evaluation = model.evaluateRegression(normalizeData(new RecordReaderDataSetIterator.Builder(createDataReader(trainData), 10).regression(0).build()));
-        System.out.println(String.format("Evaluation finished, outcome is \n: %s", evaluation.stats()));
+        LOG.info(String.format("Evaluation finished, outcome is \n: %s", evaluation.stats()));
+        evaluationMetricsManager.updateEvaluationMetrics(evaluation);
         saveModel(model, modelPath);
     }
 

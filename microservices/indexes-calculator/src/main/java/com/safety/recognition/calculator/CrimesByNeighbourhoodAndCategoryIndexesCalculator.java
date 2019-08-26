@@ -4,8 +4,8 @@ import com.safety.recognition.cassandra.model.indexes.*;
 import com.safety.recognition.cassandra.repository.LastUpdateDateRepository;
 import com.safety.recognition.cassandra.repository.crime.CrimeByNeighbourhoodAndCategoryRepository;
 import com.safety.recognition.cassandra.repository.indexes.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.safety.recognition.cassandra.repository.predictions.CrimePredictionByNeighbourhoodAndCategoryRepository;
+import io.micrometer.core.instrument.MeterRegistry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -20,21 +20,25 @@ import java.util.stream.Collectors;
 @Service
 public class CrimesByNeighbourhoodAndCategoryIndexesCalculator {
 
+    private final MeterRegistry meterRegistry;
     private final CrimesByNeighbourhoodAndCategoryAllTimeIndexRepository crimesByNeighbourhoodAndCategoryAllTimeIndexRepository;
     private final CrimesByNeighbourhoodAndCategoryLastYearIndexRepository crimesByNeighbourhoodAndCategoryLastYearIndexRepository;
     private final CrimesByNeighbourhoodAndCategoryLast3MonthsIndexRepository crimesByNeighbourhoodAndCategoryLast3MonthsIndexRepository;
     private final CrimeByNeighbourhoodAndCategoryRepository crimeByNeighbourhoodAndCategoryRepository;
     private final HighestCrimeLevelByCategoryRepository highestCrimeLevelByCategoryRepository;
     private final CrimeLevelByNeighbourhoodAndCategoryRepository crimeLevelByNeighbourhoodAndCategoryRepository;
+    private final CrimePredictionByNeighbourhoodAndCategoryRepository crimePredictionByNeighbourhoodAndCategoryRepository;
 
     @Autowired
-    public CrimesByNeighbourhoodAndCategoryIndexesCalculator(CrimesByNeighbourhoodAndCategoryAllTimeIndexRepository crimesByNeighbourhoodAndCategoryAllTimeIndexRepository, CrimesByNeighbourhoodAndCategoryLastYearIndexRepository crimesByNeighbourhoodAndCategoryLastYearIndexRepository, CrimesByNeighbourhoodAndCategoryLast3MonthsIndexRepository crimesByNeighbourhoodAndCategoryLast3MonthsIndexRepository, CrimeByNeighbourhoodAndCategoryRepository crimeByNeighbourhoodAndCategoryRepository, HighestCrimeLevelByCategoryRepository highestCrimeLevelByCategoryRepository, LastUpdateDateRepository lastUpdateDateRepository, CrimeLevelByNeighbourhoodAndCategoryRepository crimeLevelByNeighbourhoodAndCategoryRepository) {
+    public CrimesByNeighbourhoodAndCategoryIndexesCalculator(MeterRegistry meterRegistry, CrimesByNeighbourhoodAndCategoryAllTimeIndexRepository crimesByNeighbourhoodAndCategoryAllTimeIndexRepository, CrimesByNeighbourhoodAndCategoryLastYearIndexRepository crimesByNeighbourhoodAndCategoryLastYearIndexRepository, CrimesByNeighbourhoodAndCategoryLast3MonthsIndexRepository crimesByNeighbourhoodAndCategoryLast3MonthsIndexRepository, CrimeByNeighbourhoodAndCategoryRepository crimeByNeighbourhoodAndCategoryRepository, HighestCrimeLevelByCategoryRepository highestCrimeLevelByCategoryRepository, LastUpdateDateRepository lastUpdateDateRepository, CrimeLevelByNeighbourhoodAndCategoryRepository crimeLevelByNeighbourhoodAndCategoryRepository, CrimePredictionByNeighbourhoodAndCategoryRepository crimePredictionByNeighbourhoodAndCategoryRepository) {
+        this.meterRegistry = meterRegistry;
         this.crimesByNeighbourhoodAndCategoryAllTimeIndexRepository = crimesByNeighbourhoodAndCategoryAllTimeIndexRepository;
         this.crimesByNeighbourhoodAndCategoryLastYearIndexRepository = crimesByNeighbourhoodAndCategoryLastYearIndexRepository;
         this.crimesByNeighbourhoodAndCategoryLast3MonthsIndexRepository = crimesByNeighbourhoodAndCategoryLast3MonthsIndexRepository;
         this.crimeByNeighbourhoodAndCategoryRepository = crimeByNeighbourhoodAndCategoryRepository;
         this.highestCrimeLevelByCategoryRepository = highestCrimeLevelByCategoryRepository;
         this.crimeLevelByNeighbourhoodAndCategoryRepository = crimeLevelByNeighbourhoodAndCategoryRepository;
+        this.crimePredictionByNeighbourhoodAndCategoryRepository = crimePredictionByNeighbourhoodAndCategoryRepository;
     }
 
     public CrimeLevelByNeighbourhoodAndCategory calculate(LocalDate lastUpdatedMonth, String neighbourhood, String category) {
@@ -116,6 +120,15 @@ public class CrimesByNeighbourhoodAndCategoryIndexesCalculator {
 
     private CrimeLevelByNeighbourhoodAndCategory calculateCrimeLevelByNeighbourhoodAndCategory(Map<LocalDate, Long> crimesByMonth, String category, String neighbourhood) {
         var neighbourhoodAndCategoryKey = new NeighbourhoodAndCategoryKey(neighbourhood, category);
-        return crimeLevelByNeighbourhoodAndCategoryRepository.save(new CrimeLevelByNeighbourhoodAndCategory(neighbourhoodAndCategoryKey, crimesByMonth));
+        var crimeLevel = crimeLevelByNeighbourhoodAndCategoryRepository.save(new CrimeLevelByNeighbourhoodAndCategory(neighbourhoodAndCategoryKey, crimesByMonth));
+        updateMetrics(crimeLevel);
+        return crimeLevel;
+    }
+
+    private void updateMetrics(CrimeLevelByNeighbourhoodAndCategory crimeLevelByNeighbourhoodAndCategory) {
+        var predictions = crimePredictionByNeighbourhoodAndCategoryRepository.findById(crimeLevelByNeighbourhoodAndCategory.getKey());
+        predictions.ifPresent(crimePredictionByNeighbourhoodAndCategory -> crimePredictionByNeighbourhoodAndCategory.getCrimesByMonth().forEach((key, value) -> meterRegistry.gauge("prediction.deviation", crimeLevelByNeighbourhoodAndCategory.getCrimesByMonth().getOrDefault(key, 0L) - value)));
+
+
     }
 }

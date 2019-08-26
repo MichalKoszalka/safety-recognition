@@ -24,11 +24,6 @@ public class KafkaTopicConfig {
     }
 
     @Bean
-    public NewTopic neighbourhoodsFetched() {
-        return new NewTopic("neighbourhoods_fetched", 1, (short) 3);
-    }
-
-    @Bean
     public NewTopic startFetchingCrimeData() {
         return new NewTopic("start_fetching_crime_data", 1, (short) 3);
     }
@@ -70,7 +65,7 @@ public class KafkaTopicConfig {
 
     @Bean
     public NewTopic calculatePrediction() {
-        return new NewTopic("calculate_prediction", 5, (short) 3);
+        return new NewTopic("train_prediction_model_by_neighbourhood_and_category", 1, (short) 3);
     }
 
     @Bean

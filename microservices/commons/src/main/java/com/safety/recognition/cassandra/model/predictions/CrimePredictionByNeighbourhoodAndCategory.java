@@ -23,6 +23,6 @@ public class CrimePredictionByNeighbourhoodAndCategory {
     private NeighbourhoodAndCategoryKey key;
 
     @Column
-    private Map<LocalDate, Long> crimesByMonth;
+    private Map<LocalDate, Double> crimesByMonth;
 
 }

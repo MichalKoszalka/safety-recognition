@@ -20,7 +20,6 @@ import java.util.stream.Collectors;
 @Service
 public class CrimesForLondonIndexesCalculator {
 
-    private static final Logger LOG = LoggerFactory.getLogger(CrimesForLondonIndexesCalculator.class);
 
     private final CrimesForLondonAllTimeIndexRepository crimesForLondonAllTimeIndexRepository;
     private final CrimesForLondonLastYearIndexRepository crimesForLondonLastYearIndexRepository;
@@ -41,10 +40,10 @@ public class CrimesForLondonIndexesCalculator {
         this.crimeLevelRepository = crimeLevelRepository;
     }
 
-    public CrimeLevel calculate(LocalDate lastUpdatedMonth) {
+    public void calculate(LocalDate lastUpdatedMonth) {
         calculateIndexForLastYear(lastUpdatedMonth);
         calculateIndexForLast3Months(lastUpdatedMonth);
-        return calculateAllTimeIndex();
+        calculateAllTimeIndex();
     }
 
     private void calculateIndexForLastYear(LocalDate policeApiLastUpdate) {
@@ -77,7 +76,7 @@ public class CrimesForLondonIndexesCalculator {
         crimesForLondonLast3MonthsIndexRepository.save(lastYearCrimesIndex);
     }
 
-    private CrimeLevel calculateAllTimeIndex() {
+    private void calculateAllTimeIndex() {
         var lastYearCrimes = crimeRepository.findAll();
         var numberOfCrimes = lastYearCrimes.size();
         var crimesByMonth = lastYearCrimes.stream().collect(Collectors.groupingBy(crime -> crime.getKey().getCrimeDate(), Collectors.counting()));
@@ -90,7 +89,7 @@ public class CrimesForLondonIndexesCalculator {
         var lastYearCrimesIndex = new CrimesForLondonAllTimeIndex("London", numberOfCrimes, medianByMonth, meanByMonth, meanByWeek, meanByDay, crimesByMonth);
         crimesForLondonAllTimeIndexRepository.deleteById(lastYearCrimesIndex.getCity());
         crimesForLondonAllTimeIndexRepository.save(lastYearCrimesIndex);
-        return calculateCrimeLevel(crimesByMonth);
+        calculateCrimeLevel(crimesByMonth);
     }
 
     private void calculateHighestCrimeLevel(Map<LocalDate, Long> crimesByMonth) {
@@ -115,8 +114,8 @@ public class CrimesForLondonIndexesCalculator {
         }
     }
 
-    private CrimeLevel calculateCrimeLevel(Map<LocalDate, Long> crimesByMonth) {
-        return crimeLevelRepository.save(new CrimeLevel("London", crimesByMonth));
+    private void calculateCrimeLevel(Map<LocalDate, Long> crimesByMonth) {
+         crimeLevelRepository.save(new CrimeLevel("London", crimesByMonth));
     }
 
 

@@ -26,11 +26,18 @@ scrape_configs:
     - targets: ['docker.for.mac.localhost:7071']
 
   # Spring config
-  - job_name: 'spring-actuator'
+  - job_name: 'prediction-calculator'
     metrics_path: '/actuator/prometheus'
     scrape_interval: 5s
     static_configs:
-    - targets: ['docker.for.mac.localhost:8080']
+    - targets: ['docker.for.mac.localhost:8089']
+
+  # Spring config
+  - job_name: 'indexes-calculator'
+    metrics_path: '/actuator/prometheus'
+    scrape_interval: 5s
+    static_configs:
+    - targets: ['docker.for.mac.localhost:8084']
 
   # Cassandra config
   - job_name: 'cassandra'

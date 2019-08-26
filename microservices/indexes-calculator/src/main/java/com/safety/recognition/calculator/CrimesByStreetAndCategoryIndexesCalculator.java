@@ -42,10 +42,10 @@ public class CrimesByStreetAndCategoryIndexesCalculator {
         this.crimeLevelByStreetAndCategoryRepository = crimeLevelByStreetAndCategoryRepository;
     }
 
-    public CrimeLevelByStreetAndCategory calculate(LocalDate lastUpdateDate, StreetAndNeighbourhood streetAndNeighbourhood, String category) {
+    public void calculate(LocalDate lastUpdateDate, StreetAndNeighbourhood streetAndNeighbourhood, String category) {
         calculateIndexForLastYear(lastUpdateDate, streetAndNeighbourhood, category);
         calculateIndexForLast3Months(lastUpdateDate, streetAndNeighbourhood, category);
-        return calculateAllTimeIndexAndCrimeLevel(streetAndNeighbourhood, category);
+        calculateAllTimeIndexAndCrimeLevel(streetAndNeighbourhood, category);
     }
 
     private void calculateIndexForLastYear(LocalDate policeApiLastUpdate, StreetAndNeighbourhood streetAndNeighbourhood, String category) {
@@ -80,7 +80,7 @@ public class CrimesByStreetAndCategoryIndexesCalculator {
         crimesByStreetAndCategoryLast3MonthsIndexRepository.save(lastYearCrimesIndex);
     }
 
-    private CrimeLevelByStreetAndCategory calculateAllTimeIndexAndCrimeLevel(StreetAndNeighbourhood streetAndNeighbourhood, String category) {
+    private void calculateAllTimeIndexAndCrimeLevel(StreetAndNeighbourhood streetAndNeighbourhood, String category) {
         var lastYearCrimes = crimeByStreetAndCategoryRepository.findCrimeByKeyStreetAndKeyNeighbourhoodAndKeyCategory(streetAndNeighbourhood.getStreet(), streetAndNeighbourhood.getNeighbourhood(), category);
         var numberOfCrimes = lastYearCrimes.size();
         var crimesByMonth = lastYearCrimes.stream().collect(Collectors.groupingBy(crime -> crime.getKey().getCrimeDate(), Collectors.counting()));
@@ -94,7 +94,7 @@ public class CrimesByStreetAndCategoryIndexesCalculator {
         var lastYearCrimesIndex = new CrimesByStreetAndCategoryAllTimeIndex(indexKey, numberOfCrimes, medianByMonth, meanByMonth, meanByWeek, meanByDay, crimesByMonth);
         crimesByStreetAndCategoryAllTimeIndexRepository.deleteById(indexKey);
         crimesByStreetAndCategoryAllTimeIndexRepository.save(lastYearCrimesIndex);
-        return calculateCrimeLevelByStreetAndCategory(crimesByMonth, category, streetAndNeighbourhood.getNeighbourhood(), streetAndNeighbourhood.getStreet());
+        calculateCrimeLevelByStreetAndCategory(crimesByMonth, category, streetAndNeighbourhood.getNeighbourhood(), streetAndNeighbourhood.getStreet());
     }
 
     private void calculateHighestCrimeLevel(Map<LocalDate, Long> crimesByMonth, String category) {
@@ -119,9 +119,9 @@ public class CrimesByStreetAndCategoryIndexesCalculator {
         }
     }
 
-    private CrimeLevelByStreetAndCategory calculateCrimeLevelByStreetAndCategory(Map<LocalDate, Long> crimesByMonth, String category, String neighbourhood, String street) {
+    private void calculateCrimeLevelByStreetAndCategory(Map<LocalDate, Long> crimesByMonth, String category, String neighbourhood, String street) {
         var streetAndCategoryKey = new StreetAndCategoryKey(street, neighbourhood, category);
-        return crimeLevelByStreetAndCategoryRepository.save(new CrimeLevelByStreetAndCategory(streetAndCategoryKey, crimesByMonth));
+        crimeLevelByStreetAndCategoryRepository.save(new CrimeLevelByStreetAndCategory(streetAndCategoryKey, crimesByMonth));
 
     }
 }

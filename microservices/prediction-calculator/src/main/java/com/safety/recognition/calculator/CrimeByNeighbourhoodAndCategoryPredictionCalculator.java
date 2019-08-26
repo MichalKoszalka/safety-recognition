@@ -85,11 +85,11 @@ public class CrimeByNeighbourhoodAndCategoryPredictionCalculator {
 
     private void savePredictionResult(INDArray prediction, List<List<Writable>> testData) {
         for (var i = 0; i < prediction.rows(); i++) {
-            saveSinglePrediction(prediction.getLong(i), testData.get(i));
+            saveSinglePrediction(prediction.getDouble(i), testData.get(i));
         }
     }
 
-    private void saveSinglePrediction(long predictedCrimeLevel, List<Writable> testDataRecord) {
+    private void saveSinglePrediction(double predictedCrimeLevel, List<Writable> testDataRecord) {
         String category = inversedCategoriesNormalised.get(testDataRecord.get(0).toInt());
         String neighbourhood = inversedNeighbourhoodsNormalised.get(testDataRecord.get(1).toInt());
         var neighbourhoodAndCategoryKey = new NeighbourhoodAndCategoryKey(neighbourhood, category);
