@@ -8,5 +8,8 @@ spec:
   clusterIP: None
   ports:
   - port: 9042
+    name: container
+  - port: 9404
+    name: metrics
   selector:
     app: cassandra
