@@ -58,7 +58,7 @@ public class CassandraConfig extends AbstractCassandraConfiguration {
     protected List<CreateKeyspaceSpecification> getKeyspaceCreations() {
         CreateKeyspaceSpecification specification = CreateKeyspaceSpecification
             .createKeyspace(environment.getProperty("cassandra.keyspace")).ifNotExists()
-            .with(KeyspaceOption.DURABLE_WRITES, true).withSimpleReplication();
+            .with(KeyspaceOption.DURABLE_WRITES, true).withSimpleReplication(3);
         return Arrays.asList(specification);
     }
 

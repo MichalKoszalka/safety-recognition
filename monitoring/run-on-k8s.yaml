@@ -2443,30 +2443,60 @@ data:
         static_configs:
           - targets: ['kafka-minion:8080']
 
-      - job_name: 'prediction-calculator'
-        scrape_interval: 5s
-        static_configs:
-          - targets: ['prediction-calculator:8080']
+      - job_name: 'kubernetes-pods-spring'
+        kubernetes_sd_configs:
+        - role: pod
+        relabel_configs:
+        - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_scrape]
+          action: keep
+          regex: true
+        - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_path]
+          action: replace
+          target_label: __metrics_path__
+          regex: (.+)
+        - source_labels: [__address__, __meta_kubernetes_pod_annotation_prometheus_io_port]
+          action: replace
+          regex: ([^:]+)(?::\d+)?;(\d+)
+          replacement: $1:$2
+          target_label: __address__
+        - action: labelmap
+          regex: __meta_kubernetes_pod_label_(.+)
+        - source_labels: [__meta_kubernetes_namespace]
+          action: replace
+          target_label: kubernetes_namespace
+        - source_labels: [__meta_kubernetes_pod_name]
+          action: replace
+          target_label: kubernetes_pod_name
 
-      - job_name: 'police-api-consumer'
-        scrape_interval: 5s
-        static_configs:
-          - targets: ['police-api-consumer:8080']
+      # - job_name: 'prediction-calculator'
+      #   metrics_path: '/actuator/prometheus'
+      #   scrape_interval: 5s
+      #   static_configs:
+      #     - targets: ['prediction-calculator:8080']
 
-      - job_name: 'fetching-scheduler'
-        scrape_interval: 5s
-        static_configs:
-          - targets: ['fetching-scheduler:8080']
+      # - job_name: 'police-api-consumer'
+      #   metrics_path: '/actuator/prometheus'
+      #   scrape_interval: 5s
+      #   static_configs:
+      #     - targets: ['police-api-consumer:8080']
 
-      - job_name: 'crimes-processor'
-        scrape_interval: 5s
-        static_configs:
-          - targets: ['crimes-processor:8080']
+      # - job_name: 'fetching-scheduler'
+      #   metrics_path: '/actuator/prometheus'
+      #   scrape_interval: 5s
+      #   static_configs:
+      #     - targets: ['fetching-scheduler:8080']
 
-      - job_name: 'indexes-calculator'
-        scrape_interval: 5s
-        static_configs:
-          - targets: ['indexes-calculator:8080']
+      # - job_name: 'crimes-processor'
+      #   metrics_path: '/actuator/prometheus'
+      #   scrape_interval: 5s
+      #   static_configs:
+      #     - targets: ['crimes-processor:8080']
+
+      # - job_name: 'indexes-calculator'
+      #   metrics_path: '/actuator/prometheus'
+      #   scrape_interval: 5s
+      #   static_configs:
+      #     - targets: ['indexes-calculator:8080']
 
 
       # https://github.com/prometheus/prometheus/blob/master/documentation/examples/prometheus-kubernetes.yml#L37
@@ -2612,6 +2642,7 @@ spec:
         image: prom/prometheus:v1.7.0
         args:
           - '-storage.local.retention=12h'
+          - '-network=host'
           - '-storage.local.memory-chunks=500000'
           - '-config.file=/etc/prometheus/prometheus.yaml'
           - '-alertmanager.url=http://alertmanager:9093/'

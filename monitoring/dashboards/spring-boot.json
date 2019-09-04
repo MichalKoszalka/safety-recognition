@@ -16,8 +16,8 @@
     "editable": true,
     "gnetId": 10280,
     "graphTooltip": 0,
-    "id": 1,
-    "iteration": 1566824557102,
+    "id": 5,
+    "iteration": 1566842164729,
     "links": [],
     "panels": [
       {
@@ -25,7 +25,7 @@
         "bars": false,
         "dashLength": 10,
         "dashes": false,
-        "datasource": "Prometheus",
+        "datasource": "prometheus",
         "fill": 1,
         "gridPos": {
           "h": 8,
@@ -48,6 +48,7 @@
         "links": [],
         "nullPointMode": "null",
         "options": {},
+        "paceLength": 10,
         "percentage": false,
         "pointradius": 2,
         "points": false,
@@ -148,6 +149,7 @@
         "cacheTimeout": null,
         "dashLength": 10,
         "dashes": false,
+        "datasource": "prometheus",
         "fill": 1,
         "gridPos": {
           "h": 8,
@@ -170,6 +172,7 @@
         "links": [],
         "nullPointMode": "null",
         "options": {},
+        "paceLength": 10,
         "percentage": false,
         "pluginVersion": "6.2.1",
         "pointradius": 2,
@@ -184,7 +187,6 @@
             "expr": "sum(prediction_deviation{application=\"indexes-calculator\"})",
             "format": "time_series",
             "intervalFactor": 1,
-            "legendFormat": "Prediction deviation",
             "refId": "A"
           }
         ],
@@ -251,7 +253,7 @@
           "#5195ce",
           "rgba(50, 172, 45, 0.97)"
         ],
-        "datasource": "Prometheus",
+        "datasource": "prometheus",
         "decimals": 1,
         "editable": true,
         "error": false,
@@ -339,7 +341,7 @@
           "rgba(237, 129, 40, 0.89)",
           "rgba(245, 54, 54, 0.9)"
         ],
-        "datasource": "Prometheus",
+        "datasource": "prometheus",
         "decimals": 1,
         "editable": true,
         "error": false,
@@ -425,7 +427,7 @@
           "rgba(237, 129, 40, 0.89)",
           "rgba(245, 54, 54, 0.9)"
         ],
-        "datasource": "Prometheus",
+        "datasource": "prometheus",
         "decimals": 1,
         "editable": true,
         "error": false,
@@ -517,7 +519,7 @@
         "bars": false,
         "dashLength": 10,
         "dashes": false,
-        "datasource": "Prometheus",
+        "datasource": "prometheus",
         "fill": 1,
         "gridPos": {
           "h": 6,
@@ -540,6 +542,7 @@
         "links": [],
         "nullPointMode": "null",
         "options": {},
+        "paceLength": 10,
         "percentage": false,
         "pointradius": 5,
         "points": false,
@@ -614,7 +617,7 @@
           "#5195ce",
           "rgba(50, 172, 45, 0.97)"
         ],
-        "datasource": "Prometheus",
+        "datasource": "prometheus",
         "decimals": null,
         "editable": true,
         "error": false,
@@ -698,7 +701,7 @@
         "bars": false,
         "dashLength": 10,
         "dashes": false,
-        "datasource": "Prometheus",
+        "datasource": "prometheus",
         "fill": 1,
         "gridPos": {
           "h": 7,
@@ -722,6 +725,7 @@
         "links": [],
         "nullPointMode": "null",
         "options": {},
+        "paceLength": 10,
         "percentage": false,
         "pointradius": 5,
         "points": false,
@@ -792,7 +796,7 @@
         "bars": false,
         "dashLength": 10,
         "dashes": false,
-        "datasource": "Prometheus",
+        "datasource": "prometheus",
         "fill": 1,
         "gridPos": {
           "h": 7,
@@ -816,6 +820,7 @@
         "links": [],
         "nullPointMode": "null",
         "options": {},
+        "paceLength": 10,
         "percentage": false,
         "pointradius": 5,
         "points": false,
@@ -899,7 +904,7 @@
         "bars": false,
         "dashLength": 10,
         "dashes": false,
-        "datasource": "Prometheus",
+        "datasource": "prometheus",
         "fill": 1,
         "gridPos": {
           "h": 8,
@@ -923,19 +928,13 @@
         "links": [],
         "nullPointMode": "null",
         "options": {},
+        "paceLength": 10,
         "percentage": false,
         "pointradius": 5,
         "points": false,
         "renderer": "flot",
         "repeat": "memory_pool_heap",
         "repeatDirection": "h",
-        "scopedVars": {
-          "memory_pool_heap": {
-            "selected": false,
-            "text": "G1 Eden Space",
-            "value": "G1 Eden Space"
-          }
-        },
         "seriesOverrides": [],
         "spaceLength": 10,
         "stack": false,
@@ -1009,683 +1008,13 @@
         "bars": false,
         "dashLength": 10,
         "dashes": false,
-        "datasource": "Prometheus",
+        "datasource": "prometheus",
         "fill": 1,
         "gridPos": {
           "h": 8,
           "w": 8,
           "x": 8,
           "y": 23
-        },
-        "id": 111,
-        "legend": {
-          "alignAsTable": true,
-          "avg": true,
-          "current": true,
-          "max": true,
-          "min": true,
-          "show": true,
-          "total": false,
-          "values": true
-        },
-        "lines": true,
-        "linewidth": 1,
-        "links": [],
-        "nullPointMode": "null",
-        "options": {},
-        "percentage": false,
-        "pointradius": 5,
-        "points": false,
-        "renderer": "flot",
-        "repeat": null,
-        "repeatDirection": "h",
-        "repeatIteration": 1566824557102,
-        "repeatPanelId": 85,
-        "scopedVars": {
-          "memory_pool_heap": {
-            "selected": false,
-            "text": "G1 Old Gen",
-            "value": "G1 Old Gen"
-          }
-        },
-        "seriesOverrides": [],
-        "spaceLength": 10,
-        "stack": false,
-        "steppedLine": false,
-        "targets": [
-          {
-            "expr": "jvm_memory_used_bytes{instance=\"$instance\", application=\"$application\", id=\"$memory_pool_heap\"}",
-            "format": "time_series",
-            "intervalFactor": 1,
-            "legendFormat": "Used",
-            "refId": "C"
-          },
-          {
-            "expr": "jvm_memory_committed_bytes{instance=\"$instance\", application=\"$application\", id=\"$memory_pool_heap\"}",
-            "format": "time_series",
-            "intervalFactor": 1,
-            "legendFormat": "Commited",
-            "refId": "A"
-          },
-          {
-            "expr": "jvm_memory_max_bytes{instance=\"$instance\", application=\"$application\", id=\"$memory_pool_heap\"}",
-            "format": "time_series",
-            "intervalFactor": 1,
-            "legendFormat": "Max",
-            "refId": "B"
-          }
-        ],
-        "thresholds": [],
-        "timeFrom": null,
-        "timeRegions": [],
-        "timeShift": null,
-        "title": "$memory_pool_heap (heap)",
-        "tooltip": {
-          "shared": true,
-          "sort": 0,
-          "value_type": "individual"
-        },
-        "type": "graph",
-        "xaxis": {
-          "buckets": null,
-          "mode": "time",
-          "name": null,
-          "show": true,
-          "values": []
-        },
-        "yaxes": [
-          {
-            "format": "bytes",
-            "label": null,
-            "logBase": 1,
-            "max": null,
-            "min": null,
-            "show": true
-          },
-          {
-            "format": "short",
-            "label": null,
-            "logBase": 1,
-            "max": null,
-            "min": null,
-            "show": true
-          }
-        ],
-        "yaxis": {
-          "align": false,
-          "alignLevel": null
-        }
-      },
-      {
-        "aliasColors": {},
-        "bars": false,
-        "dashLength": 10,
-        "dashes": false,
-        "datasource": "Prometheus",
-        "fill": 1,
-        "gridPos": {
-          "h": 8,
-          "w": 8,
-          "x": 16,
-          "y": 23
-        },
-        "id": 112,
-        "legend": {
-          "alignAsTable": true,
-          "avg": true,
-          "current": true,
-          "max": true,
-          "min": true,
-          "show": true,
-          "total": false,
-          "values": true
-        },
-        "lines": true,
-        "linewidth": 1,
-        "links": [],
-        "nullPointMode": "null",
-        "options": {},
-        "percentage": false,
-        "pointradius": 5,
-        "points": false,
-        "renderer": "flot",
-        "repeat": null,
-        "repeatDirection": "h",
-        "repeatIteration": 1566824557102,
-        "repeatPanelId": 85,
-        "scopedVars": {
-          "memory_pool_heap": {
-            "selected": false,
-            "text": "G1 Survivor Space",
-            "value": "G1 Survivor Space"
-          }
-        },
-        "seriesOverrides": [],
-        "spaceLength": 10,
-        "stack": false,
-        "steppedLine": false,
-        "targets": [
-          {
-            "expr": "jvm_memory_used_bytes{instance=\"$instance\", application=\"$application\", id=\"$memory_pool_heap\"}",
-            "format": "time_series",
-            "intervalFactor": 1,
-            "legendFormat": "Used",
-            "refId": "C"
-          },
-          {
-            "expr": "jvm_memory_committed_bytes{instance=\"$instance\", application=\"$application\", id=\"$memory_pool_heap\"}",
-            "format": "time_series",
-            "intervalFactor": 1,
-            "legendFormat": "Commited",
-            "refId": "A"
-          },
-          {
-            "expr": "jvm_memory_max_bytes{instance=\"$instance\", application=\"$application\", id=\"$memory_pool_heap\"}",
-            "format": "time_series",
-            "intervalFactor": 1,
-            "legendFormat": "Max",
-            "refId": "B"
-          }
-        ],
-        "thresholds": [],
-        "timeFrom": null,
-        "timeRegions": [],
-        "timeShift": null,
-        "title": "$memory_pool_heap (heap)",
-        "tooltip": {
-          "shared": true,
-          "sort": 0,
-          "value_type": "individual"
-        },
-        "type": "graph",
-        "xaxis": {
-          "buckets": null,
-          "mode": "time",
-          "name": null,
-          "show": true,
-          "values": []
-        },
-        "yaxes": [
-          {
-            "format": "bytes",
-            "label": null,
-            "logBase": 1,
-            "max": null,
-            "min": null,
-            "show": true
-          },
-          {
-            "format": "short",
-            "label": null,
-            "logBase": 1,
-            "max": null,
-            "min": null,
-            "show": true
-          }
-        ],
-        "yaxis": {
-          "align": false,
-          "alignLevel": null
-        }
-      },
-      {
-        "aliasColors": {},
-        "bars": false,
-        "dashLength": 10,
-        "dashes": false,
-        "datasource": "Prometheus",
-        "fill": 1,
-        "gridPos": {
-          "h": 8,
-          "w": 6,
-          "x": 0,
-          "y": 31
-        },
-        "id": 88,
-        "legend": {
-          "alignAsTable": true,
-          "avg": true,
-          "current": true,
-          "max": true,
-          "min": true,
-          "show": true,
-          "total": false,
-          "values": true
-        },
-        "lines": true,
-        "linewidth": 1,
-        "links": [],
-        "nullPointMode": "null",
-        "options": {},
-        "percentage": false,
-        "pointradius": 5,
-        "points": false,
-        "renderer": "flot",
-        "repeat": "memory_pool_nonheap",
-        "repeatDirection": "h",
-        "scopedVars": {
-          "memory_pool_nonheap": {
-            "selected": false,
-            "text": "CodeHeap 'non-nmethods'",
-            "value": "CodeHeap 'non-nmethods'"
-          }
-        },
-        "seriesOverrides": [],
-        "spaceLength": 10,
-        "stack": false,
-        "steppedLine": false,
-        "targets": [
-          {
-            "expr": "jvm_memory_used_bytes{instance=\"$instance\", application=\"$application\", id=\"$memory_pool_nonheap\"}",
-            "format": "time_series",
-            "intervalFactor": 1,
-            "legendFormat": "Used",
-            "refId": "C"
-          },
-          {
-            "expr": "jvm_memory_committed_bytes{instance=\"$instance\", application=\"$application\", id=\"$memory_pool_nonheap\"}",
-            "format": "time_series",
-            "intervalFactor": 1,
-            "legendFormat": "Commited",
-            "refId": "A"
-          },
-          {
-            "expr": "jvm_memory_max_bytes{instance=\"$instance\", application=\"$application\", id=\"$memory_pool_nonheap\"}",
-            "format": "time_series",
-            "intervalFactor": 1,
-            "legendFormat": "Max",
-            "refId": "B"
-          }
-        ],
-        "thresholds": [],
-        "timeFrom": null,
-        "timeRegions": [],
-        "timeShift": null,
-        "title": "$memory_pool_nonheap (non-heap)",
-        "tooltip": {
-          "shared": true,
-          "sort": 0,
-          "value_type": "individual"
-        },
-        "type": "graph",
-        "xaxis": {
-          "buckets": null,
-          "mode": "time",
-          "name": null,
-          "show": true,
-          "values": []
-        },
-        "yaxes": [
-          {
-            "format": "bytes",
-            "label": null,
-            "logBase": 1,
-            "max": null,
-            "min": null,
-            "show": true
-          },
-          {
-            "format": "short",
-            "label": null,
-            "logBase": 1,
-            "max": null,
-            "min": null,
-            "show": true
-          }
-        ],
-        "yaxis": {
-          "align": false,
-          "alignLevel": null
-        }
-      },
-      {
-        "aliasColors": {},
-        "bars": false,
-        "dashLength": 10,
-        "dashes": false,
-        "datasource": "Prometheus",
-        "fill": 1,
-        "gridPos": {
-          "h": 8,
-          "w": 6,
-          "x": 6,
-          "y": 31
-        },
-        "id": 113,
-        "legend": {
-          "alignAsTable": true,
-          "avg": true,
-          "current": true,
-          "max": true,
-          "min": true,
-          "show": true,
-          "total": false,
-          "values": true
-        },
-        "lines": true,
-        "linewidth": 1,
-        "links": [],
-        "nullPointMode": "null",
-        "options": {},
-        "percentage": false,
-        "pointradius": 5,
-        "points": false,
-        "renderer": "flot",
-        "repeat": null,
-        "repeatDirection": "h",
-        "repeatIteration": 1566824557102,
-        "repeatPanelId": 88,
-        "scopedVars": {
-          "memory_pool_nonheap": {
-            "selected": false,
-            "text": "CodeHeap 'non-profiled nmethods'",
-            "value": "CodeHeap 'non-profiled nmethods'"
-          }
-        },
-        "seriesOverrides": [],
-        "spaceLength": 10,
-        "stack": false,
-        "steppedLine": false,
-        "targets": [
-          {
-            "expr": "jvm_memory_used_bytes{instance=\"$instance\", application=\"$application\", id=\"$memory_pool_nonheap\"}",
-            "format": "time_series",
-            "intervalFactor": 1,
-            "legendFormat": "Used",
-            "refId": "C"
-          },
-          {
-            "expr": "jvm_memory_committed_bytes{instance=\"$instance\", application=\"$application\", id=\"$memory_pool_nonheap\"}",
-            "format": "time_series",
-            "intervalFactor": 1,
-            "legendFormat": "Commited",
-            "refId": "A"
-          },
-          {
-            "expr": "jvm_memory_max_bytes{instance=\"$instance\", application=\"$application\", id=\"$memory_pool_nonheap\"}",
-            "format": "time_series",
-            "intervalFactor": 1,
-            "legendFormat": "Max",
-            "refId": "B"
-          }
-        ],
-        "thresholds": [],
-        "timeFrom": null,
-        "timeRegions": [],
-        "timeShift": null,
-        "title": "$memory_pool_nonheap (non-heap)",
-        "tooltip": {
-          "shared": true,
-          "sort": 0,
-          "value_type": "individual"
-        },
-        "type": "graph",
-        "xaxis": {
-          "buckets": null,
-          "mode": "time",
-          "name": null,
-          "show": true,
-          "values": []
-        },
-        "yaxes": [
-          {
-            "format": "bytes",
-            "label": null,
-            "logBase": 1,
-            "max": null,
-            "min": null,
-            "show": true
-          },
-          {
-            "format": "short",
-            "label": null,
-            "logBase": 1,
-            "max": null,
-            "min": null,
-            "show": true
-          }
-        ],
-        "yaxis": {
-          "align": false,
-          "alignLevel": null
-        }
-      },
-      {
-        "aliasColors": {},
-        "bars": false,
-        "dashLength": 10,
-        "dashes": false,
-        "datasource": "Prometheus",
-        "fill": 1,
-        "gridPos": {
-          "h": 8,
-          "w": 6,
-          "x": 12,
-          "y": 31
-        },
-        "id": 114,
-        "legend": {
-          "alignAsTable": true,
-          "avg": true,
-          "current": true,
-          "max": true,
-          "min": true,
-          "show": true,
-          "total": false,
-          "values": true
-        },
-        "lines": true,
-        "linewidth": 1,
-        "links": [],
-        "nullPointMode": "null",
-        "options": {},
-        "percentage": false,
-        "pointradius": 5,
-        "points": false,
-        "renderer": "flot",
-        "repeat": null,
-        "repeatDirection": "h",
-        "repeatIteration": 1566824557102,
-        "repeatPanelId": 88,
-        "scopedVars": {
-          "memory_pool_nonheap": {
-            "selected": false,
-            "text": "Compressed Class Space",
-            "value": "Compressed Class Space"
-          }
-        },
-        "seriesOverrides": [],
-        "spaceLength": 10,
-        "stack": false,
-        "steppedLine": false,
-        "targets": [
-          {
-            "expr": "jvm_memory_used_bytes{instance=\"$instance\", application=\"$application\", id=\"$memory_pool_nonheap\"}",
-            "format": "time_series",
-            "intervalFactor": 1,
-            "legendFormat": "Used",
-            "refId": "C"
-          },
-          {
-            "expr": "jvm_memory_committed_bytes{instance=\"$instance\", application=\"$application\", id=\"$memory_pool_nonheap\"}",
-            "format": "time_series",
-            "intervalFactor": 1,
-            "legendFormat": "Commited",
-            "refId": "A"
-          },
-          {
-            "expr": "jvm_memory_max_bytes{instance=\"$instance\", application=\"$application\", id=\"$memory_pool_nonheap\"}",
-            "format": "time_series",
-            "intervalFactor": 1,
-            "legendFormat": "Max",
-            "refId": "B"
-          }
-        ],
-        "thresholds": [],
-        "timeFrom": null,
-        "timeRegions": [],
-        "timeShift": null,
-        "title": "$memory_pool_nonheap (non-heap)",
-        "tooltip": {
-          "shared": true,
-          "sort": 0,
-          "value_type": "individual"
-        },
-        "type": "graph",
-        "xaxis": {
-          "buckets": null,
-          "mode": "time",
-          "name": null,
-          "show": true,
-          "values": []
-        },
-        "yaxes": [
-          {
-            "format": "bytes",
-            "label": null,
-            "logBase": 1,
-            "max": null,
-            "min": null,
-            "show": true
-          },
-          {
-            "format": "short",
-            "label": null,
-            "logBase": 1,
-            "max": null,
-            "min": null,
-            "show": true
-          }
-        ],
-        "yaxis": {
-          "align": false,
-          "alignLevel": null
-        }
-      },
-      {
-        "aliasColors": {},
-        "bars": false,
-        "dashLength": 10,
-        "dashes": false,
-        "datasource": "Prometheus",
-        "fill": 1,
-        "gridPos": {
-          "h": 8,
-          "w": 6,
-          "x": 18,
-          "y": 31
-        },
-        "id": 115,
-        "legend": {
-          "alignAsTable": true,
-          "avg": true,
-          "current": true,
-          "max": true,
-          "min": true,
-          "show": true,
-          "total": false,
-          "values": true
-        },
-        "lines": true,
-        "linewidth": 1,
-        "links": [],
-        "nullPointMode": "null",
-        "options": {},
-        "percentage": false,
-        "pointradius": 5,
-        "points": false,
-        "renderer": "flot",
-        "repeat": null,
-        "repeatDirection": "h",
-        "repeatIteration": 1566824557102,
-        "repeatPanelId": 88,
-        "scopedVars": {
-          "memory_pool_nonheap": {
-            "selected": false,
-            "text": "Metaspace",
-            "value": "Metaspace"
-          }
-        },
-        "seriesOverrides": [],
-        "spaceLength": 10,
-        "stack": false,
-        "steppedLine": false,
-        "targets": [
-          {
-            "expr": "jvm_memory_used_bytes{instance=\"$instance\", application=\"$application\", id=\"$memory_pool_nonheap\"}",
-            "format": "time_series",
-            "intervalFactor": 1,
-            "legendFormat": "Used",
-            "refId": "C"
-          },
-          {
-            "expr": "jvm_memory_committed_bytes{instance=\"$instance\", application=\"$application\", id=\"$memory_pool_nonheap\"}",
-            "format": "time_series",
-            "intervalFactor": 1,
-            "legendFormat": "Commited",
-            "refId": "A"
-          },
-          {
-            "expr": "jvm_memory_max_bytes{instance=\"$instance\", application=\"$application\", id=\"$memory_pool_nonheap\"}",
-            "format": "time_series",
-            "intervalFactor": 1,
-            "legendFormat": "Max",
-            "refId": "B"
-          }
-        ],
-        "thresholds": [],
-        "timeFrom": null,
-        "timeRegions": [],
-        "timeShift": null,
-        "title": "$memory_pool_nonheap (non-heap)",
-        "tooltip": {
-          "shared": true,
-          "sort": 0,
-          "value_type": "individual"
-        },
-        "type": "graph",
-        "xaxis": {
-          "buckets": null,
-          "mode": "time",
-          "name": null,
-          "show": true,
-          "values": []
-        },
-        "yaxes": [
-          {
-            "format": "bytes",
-            "label": null,
-            "logBase": 1,
-            "max": null,
-            "min": null,
-            "show": true
-          },
-          {
-            "format": "short",
-            "label": null,
-            "logBase": 1,
-            "max": null,
-            "min": null,
-            "show": true
-          }
-        ],
-        "yaxis": {
-          "align": false,
-          "alignLevel": null
-        }
-      },
-      {
-        "aliasColors": {},
-        "bars": false,
-        "dashLength": 10,
-        "dashes": false,
-        "datasource": "Prometheus",
-        "fill": 1,
-        "gridPos": {
-          "h": 8,
-          "w": 8,
-          "x": 8,
-          "y": 39
         },
         "id": 80,
         "legend": {
@@ -1702,6 +1031,7 @@
         "links": [],
         "nullPointMode": "null",
         "options": {},
+        "paceLength": 10,
         "percentage": false,
         "pointradius": 5,
         "points": false,
@@ -1765,16 +1095,15 @@
         "bars": false,
         "dashLength": 10,
         "dashes": false,
-        "datasource": "Prometheus",
-        "decimals": 0,
+        "datasource": "prometheus",
         "fill": 1,
         "gridPos": {
           "h": 8,
-          "w": 12,
+          "w": 6,
           "x": 0,
-          "y": 47
+          "y": 31
         },
-        "id": 50,
+        "id": 88,
         "legend": {
           "alignAsTable": true,
           "avg": true,
@@ -1790,28 +1119,45 @@
         "links": [],
         "nullPointMode": "null",
         "options": {},
+        "paceLength": 10,
         "percentage": false,
         "pointradius": 5,
         "points": false,
         "renderer": "flot",
+        "repeat": "memory_pool_nonheap",
+        "repeatDirection": "h",
         "seriesOverrides": [],
         "spaceLength": 10,
         "stack": false,
         "steppedLine": false,
         "targets": [
           {
-            "expr": "jvm_classes_loaded_classes{instance=\"$instance\", application=\"$application\"}",
+            "expr": "jvm_memory_used_bytes{instance=\"$instance\", application=\"$application\", id=\"$memory_pool_nonheap\"}",
             "format": "time_series",
             "intervalFactor": 1,
-            "legendFormat": "Classes Loaded",
+            "legendFormat": "Used",
+            "refId": "C"
+          },
+          {
+            "expr": "jvm_memory_committed_bytes{instance=\"$instance\", application=\"$application\", id=\"$memory_pool_nonheap\"}",
+            "format": "time_series",
+            "intervalFactor": 1,
+            "legendFormat": "Commited",
             "refId": "A"
+          },
+          {
+            "expr": "jvm_memory_max_bytes{instance=\"$instance\", application=\"$application\", id=\"$memory_pool_nonheap\"}",
+            "format": "time_series",
+            "intervalFactor": 1,
+            "legendFormat": "Max",
+            "refId": "B"
           }
         ],
         "thresholds": [],
         "timeFrom": null,
         "timeRegions": [],
         "timeShift": null,
-        "title": "Classes Loaded",
+        "title": "$memory_pool_nonheap (non-heap)",
         "tooltip": {
           "shared": true,
           "sort": 0,
@@ -1827,9 +1173,8 @@
         },
         "yaxes": [
           {
-            "decimals": 0,
-            "format": "locale",
-            "label": "",
+            "format": "bytes",
+            "label": null,
             "logBase": 1,
             "max": null,
             "min": null,
@@ -1854,13 +1199,13 @@
         "bars": false,
         "dashLength": 10,
         "dashes": false,
-        "datasource": "Prometheus",
+        "datasource": "prometheus",
         "fill": 1,
         "gridPos": {
           "h": 7,
           "w": 12,
           "x": 12,
-          "y": 47
+          "y": 31
         },
         "id": 83,
         "legend": {
@@ -1877,6 +1222,7 @@
         "links": [],
         "nullPointMode": "null",
         "options": {},
+        "paceLength": 10,
         "percentage": false,
         "pointradius": 5,
         "points": false,
@@ -1947,13 +1293,13 @@
         "bars": false,
         "dashLength": 10,
         "dashes": false,
-        "datasource": "Prometheus",
+        "datasource": "prometheus",
         "fill": 1,
         "gridPos": {
           "h": 8,
           "w": 12,
           "x": 12,
-          "y": 54
+          "y": 38
         },
         "id": 78,
         "legend": {
@@ -1970,6 +1316,7 @@
         "links": [],
         "nullPointMode": "null",
         "options": {},
+        "paceLength": 10,
         "percentage": false,
         "pointradius": 5,
         "points": false,
@@ -2040,13 +1387,103 @@
         "bars": false,
         "dashLength": 10,
         "dashes": false,
-        "datasource": "Prometheus",
+        "datasource": "prometheus",
+        "decimals": 0,
+        "fill": 1,
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 0,
+          "y": 39
+        },
+        "id": 50,
+        "legend": {
+          "alignAsTable": true,
+          "avg": true,
+          "current": true,
+          "max": true,
+          "min": true,
+          "show": true,
+          "total": false,
+          "values": true
+        },
+        "lines": true,
+        "linewidth": 1,
+        "links": [],
+        "nullPointMode": "null",
+        "options": {},
+        "paceLength": 10,
+        "percentage": false,
+        "pointradius": 5,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+          {
+            "expr": "jvm_classes_loaded_classes{instance=\"$instance\", application=\"$application\"}",
+            "format": "time_series",
+            "intervalFactor": 1,
+            "legendFormat": "Classes Loaded",
+            "refId": "A"
+          }
+        ],
+        "thresholds": [],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "Classes Loaded",
+        "tooltip": {
+          "shared": true,
+          "sort": 0,
+          "value_type": "individual"
+        },
+        "type": "graph",
+        "xaxis": {
+          "buckets": null,
+          "mode": "time",
+          "name": null,
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
+          {
+            "decimals": 0,
+            "format": "locale",
+            "label": "",
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          },
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
+        }
+      },
+      {
+        "aliasColors": {},
+        "bars": false,
+        "dashLength": 10,
+        "dashes": false,
+        "datasource": "prometheus",
         "fill": 1,
         "gridPos": {
           "h": 7,
           "w": 12,
           "x": 0,
-          "y": 55
+          "y": 47
         },
         "id": 82,
         "legend": {
@@ -2063,6 +1500,7 @@
         "links": [],
         "nullPointMode": "null",
         "options": {},
+        "paceLength": 10,
         "percentage": false,
         "pointradius": 5,
         "points": false,
@@ -2133,13 +1571,13 @@
         "bars": false,
         "dashLength": 10,
         "dashes": false,
-        "datasource": "Prometheus",
+        "datasource": "prometheus",
         "fill": 1,
         "gridPos": {
           "h": 8,
           "w": 12,
           "x": 0,
-          "y": 62
+          "y": 54
         },
         "id": 68,
         "legend": {
@@ -2157,6 +1595,7 @@
         "links": [],
         "nullPointMode": "null",
         "options": {},
+        "paceLength": 10,
         "percentage": false,
         "pointradius": 5,
         "points": false,
@@ -2235,7 +1674,7 @@
           "h": 1,
           "w": 24,
           "x": 0,
-          "y": 70
+          "y": 62
         },
         "id": 72,
         "panels": [],
@@ -2247,13 +1686,13 @@
         "bars": false,
         "dashLength": 10,
         "dashes": false,
-        "datasource": "Prometheus",
+        "datasource": "prometheus",
         "fill": 1,
         "gridPos": {
           "h": 10,
           "w": 12,
           "x": 0,
-          "y": 71
+          "y": 63
         },
         "id": 74,
         "legend": {
@@ -2273,6 +1712,7 @@
         "links": [],
         "nullPointMode": "null",
         "options": {},
+        "paceLength": 10,
         "percentage": false,
         "pointradius": 5,
         "points": false,
@@ -2336,13 +1776,13 @@
         "bars": false,
         "dashLength": 10,
         "dashes": false,
-        "datasource": "Prometheus",
+        "datasource": "prometheus",
         "fill": 1,
         "gridPos": {
           "h": 10,
           "w": 12,
           "x": 12,
-          "y": 71
+          "y": 63
         },
         "id": 76,
         "legend": {
@@ -2362,6 +1802,7 @@
         "links": [],
         "nullPointMode": "null",
         "options": {},
+        "paceLength": 10,
         "percentage": false,
         "pointradius": 5,
         "points": false,
@@ -2426,7 +1867,7 @@
           "h": 1,
           "w": 24,
           "x": 0,
-          "y": 81
+          "y": 73
         },
         "id": 34,
         "panels": [],
@@ -2442,7 +1883,7 @@
           "rgba(237, 129, 40, 0.89)",
           "#d44a3a"
         ],
-        "datasource": "Prometheus",
+        "datasource": "prometheus",
         "format": "none",
         "gauge": {
           "maxValue": 100,
@@ -2455,7 +1896,7 @@
           "h": 4,
           "w": 4,
           "x": 0,
-          "y": 82
+          "y": 74
         },
         "id": 44,
         "interval": null,
@@ -2520,13 +1961,13 @@
         "bars": false,
         "dashLength": 10,
         "dashes": false,
-        "datasource": "Prometheus",
+        "datasource": "prometheus",
         "fill": 1,
         "gridPos": {
           "h": 8,
           "w": 20,
           "x": 4,
-          "y": 82
+          "y": 74
         },
         "id": 36,
         "legend": {
@@ -2546,6 +1987,7 @@
         "links": [],
         "nullPointMode": "null",
         "options": {},
+        "paceLength": 10,
         "percentage": false,
         "pointradius": 5,
         "points": false,
@@ -2627,7 +2069,7 @@
           "rgba(237, 129, 40, 0.89)",
           "#d44a3a"
         ],
-        "datasource": "Prometheus",
+        "datasource": "prometheus",
         "format": "none",
         "gauge": {
           "maxValue": 100,
@@ -2640,7 +2082,7 @@
           "h": 4,
           "w": 4,
           "x": 0,
-          "y": 86
+          "y": 78
         },
         "id": 46,
         "interval": null,
@@ -2705,13 +2147,13 @@
         "bars": false,
         "dashLength": 10,
         "dashes": false,
-        "datasource": "Prometheus",
+        "datasource": "prometheus",
         "fill": 1,
         "gridPos": {
           "h": 6,
           "w": 8,
           "x": 0,
-          "y": 90
+          "y": 82
         },
         "id": 38,
         "legend": {
@@ -2728,6 +2170,7 @@
         "links": [],
         "nullPointMode": "null",
         "options": {},
+        "paceLength": 10,
         "percentage": false,
         "pointradius": 5,
         "points": false,
@@ -2791,13 +2234,13 @@
         "bars": false,
         "dashLength": 10,
         "dashes": false,
-        "datasource": "Prometheus",
+        "datasource": "prometheus",
         "fill": 1,
         "gridPos": {
           "h": 6,
           "w": 8,
           "x": 8,
-          "y": 90
+          "y": 82
         },
         "id": 42,
         "legend": {
@@ -2814,6 +2257,7 @@
         "links": [],
         "nullPointMode": "null",
         "options": {},
+        "paceLength": 10,
         "percentage": false,
         "pointradius": 5,
         "points": false,
@@ -2877,13 +2321,13 @@
         "bars": false,
         "dashLength": 10,
         "dashes": false,
-        "datasource": "Prometheus",
+        "datasource": "prometheus",
         "fill": 1,
         "gridPos": {
           "h": 6,
           "w": 8,
           "x": 16,
-          "y": 90
+          "y": 82
         },
         "id": 40,
         "legend": {
@@ -2900,6 +2344,7 @@
         "links": [],
         "nullPointMode": "null",
         "options": {},
+        "paceLength": 10,
         "percentage": false,
         "pointradius": 5,
         "points": false,
@@ -2964,7 +2409,7 @@
           "h": 1,
           "w": 24,
           "x": 0,
-          "y": 96
+          "y": 88
         },
         "id": 18,
         "panels": [],
@@ -2976,13 +2421,13 @@
         "bars": false,
         "dashLength": 10,
         "dashes": false,
-        "datasource": "Prometheus",
+        "datasource": "prometheus",
         "fill": 1,
         "gridPos": {
           "h": 7,
           "w": 24,
           "x": 0,
-          "y": 97
+          "y": 89
         },
         "id": 4,
         "legend": {
@@ -3001,6 +2446,7 @@
         "links": [],
         "nullPointMode": "null",
         "options": {},
+        "paceLength": 10,
         "percentage": false,
         "pointradius": 5,
         "points": false,
@@ -3065,13 +2511,13 @@
         "bars": false,
         "dashLength": 10,
         "dashes": false,
-        "datasource": "Prometheus",
+        "datasource": "prometheus",
         "fill": 1,
         "gridPos": {
           "h": 7,
           "w": 24,
           "x": 0,
-          "y": 104
+          "y": 96
         },
         "id": 2,
         "legend": {
@@ -3090,6 +2536,7 @@
         "links": [],
         "nullPointMode": "null",
         "options": {},
+        "paceLength": 10,
         "percentage": false,
         "pointradius": 5,
         "points": false,
@@ -3154,7 +2601,7 @@
           "h": 1,
           "w": 24,
           "x": 0,
-          "y": 111
+          "y": 103
         },
         "id": 22,
         "panels": [],
@@ -3170,7 +2617,7 @@
           "rgba(237, 129, 40, 0.89)",
           "#d44a3a"
         ],
-        "datasource": "Prometheus",
+        "datasource": "prometheus",
         "format": "locale",
         "gauge": {
           "maxValue": 100,
@@ -3183,7 +2630,7 @@
           "h": 4,
           "w": 4,
           "x": 0,
-          "y": 112
+          "y": 104
         },
         "id": 28,
         "interval": null,
@@ -3248,14 +2695,14 @@
         "bars": false,
         "dashLength": 10,
         "dashes": false,
-        "datasource": "Prometheus",
+        "datasource": "prometheus",
         "decimals": 0,
         "fill": 1,
         "gridPos": {
           "h": 7,
           "w": 9,
           "x": 4,
-          "y": 112
+          "y": 104
         },
         "id": 24,
         "legend": {
@@ -3273,6 +2720,7 @@
         "links": [],
         "nullPointMode": "null",
         "options": {},
+        "paceLength": 10,
         "percentage": false,
         "pointradius": 5,
         "points": false,
@@ -3338,13 +2786,13 @@
         "bars": false,
         "dashLength": 10,
         "dashes": false,
-        "datasource": "Prometheus",
+        "datasource": "prometheus",
         "fill": 1,
         "gridPos": {
           "h": 7,
           "w": 11,
           "x": 13,
-          "y": 112
+          "y": 104
         },
         "id": 26,
         "legend": {
@@ -3362,6 +2810,7 @@
         "links": [],
         "nullPointMode": "null",
         "options": {},
+        "paceLength": 10,
         "percentage": false,
         "pointradius": 5,
         "points": false,
@@ -3436,7 +2885,7 @@
           "rgba(237, 129, 40, 0.89)",
           "#d44a3a"
         ],
-        "datasource": "Prometheus",
+        "datasource": "prometheus",
         "format": "locale",
         "gauge": {
           "maxValue": 100,
@@ -3449,7 +2898,7 @@
           "h": 3,
           "w": 4,
           "x": 0,
-          "y": 116
+          "y": 108
         },
         "id": 32,
         "interval": null,
@@ -3514,13 +2963,13 @@
         "bars": false,
         "dashLength": 10,
         "dashes": false,
-        "datasource": "Prometheus",
+        "datasource": "prometheus",
         "fill": 1,
         "gridPos": {
           "h": 7,
           "w": 13,
           "x": 0,
-          "y": 119
+          "y": 111
         },
         "id": 30,
         "legend": {
@@ -3538,6 +2987,7 @@
         "links": [],
         "nullPointMode": "null",
         "options": {},
+        "paceLength": 10,
         "percentage": false,
         "pointradius": 5,
         "points": false,
@@ -3609,7 +3059,7 @@
           "h": 1,
           "w": 24,
           "x": 0,
-          "y": 126
+          "y": 118
         },
         "id": 8,
         "panels": [],
@@ -3621,13 +3071,13 @@
         "bars": false,
         "dashLength": 10,
         "dashes": false,
-        "datasource": "Prometheus",
+        "datasource": "prometheus",
         "fill": 1,
         "gridPos": {
           "h": 7,
           "w": 12,
           "x": 0,
-          "y": 127
+          "y": 119
         },
         "id": 6,
         "legend": {
@@ -3645,6 +3095,7 @@
         "links": [],
         "nullPointMode": "null",
         "options": {},
+        "paceLength": 10,
         "percentage": false,
         "pointradius": 5,
         "points": false,
@@ -3710,13 +3161,13 @@
         "bars": false,
         "dashLength": 10,
         "dashes": false,
-        "datasource": "Prometheus",
+        "datasource": "prometheus",
         "fill": 1,
         "gridPos": {
           "h": 7,
           "w": 12,
           "x": 12,
-          "y": 127
+          "y": 119
         },
         "id": 10,
         "legend": {
@@ -3734,6 +3185,7 @@
         "links": [],
         "nullPointMode": "null",
         "options": {},
+        "paceLength": 10,
         "percentage": false,
         "pointradius": 5,
         "points": false,
@@ -3799,13 +3251,13 @@
         "bars": false,
         "dashLength": 10,
         "dashes": false,
-        "datasource": "Prometheus",
+        "datasource": "prometheus",
         "fill": 1,
         "gridPos": {
           "h": 7,
           "w": 8,
           "x": 0,
-          "y": 134
+          "y": 126
         },
         "id": 14,
         "legend": {
@@ -3823,6 +3275,7 @@
         "links": [],
         "nullPointMode": "null",
         "options": {},
+        "paceLength": 10,
         "percentage": false,
         "pointradius": 5,
         "points": false,
@@ -3888,13 +3341,13 @@
         "bars": false,
         "dashLength": 10,
         "dashes": false,
-        "datasource": "Prometheus",
+        "datasource": "prometheus",
         "fill": 1,
         "gridPos": {
           "h": 7,
           "w": 8,
           "x": 8,
-          "y": 134
+          "y": 126
         },
         "id": 16,
         "legend": {
@@ -3912,6 +3365,7 @@
         "links": [],
         "nullPointMode": "null",
         "options": {},
+        "paceLength": 10,
         "percentage": false,
         "pointradius": 5,
         "points": false,
@@ -3977,13 +3431,13 @@
         "bars": false,
         "dashLength": 10,
         "dashes": false,
-        "datasource": "Prometheus",
+        "datasource": "prometheus",
         "fill": 1,
         "gridPos": {
           "h": 7,
           "w": 8,
           "x": 16,
-          "y": 134
+          "y": 126
         },
         "id": 20,
         "legend": {
@@ -4001,6 +3455,7 @@
         "links": [],
         "nullPointMode": "null",
         "options": {},
+        "paceLength": 10,
         "percentage": false,
         "pointradius": 5,
         "points": false,
@@ -4071,10 +3526,11 @@
         {
           "allValue": null,
           "current": {
-            "text": "prediction-calculator",
-            "value": "prediction-calculator"
+            "isNone": true,
+            "text": "None",
+            "value": ""
           },
-          "datasource": "Prometheus",
+          "datasource": "prometheus",
           "definition": "label_values(application)",
           "hide": 0,
           "includeAll": false,
@@ -4096,10 +3552,11 @@
         {
           "allValue": null,
           "current": {
-            "text": "docker.for.mac.localhost:8089",
-            "value": "docker.for.mac.localhost:8089"
+            "isNone": true,
+            "text": "None",
+            "value": ""
           },
-          "datasource": "Prometheus",
+          "datasource": "prometheus",
           "definition": "label_values(jvm_classes_loaded_classes{application=\"$application\"}, instance)",
           "hide": 0,
           "includeAll": false,
@@ -4125,7 +3582,7 @@
             "text": "None",
             "value": ""
           },
-          "datasource": "Prometheus",
+          "datasource": "prometheus",
           "definition": "",
           "hide": 0,
           "includeAll": false,
@@ -4150,7 +3607,7 @@
             "text": "All",
             "value": "$__all"
           },
-          "datasource": "Prometheus",
+          "datasource": "prometheus",
           "definition": "",
           "hide": 0,
           "includeAll": true,
@@ -4175,7 +3632,7 @@
             "text": "All",
             "value": "$__all"
           },
-          "datasource": "Prometheus",
+          "datasource": "prometheus",
           "definition": "",
           "hide": 0,
           "includeAll": true,
@@ -4228,5 +3685,5 @@
     "timezone": "",
     "title": "Spring Boot 2.1 Statistics",
     "uid": "spring_boot_21",
-    "version": 5
+    "version": 2
   }

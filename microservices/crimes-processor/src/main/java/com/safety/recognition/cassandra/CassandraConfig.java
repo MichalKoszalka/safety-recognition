@@ -9,11 +9,9 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.data.cassandra.config.AbstractCassandraConfiguration;
 import org.springframework.data.cassandra.config.CassandraClusterFactoryBean;
-import org.springframework.data.cassandra.config.KeyspaceActionSpecificationFactoryBean;
 import org.springframework.data.cassandra.config.SchemaAction;
 import org.springframework.data.cassandra.core.cql.keyspace.CreateKeyspaceSpecification;
 import org.springframework.data.cassandra.core.cql.keyspace.DropKeyspaceSpecification;
-import org.springframework.data.cassandra.core.cql.keyspace.KeyspaceActionSpecification;
 import org.springframework.data.cassandra.core.cql.keyspace.KeyspaceOption;
 import org.springframework.data.cassandra.core.mapping.CassandraMappingContext;
 import org.springframework.data.cassandra.core.mapping.SimpleUserTypeResolver;
@@ -60,7 +58,7 @@ public class CassandraConfig extends AbstractCassandraConfiguration {
     protected List<CreateKeyspaceSpecification> getKeyspaceCreations() {
         CreateKeyspaceSpecification specification = CreateKeyspaceSpecification
             .createKeyspace(environment.getProperty("cassandra.keyspace")).ifNotExists()
-            .with(KeyspaceOption.DURABLE_WRITES, true).withSimpleReplication();
+            .with(KeyspaceOption.DURABLE_WRITES, true).withSimpleReplication(3);
         return Arrays.asList(specification);
     }
 

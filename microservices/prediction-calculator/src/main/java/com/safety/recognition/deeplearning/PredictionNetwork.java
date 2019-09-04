@@ -40,6 +40,8 @@ public class PredictionNetwork {
 
     private final NeuralNetworkUI neuralNetworkUI;
 
+    private MultiLayerNetwork multiLayerNetwork;
+
     @Inject
     public PredictionNetwork(EvaluationMetricsManager evaluationMetricsManager, NeuralNetworkUI neuralNetworkUI) {
         this.evaluationMetricsManager = evaluationMetricsManager;
@@ -73,7 +75,7 @@ public class PredictionNetwork {
         LOG.info(String.format("Starting training model %s", modelPath));
         var model = getOrCreateModel(modelPath, calculateInputNeurons(trainData));
         var iterator = normalizeData(new RecordReaderDataSetIterator.Builder(createDataReader(trainData), 10).regression(0).build());
-        model.fit(iterator, 20);
+        model.fit(iterator, 100);
         var evaluation = model.evaluateRegression(normalizeData(new RecordReaderDataSetIterator.Builder(createDataReader(trainData), 10).regression(0).build()));
         LOG.info(String.format("Evaluation finished, outcome is \n: %s", evaluation.stats()));
         evaluationMetricsManager.updateEvaluationMetrics(evaluation);
@@ -92,10 +94,14 @@ public class PredictionNetwork {
         LOG.info("Creating new model");
         var neuralNetwork = new MultiLayerNetwork(configuration);
         neuralNetwork.setListeners(new StatsListener(neuralNetworkUI.getStatsStorage()));
+        this.multiLayerNetwork = neuralNetwork;
         return neuralNetwork;
     }
 
     private Optional<MultiLayerNetwork> loadModel(String modelPath) {
+        if(multiLayerNetwork != null) {
+            return Optional.of(multiLayerNetwork);
+        }
         var resourceFile = getFileIfExists(this.getClass().getClassLoader().getResource("").getPath()+modelPath);
         if (resourceFile.isPresent()) {
             try {

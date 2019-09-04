@@ -41,11 +41,11 @@ public class CrimesListener {
         String month = crimesForNeighbourhood.value().getCrimeList().stream().findAny().orElseThrow(() -> new IllegalArgumentException("No crime data found!")).getMonth();
         LOG.info(String.format("Starting processing crimes with neighbourhood: %s and date: %s", crimesForNeighbourhood.key(), month));
         crimesForNeighbourhood.value().getCrimeList().parallelStream().forEach(crimeProcessor::process);
-//        stringKafkaTemplate.send("calculate_indexes_for_london", month, "london");
-//        extractDistinctCategories(crimesForNeighbourhood.value()).forEach(category -> stringKafkaTemplate.send("calculate_indexes_for_london_by_category", month, category));
-//        extractDistinctStreets(crimesForNeighbourhood.value()).forEach(street-> streetAndNeighbourhoodKafkaTemplate.send("calculate_indexes_by_street", month, new StreetAndNeighbourhood(street, crimesForNeighbourhood.key())));
-//        extractDistinctStreetsAndCategories(crimesForNeighbourhood.key(), crimesForNeighbourhood.value()).forEach(streetAndCategory -> streetAndCategoryTemplate.send("calculate_indexes_by_street_and_category", month, streetAndCategory));
-//        stringKafkaTemplate.send("calculate_indexes_by_neighbourhood", month, crimesForNeighbourhood.key());
+        stringKafkaTemplate.send("calculate_indexes_for_london", month, "london");
+        extractDistinctCategories(crimesForNeighbourhood.value()).forEach(category -> stringKafkaTemplate.send("calculate_indexes_for_london_by_category", month, category));
+        extractDistinctStreets(crimesForNeighbourhood.value()).forEach(street-> streetAndNeighbourhoodKafkaTemplate.send("calculate_indexes_by_street", month, new StreetAndNeighbourhood(street, crimesForNeighbourhood.key())));
+        extractDistinctStreetsAndCategories(crimesForNeighbourhood.key(), crimesForNeighbourhood.value()).forEach(streetAndCategory -> streetAndCategoryTemplate.send("calculate_indexes_by_street_and_category", month, streetAndCategory));
+        stringKafkaTemplate.send("calculate_indexes_by_neighbourhood", month, crimesForNeighbourhood.key());
         extractDistinctCategories(crimesForNeighbourhood.value()).forEach(category -> neighbourhoodAndCategoryTemplate.send("calculate_indexes_by_neighbourhood_and_category", month, new NeighbourhoodAndCategory(crimesForNeighbourhood.key(), category)));
         LOG.info(String.format("Finished processing crimes with neighbourhood: %s and date: %s", crimesForNeighbourhood.key(), month));
     }
