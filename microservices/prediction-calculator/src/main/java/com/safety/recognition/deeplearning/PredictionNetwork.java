@@ -75,7 +75,7 @@ public class PredictionNetwork {
         LOG.info(String.format("Starting training model %s", modelPath));
         var model = getOrCreateModel(modelPath, calculateInputNeurons(trainData));
         var iterator = normalizeData(new RecordReaderDataSetIterator.Builder(createDataReader(trainData), 10).regression(0).build());
-        model.fit(iterator, 100);
+        model.fit(iterator, 20);
         var evaluation = model.evaluateRegression(normalizeData(new RecordReaderDataSetIterator.Builder(createDataReader(trainData), 10).regression(0).build()));
         LOG.info(String.format("Evaluation finished, outcome is \n: %s", evaluation.stats()));
         evaluationMetricsManager.updateEvaluationMetrics(evaluation);
